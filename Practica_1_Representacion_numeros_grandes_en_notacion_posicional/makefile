@@ -1,23 +1,10 @@
-text0 = 
-text1 = Se procedera a compilar la práctica...
-text2 = Modo de empleo:
-text3 = ./main <input file> || -h || --help
-text4 = Se ha eliminado el fichero ejecutable y los ficheros objetos.
-
 CC=g++
-CXXFLAGS=-g -std=c++14 
+CXXFLAGS=-g -std=c++14 -Wall
 
-OBJS = src/main.o src/bigint.o src/checkparameters.o
+OBJS = src/main.o src/bigint.o src/checkparameters.o src/board.o
 
 all: ${OBJS}
-	@echo $(text0)
-	@echo $(text1)
 	$(CC) $(CXXFLAGS) -o main ${OBJS}
 
-	@echo $(text0)
-	@echo $(text2)
-	@echo $(text3)
-
 clean: 
-	rm -rf *.o main
-	@echo $(text4)
+	rm -rf src/*.o main

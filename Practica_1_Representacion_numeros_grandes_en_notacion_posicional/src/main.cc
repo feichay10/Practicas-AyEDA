@@ -20,7 +20,29 @@
 
 #include "../include/bigint.h"
 #include "../include/checkparameters.h"
+#include "../include/board.h"
 
+/**
+ * @brief Main function
+ * 
+ * @param argc 
+ * @param argv 
+ * @return int 
+ */
 int main(int argc, char* argv[]) {
-  if (!CheckParameters(argc, argv)) exit(EXIT_FAILURE);
+  CheckParameters(argc, argv);
+
+  Board board(argv[1]);
+
+  std::cout << "Base: " << board.getBase() << std::endl;
+  std::map<std::string, std::string> labels = board.getLabels();
+  for (const auto& label : labels) {
+    std::cout << label.first << ": " << label.second << std::endl;
+  }
+  std::vector<std::string> expressions = board.getExpressions();
+  for (const auto& expression : expressions) {
+    std::cout << expression << std::endl;
+  }
+
+  return 0;
 }

@@ -26,7 +26,7 @@
  * @return true If the number of parameters is correct
  * @return false If the number of parameters is incorrect
  */
-bool CheckParameters(int argc, char* argv[]) {
+void CheckParameters(int argc, char* argv[]) {
   if (argc == 2) {
     std::string parameter = argv[1];
     if (parameter == HELP1 || parameter == HELP2) {
@@ -34,11 +34,11 @@ bool CheckParameters(int argc, char* argv[]) {
       std::cout << "OPCION:" << std::endl;
       std::cout << "  -h, --help\t\tAyuda del programa." << std::endl;
       std::cout << "  <input file>\t\tFichero de entrada con los datos de entrada." << std::endl;
-      return true;
+      exit(0);
     }
   } else {
     std::cout << "Error: El número de parámetros es incorrecto." << std::endl;
     std::cout << "Use -h o --help para más información." << std::endl;
-    return false;
+    exit(EXIT_FAILURE);
   }
 }
