@@ -21,7 +21,7 @@
 #include <string>
 #include <vector>
 
-template <typename Base>
+template <int Base>
 
 class BigInt {
  public:
