@@ -8,7 +8,7 @@
  * Práctica 1: Representación de números grandes en notación posicional
  * @file main.cc
  * @author Cheuk Kelly Ng Pante (alu0101364544@ull.edu.es)
- * @brief 
+ * @brief
  * @version 0.1
  * @date 2023-02-17
  *
@@ -18,6 +18,9 @@
 
 #include <iostream>
 
-int main(int argc, char* argv[]) {
+#include "../include/bigint.h"
+#include "../include/checkparameters.h"
 
+int main(int argc, char* argv[]) {
+  if (!CheckParameters(argc, argv)) exit(EXIT_FAILURE);
 }

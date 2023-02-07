@@ -1,13 +1,13 @@
 text0 = 
 text1 = Se procedera a compilar la práctica...
 text2 = Modo de empleo:
-text3 = ./main [OPCION]
+text3 = ./main <input file> || -h || --help
 text4 = Se ha eliminado el fichero ejecutable y los ficheros objetos.
 
 CC=g++
 CXXFLAGS=-g -std=c++14 
 
-OBJS = main.o bigint.o
+OBJS = src/main.o src/bigint.o src/checkparameters.o
 
 all: ${OBJS}
 	@echo $(text0)

@@ -6,7 +6,7 @@
  * Asignatura: Algoritmos y Estructura de Datos Avanzada
  * Curso: 2º
  * Práctica 1: Representación de números grandes en notación posicional
- * @file main.cc
+ * @file checkparameters.cc
  * @author Cheuk Kelly Ng Pante (alu0101364544@ull.edu.es)
  * @brief
  * @version 0.1
@@ -16,7 +16,12 @@
  *
  */
 
-class BigInt {
- public:
- private:
-};
+#pragma once
+
+#include <iostream>
+#include <string>
+
+const std::string HELP1 = "--help";
+const std::string HELP2 = "-h";
+
+bool CheckParameters(int argc, char* argv[]);
