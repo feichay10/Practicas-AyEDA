@@ -18,16 +18,3 @@
 
 #include "../include/bigint.h"
 
-// template <unsigned int Base>
-// BigInt<Base>::BigInt(long n) {
-//   if (n < 0) {
-//     sign_ = -1;
-//     n = -n;
-//   } else {
-//     sign_ = 1;
-//   }
-//   do {
-//     digits_.push_back(n % Base);
-//     n /= Base;
-//   } while (n > 0);
-// }

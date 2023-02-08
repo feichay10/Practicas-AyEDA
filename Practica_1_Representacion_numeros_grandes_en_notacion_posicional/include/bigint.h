@@ -31,40 +31,41 @@ class BigInt {
   BigInt(const char*);
   BigInt(const BigInt<Base>&);  // Constructor de copia
 
-  // // Asignación
-  // BigInt<Base>& operator=(const BigInt<Base>&);
+  // Asignación
+  BigInt<Base>& operator=(const BigInt<Base>&);
 
-  // // Inserción y extracción en flujo
-  // friend ostream& operator<<(ostream&, const BigInt<Base>&);
-  // friend istream& operator>>(istream&, BigInt<Base>&);
+  // Inserción y extracción en flujo
+  friend std::ostream& operator<<(std::ostream&, const BigInt<Base>&);
+  friend std::istream& operator>>(std::istream&, BigInt<Base>&);
 
-  // // Accesor
-  // int sign() const;            // Signo: 1 o -1
-  // char operator[](int) const;  // Acceso al i-ésimo dígito
+  // Accesor
+  int sign() const;            // Signo: 1 o -1
+  char operator[](int) const;  // Acceso al i-ésimo dígito
 
-  // // Comparación
-  // friend bool operator==(const BigInt<Base>&, const BigInt<Base>&);
-  // bool operator!=(const BigInt<Base>&) const;
-  // friend bool operator>(const BigInt<Base>&, const BigInt<Base>&);
-  // bool operator>=(const BigInt<Base>&) const;
-  // friend bool operator<(const BigInt<Base>&, const BigInt<Base>&);
-  // bool operator<=(const BigInt<Base>&) const;
+  // Comparación
+  friend bool operator==(const BigInt<Base>&, const BigInt<Base>&);
+  bool operator!=(const BigInt<Base>&) const;
+  friend bool operator>(const BigInt<Base>&, const BigInt<Base>&);
+  bool operator>=(const BigInt<Base>&) const;
+  friend bool operator<(const BigInt<Base>&, const BigInt<Base>&);
+  bool operator<=(const BigInt<Base>&) const;
 
-  // // Incremento y decremento
-  // BigInt<Base>& operator++();    // Pre-incremento
-  // BigInt<Base> operator++(int);  // Post-incremento
-  // BigInt<Base>& operator--();    // Pre-decremento
-  // BigInt<Base> operator--(int);  // Post-decremento
+  // Incremento y decremento
+  BigInt<Base>& operator++();    // Pre-incremento
+  BigInt<Base> operator++(int);  // Post-incremento
+  BigInt<Base>& operator--();    // Pre-decremento
+  BigInt<Base> operator--(int);  // Post-decremento
 
-  // // Operaciones aritméticas
-  // friend BigInt<Base> operator+(const BigInt<Base>&, const BigInt<Base>&);
-  // BigInt<Base> operator-(const BigInt<Base>&) const;
-  // BigInt<Base> operator-() const;
-  // BigInt<Base> operator*(const BigInt<Base>&) const;
-  // friend BigInt<Base> operator/(const BigInt<Base>&, const BigInt<Base>&);
-  // BigInt<Base> operator%(const BigInt<Base>&) const;
-  // // Potencia a^b
-  // friend BigInt<Base> pow(const BigInt<Base>&, const BigInt<Base>&);
+  // Operaciones aritméticas
+  friend BigInt<Base> operator+(const BigInt<Base>&, const BigInt<Base>&);
+  BigInt<Base> operator-(const BigInt<Base>&) const;
+  BigInt<Base> operator-() const;
+  BigInt<Base> operator*(const BigInt<Base>&) const;
+  friend BigInt<Base> operator/(const BigInt<Base>&, const BigInt<Base>&);
+  BigInt<Base> operator%(const BigInt<Base>&) const;
+  
+  // Potencia a^b
+  friend BigInt<Base> pow(const BigInt<Base>&, const BigInt<Base>&);
 
  private:
 };

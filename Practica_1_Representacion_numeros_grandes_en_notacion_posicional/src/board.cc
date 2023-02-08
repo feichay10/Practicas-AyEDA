@@ -22,10 +22,8 @@
  * @brief Constructor de la clase Board
  * @param filename Nombre del archivo de entrada
  *
- * Abre el archivo de entrada y lee los datos. Lee primero la base y luego
- * las parejas de etiquetas y valores. Almacena las etiquetas en un mapa
- * labels_ si la etiqueta no comienza con "E", y las almacena en un vector
- * expressions_ si la etiqueta comienza con "E".
+ * Lee el archivo de entrada y almacena la base y las etiquetas y expresiones
+ * en un mapa y un vector respectivamente
  */
 Board::Board(const std::string& filename) {
   std::ifstream file(filename);
@@ -43,6 +41,10 @@ Board::Board(const std::string& filename) {
     std::string value = line.substr(pos + 2);
 
     // Almacena en un mapa si comienza con "N" que seria un numero BigInt
+    // N1 = 442142117615672
+    // N2 = 46651367647546
+    // E1 = N1 N2 +
+    // E2 = E1 N1 N2 - +
     if (label[0] == 'N') {
       labels_[label] = value;
     } else if (label[0] == 'E') {

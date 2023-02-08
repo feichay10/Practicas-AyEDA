@@ -16,6 +16,14 @@
  *
  */
 
+/*
+=========================== DUDAS =======================================
+- ¿La entrada de los numeros de una base tiene que dar como resultado la misma base?
+- DUDA GRANDE: Punto 4.
+- Uso de templates 
+========================================================================
+*/
+
 #include <iostream>
 
 #include "../include/bigint.h"
