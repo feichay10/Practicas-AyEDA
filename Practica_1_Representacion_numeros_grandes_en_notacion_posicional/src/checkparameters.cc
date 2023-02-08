@@ -19,12 +19,10 @@
 #include "../include/checkparameters.h"
 
 /**
- * @brief Check if the number of parameters is correct
+ * @brief Comprueba si el número de parámetros es correcto
  *
- * @param argc Number of parameters
- * @param argv Parameters
- * @return true If the number of parameters is correct
- * @return false If the number of parameters is incorrect
+ * @param argc Número de parámetros
+ * @param argv Parámetros
  */
 void CheckParameters(int argc, char* argv[]) {
   if (argc == 2) {
@@ -34,7 +32,7 @@ void CheckParameters(int argc, char* argv[]) {
       std::cout << "OPCION:" << std::endl;
       std::cout << "  -h, --help\t\tAyuda del programa." << std::endl;
       std::cout << "  <input file>\t\tFichero de entrada con los datos de entrada." << std::endl;
-      exit(0);
+      exit(EXIT_SUCCESS);
     }
   } else {
     std::cout << "Error: El número de parámetros es incorrecto." << std::endl;
