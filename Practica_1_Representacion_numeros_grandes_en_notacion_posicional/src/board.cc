@@ -42,12 +42,10 @@ Board::Board(const std::string& filename) {
     std::string label = line.substr(0, pos - 1);
     std::string value = line.substr(pos + 2);
 
-    // Almacenar en un mapa si la etiqueta no comienza con "E"
-    if (label[0] != 'E') {
+    // Almacena en un mapa si comienza con "N" que seria un numero BigInt
+    if (label[0] == 'N') {
       labels_[label] = value;
-    }
-    // Almacenar en un vector si la etiqueta comienza con "E"
-    else {
+    } else if (label[0] == 'E') {
       expressions_.push_back(value);
     }
   }
