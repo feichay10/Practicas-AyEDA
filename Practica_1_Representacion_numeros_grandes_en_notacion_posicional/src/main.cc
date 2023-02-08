@@ -16,39 +16,36 @@
  *
  */
 
-/*
-=========================== DUDAS =======================================
-- ¿La entrada de los numeros de una base tiene que dar como resultado la misma base?
-- DUDA GRANDE: Punto 4.
-- Uso de templates 
-========================================================================
-*/
-
 #include <iostream>
 
 #include "../include/bigint.h"
-#include "../include/checkparameters.h"
-#include "../include/board.h"
+#include "../include/functions.h"
 
 /**
- * @brief Main function
- * 
- * @param argc 
- * @param argv 
- * @return int 
+ * @brief Funcion principal del programa
+ *
+ * @param argc
+ * @param argv
+ * @return int
  */
 int main(int argc, char* argv[]) {
-  CheckParameters(argc, argv);
+  Functions check;
+  Functions functions;
+  check.CheckParameters(argc, argv);
 
-  Board board(argv[1]);
-
-  std::cout << "Base: " << board.getBase() << std::endl;
-  std::map<std::string, std::string> labels = board.getLabels();
-  for (const auto& label : labels) {
-    std::cout << label.first << ": " << label.second << std::endl;
+  if (argc == 2) {
+    functions = Functions(argv[1]);
+  } else {
+    functions = Functions();
   }
-  std::vector<std::string> expressions = board.getExpressions();
-  for (const auto& expression : expressions) {
+
+  std::cout << "Base: " << functions.getBase() << std::endl;
+  std::cout << "Labels: " << std::endl;
+  for (auto& label : functions.getLabels()) {
+    std::cout << label.first << " = " << label.second << std::endl;
+  }
+  std::cout << "Expressions: " << std::endl;
+  for (auto& expression : functions.getExpressions()) {
     std::cout << expression << std::endl;
   }
 

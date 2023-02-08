@@ -1,7 +1,7 @@
 CC=g++
 CXXFLAGS=-g -std=c++14
 
-OBJS = src/main.o src/bigint.o src/checkparameters.o src/board.o
+OBJS = src/main.o src/bigint.o src/functions.o
 
 all: ${OBJS}
 	$(CC) $(CXXFLAGS) -o main ${OBJS}
