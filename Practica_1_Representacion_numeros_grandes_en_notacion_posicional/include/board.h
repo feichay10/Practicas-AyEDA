@@ -16,22 +16,27 @@
  *
  */
 
-#include <iostream>
+#pragma once
+
 #include <fstream>
+#include <iostream>
 #include <map>
 #include <string>
 #include <vector>
 
+/**
+ * @class Board
+ * @brief Almacena los datos leídos de un archivo de entrada
+ */
 class Board {
-public:
+ public:
   Board(const std::string& filename);
   int getBase() const;
   std::map<std::string, std::string> getLabels() const;
   std::vector<std::string> getExpressions() const;
 
-private:
+ private:
   int base_;
   std::map<std::string, std::string> labels_;
   std::vector<std::string> expressions_;
 };
-
