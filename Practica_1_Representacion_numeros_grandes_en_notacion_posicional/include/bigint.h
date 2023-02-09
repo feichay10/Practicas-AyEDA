@@ -18,13 +18,15 @@
 
 #pragma once
 
+#ifndef BIGINT_H_
+#define BIGINT_H_
+
 #include <cmath>
 #include <iostream>
 #include <string>
 #include <vector>
 
-template <unsigned int Base>
-
+template <size_t Base>
 class BigInt {
  public:
   // Constructores
@@ -65,9 +67,13 @@ class BigInt {
   BigInt<Base> operator*(const BigInt<Base>&) const;
   friend BigInt<Base> operator/(const BigInt<Base>&, const BigInt<Base>&);
   BigInt<Base> operator%(const BigInt<Base>&) const;
-  
+
   // Potencia a^b
   friend BigInt<Base> pow(const BigInt<Base>&, const BigInt<Base>&);
 
  private:
+  int sign_;  // Signo: 1 o -1
+  std::vector<char> digits_;  // Dígitos del número
 };
+
+#endif // BIGINT_H_

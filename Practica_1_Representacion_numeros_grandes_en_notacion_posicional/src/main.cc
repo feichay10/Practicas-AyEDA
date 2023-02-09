@@ -49,5 +49,35 @@ int main(int argc, char* argv[]) {
     std::cout << expression << std::endl;
   }
 
+  switch (functions.getBase()) {
+    case 2:
+      for (auto& expression : functions.getExpressions()) {
+        BigInt<2> bigint(expression);
+        std::cout << bigint << std::endl;
+      }
+      break;
+    case 8:
+      for (auto& expression : functions.getExpressions()) {
+        BigInt<8> bigint(expression);
+        std::cout << bigint << std::endl;
+      }
+      break;
+    case 10:
+      for (auto& expression : functions.getExpressions()) {
+        BigInt<10> bigint(expression);
+        std::cout << bigint << std::endl;
+      }
+      break;
+    case 16:
+      for (auto& expression : functions.getExpressions()) {
+        BigInt<16> bigint(expression);
+        std::cout << bigint << std::endl;
+      }
+      break;
+    default:
+      std::cout << "Base no soportada" << std::endl;
+      break;
+  }
+
   return 0;
 }

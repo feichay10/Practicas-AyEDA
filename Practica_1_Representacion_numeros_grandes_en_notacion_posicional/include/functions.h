@@ -18,6 +18,9 @@
 
 #pragma once
 
+#ifndef FUNCTIONS_H_
+#define FUNCTIONS_H_
+
 #include <fstream>
 #include <iostream>
 #include <map>
@@ -47,3 +50,5 @@ class Functions {
   std::map<std::string, std::string> labels_;
   std::vector<std::string> expressions_;
 };
+
+#endif  // FUNCTIONS_H_
