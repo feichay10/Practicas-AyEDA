@@ -18,8 +18,8 @@
 
 #pragma once
 
-#ifndef BIGINT_H_
-#define BIGINT_H_
+#ifndef _BIGINT_H_
+#define _BIGINT_H_
 
 #include <cmath>
 #include <iostream>
@@ -70,6 +70,10 @@ class BigInt {
 
   // Potencia a^b
   friend BigInt<Base> pow(const BigInt<Base>&, const BigInt<Base>&);
+
+  // Metodos
+  // void Procesar();
+  // void Calculadora();
 
  private:
   int sign_;  // Signo: 1 o -1

@@ -18,42 +18,11 @@
 
 #include "../include/functions.h"
 
-Functions::Functions() {}
-
 /**
- * @brief Constructor de la clase Functions
- * @param filename Nombre del archivo de entrada
- *
- * Lee el archivo de entrada y almacena la base y las etiquetas y expresiones
- * en un mapa y un vector respectivamente
- */
-Functions::Functions(const std::string& filename) {
-  std::ifstream file(filename);
-  std::string line;
-
-  // Leer la base
-  std::getline(file, line);
-  std::size_t pos = line.find("=");
-  base_ = std::stoi(line.substr(pos + 2));
-
-  // Leer las parejas de etiqueta y número
-  while (std::getline(file, line)) {
-    pos = line.find("=");
-    std::string label = line.substr(0, pos - 1);
-    std::string value = line.substr(pos + 2);
-
-    // Almacena en un mapa si comienza con "N" que seria un numero BigInt
-    // N1 = 442142117615672
-    // N2 = 46651367647546
-    // E1 = N1 N2 +
-    // E2 = E1 N1 N2 - +
-    if (label[0] == 'N') {
-      labels_[label] = value;
-    } else if (label[0] == 'E') {
-      expressions_.push_back(value);
-    }
-  }
-}
+ * @brief Constructor por defecto
+ * 
+*/
+Functions::Functions() {}
 
 /**
  * @brief Devuelve la base leída del archivo de entrada
@@ -93,5 +62,38 @@ void Functions::CheckParameters(int argc, char* argv[]) {
     std::cout << "Error: El número de parámetros es incorrecto." << std::endl;
     std::cout << "Use -h o --help para más información." << std::endl;
     exit(EXIT_FAILURE);
+  }
+}
+
+/**
+ * @brief Lee el archivo de entrada
+ *
+ * @param filename Nombre del archivo de entrada
+ */
+void Functions::ReadFile(const std::string& filename) {
+  std::ifstream file(filename);
+  std::string line;
+
+  // Leer la base
+  std::getline(file, line);
+  std::size_t pos = line.find("=");
+  base_ = std::stoi(line.substr(pos + 2));
+
+  // Leer las parejas de etiqueta y número
+  while (std::getline(file, line)) {
+    pos = line.find("=");
+    std::string label = line.substr(0, pos - 1);
+    std::string value = line.substr(pos + 2);
+
+    // Almacena en un mapa si comienza con "N" que seria un numero BigInt
+    // N1 = 442142117615672
+    // N2 = 46651367647546
+    // E1 = N1 N2 +
+    // E2 = E1 N1 N2 - +
+    if (label[0] == 'N') {
+      labels_[label] = value;
+    } else if (label[0] == 'E') {
+      expressions_.push_back(value);
+    }
   }
 }

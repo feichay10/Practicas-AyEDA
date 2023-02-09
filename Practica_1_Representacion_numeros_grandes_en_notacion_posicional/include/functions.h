@@ -18,8 +18,8 @@
 
 #pragma once
 
-#ifndef FUNCTIONS_H_
-#define FUNCTIONS_H_
+#ifndef _FUNCTIONS_H_
+#define _FUNCTIONS_H_
 
 #include <fstream>
 #include <iostream>
@@ -37,13 +37,15 @@ const std::string HELP2 = "-h";
 class Functions {
  public:
   Functions();
-  Functions(const std::string& filename);
 
   int getBase() const;
   std::map<std::string, std::string> getLabels() const;
   std::vector<std::string> getExpressions() const;
 
   void CheckParameters(int, char**);
+
+  void ReadFile(const std::string& filename);
+  void WriteFile(const std::string& filename);
 
  private:
   int base_;

@@ -31,13 +31,9 @@
 int main(int argc, char* argv[]) {
   Functions check;
   Functions functions;
+  
   check.CheckParameters(argc, argv);
-
-  if (argc == 2) {
-    functions = Functions(argv[1]);
-  } else {
-    functions = Functions();
-  }
+  functions.ReadFile(argv[1]);
 
   std::cout << "Base: " << functions.getBase() << std::endl;
   std::cout << "Labels: " << std::endl;
@@ -49,35 +45,35 @@ int main(int argc, char* argv[]) {
     std::cout << expression << std::endl;
   }
 
-  switch (functions.getBase()) {
-    case 2:
-      for (auto& expression : functions.getExpressions()) {
-        BigInt<2> bigint(expression);
-        std::cout << bigint << std::endl;
-      }
-      break;
-    case 8:
-      for (auto& expression : functions.getExpressions()) {
-        BigInt<8> bigint(expression);
-        std::cout << bigint << std::endl;
-      }
-      break;
-    case 10:
-      for (auto& expression : functions.getExpressions()) {
-        BigInt<10> bigint(expression);
-        std::cout << bigint << std::endl;
-      }
-      break;
-    case 16:
-      for (auto& expression : functions.getExpressions()) {
-        BigInt<16> bigint(expression);
-        std::cout << bigint << std::endl;
-      }
-      break;
-    default:
-      std::cout << "Base no soportada" << std::endl;
-      break;
-  }
+  // switch (functions.getBase()) {
+  //   case 2:
+  //     for (auto& expression : functions.getExpressions()) {
+  //       BigInt<2> bigint(expression);
+  //       std::cout << bigint << std::endl;
+  //     }
+  //     break;
+  //   case 8:
+  //     for (auto& expression : functions.getExpressions()) {
+  //       BigInt<8> bigint(expression);
+  //       std::cout << bigint << std::endl;
+  //     }
+  //     break;
+  //   case 10:
+  //     for (auto& expression : functions.getExpressions()) {
+  //       BigInt<10> bigint(expression);
+  //       std::cout << bigint << std::endl;
+  //     }
+  //     break;
+  //   case 16:
+  //     for (auto& expression : functions.getExpressions()) {
+  //       BigInt<16> bigint(expression);
+  //       std::cout << bigint << std::endl;
+  //     }
+  //     break;
+  //   default:
+  //     std::cout << "Base no soportada" << std::endl;
+  //     break;
+  // }
 
   return 0;
 }
