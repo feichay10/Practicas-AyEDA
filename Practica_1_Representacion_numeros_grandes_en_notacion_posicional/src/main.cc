@@ -37,7 +37,7 @@ int main(int argc, char* argv[]) {
 
   check.CheckParameters(argc, argv);
   functions.ReadFile(argv[1]);
-  functions.WriteFile(argv[2]);
+  // functions.WriteFile(argv[2]);
 
   base = functions.getBase();
   std::cout << "Base: " << base << std::endl;
@@ -52,7 +52,6 @@ int main(int argc, char* argv[]) {
     std::cout << expression << std::endl;
   }
 
-  std::string aux = "12021342432";
   switch (base) {
     case 2:
       std::cout << "Base 2" << std::endl;

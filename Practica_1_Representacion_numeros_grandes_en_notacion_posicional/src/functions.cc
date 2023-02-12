@@ -74,6 +74,11 @@ void Functions::ReadFile(const std::string& filename) {
   std::ifstream file(filename);
   std::string line;
 
+  if (!file.is_open()) {
+    std::cout << "Error: No se ha podido abrir el archivo de entrada " << "\"" << filename << "\"." << std::endl;
+    exit(EXIT_FAILURE);
+  }
+
   // Leer la base
   std::getline(file, line);
   std::size_t pos = line.find("=");
@@ -86,10 +91,6 @@ void Functions::ReadFile(const std::string& filename) {
     std::string value = line.substr(pos + 2);
 
     // Almacena en un mapa si comienza con "N" que seria un numero BigInt
-    // N1 = 442142117615672
-    // N2 = 46651367647546
-    // E1 = N1 N2 +
-    // E2 = E1 N1 N2 - +
     if (label[0] == 'N') {
       labels_[label] = value;
     } else if (label[0] == 'E') {
@@ -98,9 +99,19 @@ void Functions::ReadFile(const std::string& filename) {
   }
 }
 
+/**
+ * @brief Escribe el archivo de salida con los resultados de las operaciones
+ * 
+ * @param filename 
+ */
 void Functions::WriteFile(const std::string& filename) {
   std::ofstream file(filename);
   std::string line;
+
+  if (!file.is_open()) {
+    std::cout << "Error: No se ha podido abrir el archivo de salida." << "\"" << filename << "\"."<< std::endl;
+    exit(EXIT_FAILURE);
+  }
 
   // Escribir la base
   file << "Base = " << base_ << std::endl;

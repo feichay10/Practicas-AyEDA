@@ -73,13 +73,13 @@ BigInt<Base>::BigInt(const BigInt<Base>& n) {
   digits_ = n.digits_;
 }
 
-// // Asignacion
-// template<size_t Base>
-// BigInt<Base>& BigInt<Base>::operator=(const BigInt<Base>& n) {
-//   sign_ = n.sign_;
-//   digits_ = n.digits_;
-//   return *this;
-// }
+// Asignacion
+template <size_t Base>
+BigInt<Base> &BigInt<Base>::operator=(const BigInt<Base> &number_big) {
+  sign_ = number_big.sign_;
+  digits_ = number_big.digits_;
+  return *this;
+}
 
 // // Inserción y extracción en flujo
 // template<size_t Base>

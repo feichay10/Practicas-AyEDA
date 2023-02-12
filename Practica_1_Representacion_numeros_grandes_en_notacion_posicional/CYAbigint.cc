@@ -27,12 +27,14 @@ BigInt::BigInt(std::string &s) {
     digits.push_back(s[i] - '0');
   }
 }
+
 BigInt::BigInt(unsigned long long nr) {
   do {
     digits.push_back(nr % 10);
     nr /= 10;
   } while (nr);
 }
+
 BigInt::BigInt(const char *s) {
   digits = "";
   for (int i = strlen(s) - 1; i >= 0; i--) {
@@ -40,6 +42,7 @@ BigInt::BigInt(const char *s) {
     digits.push_back(s[i] - '0');
   }
 }
+
 BigInt::BigInt(const BigInt &a) { digits = a.digits; }
 
 bool Null(const BigInt &a) {

@@ -43,7 +43,6 @@ class Functions {
   std::vector<std::string> getExpressions() const;
 
   void CheckParameters(int, char**);
-
   void ReadFile(const std::string& filename);
   void WriteFile(const std::string& filename);
 

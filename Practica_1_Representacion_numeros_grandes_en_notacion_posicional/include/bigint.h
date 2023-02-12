@@ -36,7 +36,7 @@ class BigInt {
   BigInt(const BigInt<Base>&);  // Constructor de copia
 
   // Asignación
-  // BigInt<Base>& operator=(const BigInt<Base>&);
+  BigInt<Base> &operator=(const BigInt<Base> &);
 
   // // Inserción y extracción en flujo
   // friend std::ostream& operator<<(std::ostream&, const BigInt<Base>&);
