@@ -37,6 +37,7 @@ int main(int argc, char* argv[]) {
 
   check.CheckParameters(argc, argv);
   functions.ReadFile(argv[1]);
+  functions.WriteFile(argv[2]);
 
   base = functions.getBase();
   std::cout << "Base: " << base << std::endl;

@@ -49,7 +49,7 @@ std::vector<std::string> Functions::getExpressions() const { return expressions_
  * @param argv Parámetros
  */
 void Functions::CheckParameters(int argc, char* argv[]) {
-  if (argc == 2) {
+  if (argc == 3) {
     std::string parameter = argv[1];
     if (parameter == HELP1 || parameter == HELP2) {
       std::cout << "Uso: " << argv[0] << " <input file> || -h || --help" << std::endl;
@@ -95,5 +95,23 @@ void Functions::ReadFile(const std::string& filename) {
     } else if (label[0] == 'E') {
       expressions_.push_back(value);
     }
+  }
+}
+
+void Functions::WriteFile(const std::string& filename) {
+  std::ofstream file(filename);
+  std::string line;
+
+  // Escribir la base
+  file << "Base = " << base_ << std::endl;
+
+  // Escribir las parejas de etiqueta y número
+  for (auto& label : labels_) {
+    file << label.first << " = " << label.second << std::endl;
+  }
+
+  // Escribir las expresiones
+  for (auto& expression : expressions_) {
+    file << expression << std::endl;
   }
 }
