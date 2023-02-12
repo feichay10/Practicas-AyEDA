@@ -31,49 +31,62 @@
 int main(int argc, char* argv[]) {
   Functions check;
   Functions functions;
-  
+  char base;
+  std::map<std::string, std::string> label;
+  std::vector<std::string> expression;
+
   check.CheckParameters(argc, argv);
   functions.ReadFile(argv[1]);
 
-  std::cout << "Base: " << functions.getBase() << std::endl;
+  base = functions.getBase();
+  std::cout << "Base: " << base << std::endl;
   std::cout << "Labels: " << std::endl;
-  for (auto& label : functions.getLabels()) {
+  label = functions.getLabels();
+  for (auto& label : label) {
     std::cout << label.first << " = " << label.second << std::endl;
   }
   std::cout << "Expressions: " << std::endl;
-  for (auto& expression : functions.getExpressions()) {
+  expression = functions.getExpressions();
+  for (auto& expression : expression) {
     std::cout << expression << std::endl;
   }
 
-  // switch (functions.getBase()) {
-  //   case 2:
-  //     for (auto& expression : functions.getExpressions()) {
-  //       BigInt<2> bigint(expression);
-  //       std::cout << bigint << std::endl;
-  //     }
-  //     break;
-  //   case 8:
-  //     for (auto& expression : functions.getExpressions()) {
-  //       BigInt<8> bigint(expression);
-  //       std::cout << bigint << std::endl;
-  //     }
-  //     break;
-  //   case 10:
-  //     for (auto& expression : functions.getExpressions()) {
-  //       BigInt<10> bigint(expression);
-  //       std::cout << bigint << std::endl;
-  //     }
-  //     break;
-  //   case 16:
-  //     for (auto& expression : functions.getExpressions()) {
-  //       BigInt<16> bigint(expression);
-  //       std::cout << bigint << std::endl;
-  //     }
-  //     break;
-  //   default:
-  //     std::cout << "Base no soportada" << std::endl;
-  //     break;
-  // }
+  std::string aux = "12021342432";
+  switch (base) {
+    case 2:
+      std::cout << "Base 2" << std::endl;
+      // Convertir el numero que esta en label a un BigInt:
+      // BigInt<2> bigint(aux);
+      // for (auto& label : label) {
+      //   BigInt<2> bigint(label.second);
+      //   // std::cout << bigint << std::endl;
+      // }
+      break;
+    case 8:
+      // for (auto& expression : functions.getExpressions()) {
+      //   BigInt<8> bigint(expression);
+      //   std::cout << bigint << std::endl;
+      // }
+      std::cout << "Base 8" << std::endl;
+      break;
+    case 10:
+      // for (auto& expression : functions.getExpressions()) {
+      //   BigInt<10> bigint(expression);
+      //   std::cout << bigint << std::endl;
+      // }
+      std::cout << "Base 10" << std::endl;
+      break;
+    case 16:
+      // for (auto& expression : functions.getExpressions()) {
+      //   BigInt<16> bigint(expression);
+      //   std::cout << bigint << std::endl;
+      // }
+      std::cout << "Base 16" << std::endl;
+      break;
+    default:
+      std::cout << "Base no soportada" << std::endl;
+      break;
+  }
 
   return 0;
 }
