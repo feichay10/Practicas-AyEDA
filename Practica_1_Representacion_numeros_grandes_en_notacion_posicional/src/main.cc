@@ -60,6 +60,8 @@ int main(int argc, char* argv[]) {
   switch (base) {
     case 2:
       std::cout << "Base 2" << std::endl;
+      // calculator2.Calculate(expression);
+      // std::cout << "Result: " << calculator2.Calculate(expression) << std::endl;
       break;
     case 8:
       std::cout << "Base 8" << std::endl;

@@ -30,16 +30,20 @@
 const std::string HELP1 = "--help";
 const std::string HELP2 = "-h";
 
+template <size_t Base>
+class BigInt;
+
 /**
  * @class Functions
  * @brief Almacena los datos leídos de un archivo de entrada
  */
+template <size_t Base>
 class Functions {
  public:
   Functions();
 
   int getBase() const;
-  std::map<std::string, std::string> getLabels() const;
+  std::map<std::string, BigInt<Base>> getLabels() const;
   std::vector<std::string> getExpressions() const;
 
   void CheckParameters(int, char**);
@@ -48,7 +52,7 @@ class Functions {
 
  private:
   int base_;
-  std::map<std::string, std::string> labels_;
+  std::map<std::string, BigInt<Base>> labels_;
   std::vector<std::string> expressions_;
 };
 

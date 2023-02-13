@@ -24,6 +24,9 @@
 #include <iostream>
 #include <map>
 #include <string>
+#include <vector>
+#include <functional>
+#include <stack>
 
 template <class T>
 class Calculator {
@@ -40,7 +43,6 @@ class Calculator {
   std::map<std::string, T> variables_;
   std::map<std::string, std::function<T(T, T)>> operations_;
   std::map<std::string, std::function<T(T)>> unary_operations_;
-  std::vector<T> stack_;
 };
 
 #endif  // CALCULATOR_H_

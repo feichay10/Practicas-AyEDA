@@ -22,25 +22,29 @@
  * @brief Constructor por defecto
  * 
 */
-Functions::Functions() {}
+template <size_t Base>
+Functions<Base>::Functions() {}
 
 /**
  * @brief Devuelve la base leída del archivo de entrada
  * @return Valor de la base
  */
-int Functions::getBase() const { return base_; }
+template <size_t Base>
+int Functions<Base>::getBase() const { return base_; }
 
 /**
  * @brief Devuelve las etiquetas leídas del archivo de entrada
  * @return Mapa de etiquetas y valores
  */
-std::map<std::string, std::string> Functions::getLabels() const { return labels_; }
+template <size_t Base>
+std::map<std::string, BigInt<Base>> Functions<Base>::getLabels() const { return labels_; }
 
 /**
  * @brief Devuelve las expresiones leídas del archivo de entrada
  * @return Vector de expresiones
  */
-std::vector<std::string> Functions::getExpressions() const { return expressions_; }
+template <size_t Base>
+std::vector<std::string> Functions<Base>::getExpressions() const { return expressions_; }
 
 /**
  * @brief Comprueba si el número de parámetros es correcto
@@ -48,7 +52,8 @@ std::vector<std::string> Functions::getExpressions() const { return expressions_
  * @param argc Número de parámetros
  * @param argv Parámetros
  */
-void Functions::CheckParameters(int argc, char* argv[]) {
+template <size_t Base>
+void Functions<Base>::CheckParameters(int argc, char* argv[]) {
   if (argc == 3) {
     std::string parameter = argv[1];
     if (parameter == HELP1 || parameter == HELP2) {
@@ -70,7 +75,8 @@ void Functions::CheckParameters(int argc, char* argv[]) {
  *
  * @param filename Nombre del archivo de entrada
  */
-void Functions::ReadFile(const std::string& filename) {
+template <size_t Base>
+void Functions<Base>::ReadFile(const std::string& filename) {
   std::ifstream file(filename);
   std::string line;
 
@@ -96,33 +102,5 @@ void Functions::ReadFile(const std::string& filename) {
     } else if (label[0] == 'E') {
       expressions_.push_back(value);
     }
-  }
-}
-
-/**
- * @brief Escribe el archivo de salida con los resultados de las operaciones
- * 
- * @param filename 
- */
-void Functions::WriteFile(const std::string& filename) {
-  std::ofstream file(filename);
-  std::string line;
-
-  if (!file.is_open()) {
-    std::cout << "Error: No se ha podido abrir el archivo de salida." << "\"" << filename << "\"."<< std::endl;
-    exit(EXIT_FAILURE);
-  }
-
-  // Escribir la base
-  file << "Base = " << base_ << std::endl;
-
-  // Escribir las parejas de etiqueta y número
-  for (auto& label : labels_) {
-    file << label.first << " = " << label.second << std::endl;
-  }
-
-  // Escribir las expresiones
-  for (auto& expression : expressions_) {
-    file << expression << std::endl;
   }
 }

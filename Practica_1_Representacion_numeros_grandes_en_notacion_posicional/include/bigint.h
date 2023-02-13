@@ -38,21 +38,21 @@ class BigInt {
   // Asignación
   BigInt<Base> &operator=(const BigInt<Base> &);
 
-  // // Inserción y extracción en flujo
-  // friend std::ostream& operator<<(std::ostream&, const BigInt<Base>&);
-  // friend std::istream& operator>>(std::istream&, BigInt<Base>&);
+  // Inserción y extracción en flujo
+  friend std::ostream& operator<<(std::ostream&, const BigInt<Base>&);
+  friend std::istream& operator>>(std::istream&, BigInt<Base>&);
 
-  // // Accesor
-  // int sign() const;            // Signo: 1 o -1
-  // char operator[](int) const;  // Acceso al i-ésimo dígito
+  // Accesor
+  int sign() const;            // Signo: 1 o -1
+  char operator[](int) const;  // Acceso al i-ésimo dígito
 
-  // // Comparación
-  // friend bool operator==(const BigInt<Base>&, const BigInt<Base>&);
-  // bool operator!=(const BigInt<Base>&) const;
-  // friend bool operator>(const BigInt<Base>&, const BigInt<Base>&);
-  // bool operator>=(const BigInt<Base>&) const;
-  // friend bool operator<(const BigInt<Base>&, const BigInt<Base>&);
-  // bool operator<=(const BigInt<Base>&) const;
+  // Comparación
+  friend bool operator==(const BigInt<Base>&, const BigInt<Base>&);
+  bool operator!=(const BigInt<Base>&) const;
+  friend bool operator>(const BigInt<Base>&, const BigInt<Base>&);
+  bool operator>=(const BigInt<Base>&) const;
+  friend bool operator<(const BigInt<Base>&, const BigInt<Base>&);
+  bool operator<=(const BigInt<Base>&) const;
 
   // // Incremento y decremento
   // BigInt<Base>& operator++();    // Pre-incremento

@@ -81,22 +81,39 @@ BigInt<Base> &BigInt<Base>::operator=(const BigInt<Base> &number_big) {
   return *this;
 }
 
-// // Inserción y extracción en flujo
-// template<size_t Base>
-// std::ostream& operator<<(std::ostream& os, const BigInt<Base>& n) {
-//   if (n.sign_ == -1) {
-//     os << '-';
-//   }
-//   for (int i = n.digits_.size() - 1; i >= 0; i--) {
-//     os << n.digits_[i];
-//   }
-//   return os;
-// }
+// Inserción y extracción en flujo
+template <size_t Base>
+std::ostream& operator<<(std::ostream& os, const BigInt<Base>& number_big) {
+  if (number_big.sign_ == -1) {
+    os << '-';
+  }
+  for (int i = number_big.digits_.size() - 1; i >= 0; i--) {
+    if (number_big.digits_[i] >= 0 && number_big.digits_[i] <= 9) {
+      os << number_big.digits_[i];
+    } else if (number_big.digits_[i] >= 10 && number_big.digits_[i] <= 15) {
+      os << static_cast<char>(number_big.digits_[i] + 'A' - 10);
+    }
+  }
+  return os;
+}
 
-// template<size_t Base>
-// std::istream& operator>>(std::istream& is, BigInt<Base>& n) {
-//   std::string s;
-//   is >> s;
-//   n = BigInt<Base>(s);
-//   return is;
-// }
+template <size_t Base>
+std::istream& operator>>(std::istream& is, BigInt<Base>& number_big) {
+  std::string str;
+  is >> str;
+  number_big = BigInt<Base>(str);
+  return is;
+}
+
+// Accesor
+template <size_t Base>
+int BigInt<Base>::sign() const {
+  return sign_;
+}
+
+template <size_t Base>
+char BigInt<Base>::operator[](int i) const {
+  return digits_[i];
+}
+
+// Comparación
