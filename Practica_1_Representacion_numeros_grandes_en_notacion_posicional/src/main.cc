@@ -32,13 +32,17 @@
 int main(int argc, char* argv[]) {
   Functions functions;
   Functions check;
-  char base;
-  std::map<std::string, std::string> label;
-  std::vector<std::string> expression;
   // Calculator<BigInt<2>> calculator2;
   // Calculator<BigInt<8>> calculator8;
   // Calculator<BigInt<10>> calculator10;
   // Calculator<BigInt<16>> calculator16;
+
+  long number = 124312121;
+  std::string aux_string = "ADF124312121";
+  char aux_char = 'A';
+  BigInt<10> number1(number);
+  BigInt<16> number2(aux_string);
+  BigInt<16> number3(aux_char);
 
   check.CheckParameters(argc, argv);
   functions.ReadFile(argv[1]);
@@ -47,8 +51,6 @@ int main(int argc, char* argv[]) {
   switch (functions.getBase()) {
     case 2:
       std::cout << "Base 2" << std::endl;
-      // calculator2.Calculate(expression);
-      // std::cout << "Result: " << calculator2.Calculate(expression) << std::endl;
       break;
     case 8:
       std::cout << "Base 8" << std::endl;
