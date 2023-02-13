@@ -22,29 +22,13 @@
  * @brief Constructor por defecto
  * 
 */
-template <size_t Base>
-Functions<Base>::Functions() {}
+Functions::Functions() {}
 
 /**
  * @brief Devuelve la base leída del archivo de entrada
  * @return Valor de la base
  */
-template <size_t Base>
-int Functions<Base>::getBase() const { return base_; }
-
-/**
- * @brief Devuelve las etiquetas leídas del archivo de entrada
- * @return Mapa de etiquetas y valores
- */
-template <size_t Base>
-std::map<std::string, BigInt<Base>> Functions<Base>::getLabels() const { return labels_; }
-
-/**
- * @brief Devuelve las expresiones leídas del archivo de entrada
- * @return Vector de expresiones
- */
-template <size_t Base>
-std::vector<std::string> Functions<Base>::getExpressions() const { return expressions_; }
+int Functions::getBase() const { return base_; }
 
 /**
  * @brief Comprueba si el número de parámetros es correcto
@@ -52,9 +36,8 @@ std::vector<std::string> Functions<Base>::getExpressions() const { return expres
  * @param argc Número de parámetros
  * @param argv Parámetros
  */
-template <size_t Base>
-void Functions<Base>::CheckParameters(int argc, char* argv[]) {
-  if (argc == 3) {
+void Functions::CheckParameters(int argc, char* argv[]) {
+  if (argc != 3) {
     std::string parameter = argv[1];
     if (parameter == HELP1 || parameter == HELP2) {
       std::cout << "Uso: " << argv[0] << " <input file> || -h || --help" << std::endl;
@@ -75,8 +58,7 @@ void Functions<Base>::CheckParameters(int argc, char* argv[]) {
  *
  * @param filename Nombre del archivo de entrada
  */
-template <size_t Base>
-void Functions<Base>::ReadFile(const std::string& filename) {
+void Functions::ReadFile(const std::string& filename) {
   std::ifstream file(filename);
   std::string line;
 
@@ -85,22 +67,31 @@ void Functions<Base>::ReadFile(const std::string& filename) {
     exit(EXIT_FAILURE);
   }
 
-  // Leer la base
   std::getline(file, line);
   std::size_t pos = line.find("=");
   base_ = std::stoi(line.substr(pos + 2));
 
-  // Leer las parejas de etiqueta y número
   while (std::getline(file, line)) {
-    pos = line.find("=");
-    std::string label = line.substr(0, pos - 1);
+    std::size_t pos = line.find("=");
+    std::string label = line.substr(0, pos);
     std::string value = line.substr(pos + 2);
 
-    // Almacena en un mapa si comienza con "N" que seria un numero BigInt
     if (label[0] == 'N') {
-      labels_[label] = value;
-    } else if (label[0] == 'E') {
-      expressions_.push_back(value);
+      labels_.insert(std::pair<std::string, std::string>(label, value));
+    } else if (label[0] == 'E'){
+      expressions_.insert(std::pair<std::string, std::string>(label, value));
     }
+  }
+}
+
+void Functions::WriteOnScreen() {
+  std::cout << "Base: " << base_ << std::endl;
+  std::cout << "Etiquetas: " << std::endl;
+  for (auto& label : labels_) {
+    std::cout << "\t" << label.first << " = " << label.second << std::endl;
+  }
+  std::cout << "Expresiones: " << std::endl;
+  for (auto& expression : expressions_) {
+    std::cout << "\t" << expression.first << " = " << expression.second << std::endl;
   }
 }

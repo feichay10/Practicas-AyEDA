@@ -30,34 +30,21 @@
  * @return int
  */
 int main(int argc, char* argv[]) {
-  Functions check;
   Functions functions;
+  Functions check;
   char base;
   std::map<std::string, std::string> label;
   std::vector<std::string> expression;
-  Calculator<BigInt<2>> calculator2;
-  Calculator<BigInt<8>> calculator8;
-  Calculator<BigInt<10>> calculator10;
-  Calculator<BigInt<16>> calculator16;
+  // Calculator<BigInt<2>> calculator2;
+  // Calculator<BigInt<8>> calculator8;
+  // Calculator<BigInt<10>> calculator10;
+  // Calculator<BigInt<16>> calculator16;
 
   check.CheckParameters(argc, argv);
   functions.ReadFile(argv[1]);
-  // functions.WriteFile(argv[2]);
+  functions.WriteOnScreen();
 
-  base = functions.getBase();
-  std::cout << "Base: " << base << std::endl;
-  std::cout << "Labels: " << std::endl;
-  label = functions.getLabels();
-  for (auto& label : label) {
-    std::cout << label.first << " = " << label.second << std::endl;
-  }
-  std::cout << "Expressions: " << std::endl;
-  expression = functions.getExpressions();
-  for (auto& expression : expression) {
-    std::cout << expression << std::endl;
-  }
-
-  switch (base) {
+  switch (functions.getBase()) {
     case 2:
       std::cout << "Base 2" << std::endl;
       // calculator2.Calculate(expression);
