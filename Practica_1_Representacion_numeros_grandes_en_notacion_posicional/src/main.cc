@@ -19,6 +19,7 @@
 #include <iostream>
 
 #include "../include/bigint.h"
+#include "../include/calculator.h"
 #include "../include/functions.h"
 
 /**
@@ -34,6 +35,10 @@ int main(int argc, char* argv[]) {
   char base;
   std::map<std::string, std::string> label;
   std::vector<std::string> expression;
+  Calculator<BigInt<2>> calculator2;
+  Calculator<BigInt<8>> calculator8;
+  Calculator<BigInt<10>> calculator10;
+  Calculator<BigInt<16>> calculator16;
 
   check.CheckParameters(argc, argv);
   functions.ReadFile(argv[1]);
@@ -55,32 +60,14 @@ int main(int argc, char* argv[]) {
   switch (base) {
     case 2:
       std::cout << "Base 2" << std::endl;
-      // Convertir el numero que esta en label a un BigInt:
-      // BigInt<2> bigint(aux);
-      // for (auto& label : label) {
-      //   BigInt<2> bigint(label.second);
-      //   // std::cout << bigint << std::endl;
-      // }
       break;
     case 8:
-      // for (auto& expression : functions.getExpressions()) {
-      //   BigInt<8> bigint(expression);
-      //   std::cout << bigint << std::endl;
-      // }
       std::cout << "Base 8" << std::endl;
       break;
     case 10:
-      // for (auto& expression : functions.getExpressions()) {
-      //   BigInt<10> bigint(expression);
-      //   std::cout << bigint << std::endl;
-      // }
       std::cout << "Base 10" << std::endl;
       break;
     case 16:
-      // for (auto& expression : functions.getExpressions()) {
-      //   BigInt<16> bigint(expression);
-      //   std::cout << bigint << std::endl;
-      // }
       std::cout << "Base 16" << std::endl;
       break;
     default:

@@ -17,3 +17,36 @@
  */
 
 #include "../include/calculator.h"
+
+template <class T>
+Calculator<T>::Calculator() {
+  InitializeOperations();
+}
+
+template <class T>
+void Calculator<T>::SetExpression(const std::map<std::string, std::string>& expression) {
+  this->expression_ = expression;
+}
+
+template <class T>
+void Calculator<T>::InitializeOperations() {
+  // Operaciones
+  operations_["+"] = [](T a, T b) { return a + b; };
+  operations_["-"] = [](T a, T b) { return a - b; };
+  operations_["*"] = [](T a, T b) { return a * b; };
+  operations_["/"] = [](T a, T b) { return a / b; };
+  operations_["%"] = [](T a, T b) { return a % b; };
+  operations_["^"] = [](T a, T b) { return a ^ b; };
+  operations_["=="] = [](T a, T b) { return a == b; };
+  operations_["!="] = [](T a, T b) { return a != b; };
+  operations_["<"] = [](T a, T b) { return a < b; };
+  operations_["<="] = [](T a, T b) { return a <= b; };
+  operations_[">"] = [](T a, T b) { return a > b; };
+  operations_[">="] = [](T a, T b) { return a >= b; };
+  operations_["="] = [](T a, T b) { return a = b; };
+
+  // Operaciones unarias
+  unary_operations_["++"] = [](T a) { return ++a; };
+  unary_operations_["--"] = [](T a) { return --a; };
+  unary_operations_["-"] = [](T a) { return -a; };
+}

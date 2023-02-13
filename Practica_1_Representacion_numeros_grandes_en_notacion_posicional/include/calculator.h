@@ -31,11 +31,16 @@ class Calculator {
   Calculator();
 
   void InitializeOperations();
-  void SetTokens(const std::map<std::string, std::string>& tokens);
-  T Calculate(std::vector<std::string> expression);
+  void SetExpression(const std::map<std::string, std::string>&);
+  T Calculate(std::vector<std::string>);
   void ProcessExpression();
 
  private:
+  std::map<std::string, std::string> expression_;
+  std::map<std::string, T> variables_;
+  std::map<std::string, std::function<T(T, T)>> operations_;
+  std::map<std::string, std::function<T(T)>> unary_operations_;
+  std::vector<T> stack_;
 };
 
 #endif  // CALCULATOR_H_
