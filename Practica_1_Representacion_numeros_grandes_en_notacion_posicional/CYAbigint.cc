@@ -57,6 +57,8 @@ int BigInt::operator[](const int index) const {
 bool operator==(const BigInt &a, const BigInt &b) {
   return a.digits == b.digits;
 }
+
+
 bool operator!=(const BigInt &a, const BigInt &b) { return !(a == b); }
 bool operator<(const BigInt &a, const BigInt &b) {
   int n = Length(a), m = Length(b);

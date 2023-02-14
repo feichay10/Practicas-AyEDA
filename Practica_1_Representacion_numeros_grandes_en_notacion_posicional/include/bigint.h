@@ -36,7 +36,7 @@ class BigInt {
   BigInt(const BigInt<Base>&);  // Constructor de copia
 
   // Asignación
-  BigInt<Base> &operator=(const BigInt<Base> &);
+  BigInt<Base>& operator=(const BigInt<Base>&);
 
   // Inserción y extracción en flujo
   friend std::ostream& operator<<(std::ostream&, const BigInt<Base>&);
@@ -71,9 +71,8 @@ class BigInt {
   // // Potencia a^b
   // friend BigInt<Base> pow(const BigInt<Base>&, const BigInt<Base>&);
 
-  // Metodos
-  // void Procesar();
-  // void Calculadora();
+  // Metodos auxiliares
+  bool IsZero();
 
  private:
   int sign_;                  // Signo: 1 o -1
@@ -81,6 +80,12 @@ class BigInt {
 };
 
 // Constructores
+/**
+ * @brief Constructor de la clase BigInt a partir de un long
+ *
+ * @tparam Base
+ * @param n
+ */
 template <size_t Base>
 BigInt<Base>::BigInt(long n) {
   if (n == 0) {
@@ -104,6 +109,12 @@ BigInt<Base>::BigInt(long n) {
   }
 }
 
+/**
+ * @brief Constructor de la clase BigInt a partir de un string
+ *
+ * @tparam Base
+ * @param s
+ */
 template <size_t Base>
 BigInt<Base>::BigInt(std::string& s) {
   if (s.empty()) {
@@ -133,6 +144,12 @@ BigInt<Base>::BigInt(std::string& s) {
   }
 }
 
+/**
+ * @brief Constructor de la clase BigInt a partir de un char *
+ *
+ * @tparam Base
+ * @param s
+ */
 template <size_t Base>
 BigInt<Base>::BigInt(const char* s) {
   std::string str(s);
@@ -144,45 +161,148 @@ BigInt<Base>::BigInt(const char* s) {
   }
 }
 
+/**
+ * @brief Constructor de copia de la clase BigInt
+ *
+ * @tparam Base
+ * @param n
+ */
 template <size_t Base>
 BigInt<Base>::BigInt(const BigInt<Base>& n) {
   sign_ = n.sign_;
   digits_ = n.digits_;
 }
 
-// // Asignacion
-// template <size_t Base>
-// BigInt<Base> &BigInt<Base>::operator=(const BigInt<Base> &number_big) {
-//   sign_ = number_big.sign_;
-//   digits_ = number_big.digits_;
-//   return *this;
-// }
+// Asignacion
+/**
+ * @brief Operador de asignación de la clase BigInt
+ *
+ * @tparam Base
+ * @param n
+ * @return BigInt<Base>&
+ */
+template <size_t Base>
+BigInt<Base>& BigInt<Base>::operator=(const BigInt<Base>& n) {
+  sign_ = n.sign_;
+  digits_ = n.digits_;
+  return *this;
+}
 
-// // Inserción y extracción en flujo
-// template <size_t Base>
-// std::ostream &operator<<(std::ostream &os, const BigInt<Base> &number_big) {
-//   std::string number_str = number_big.to_string();
-//   os << number_str;
-//   return os;
-// }
+// Inserción y extracción en flujo
+template <size_t Base>
+std::ostream& operator<<(std::ostream& os, const BigInt<Base>& number_big) {
+  std::string number_str = number_big.to_string();
+  os << number_str;
+  return os;
+}
 
-// template <size_t Base>
-// std::istream& operator>>(std::istream& is, BigInt<Base>& number_big) {
-//   std::string str;
-//   is >> str;
-//   number_big = BigInt<Base>(str);
-//   return is;
-// }
+template <size_t Base>
+std::istream& operator>>(std::istream& is, BigInt<Base>& number_big) {
+  std::string str;
+  is >> str;
+  number_big = BigInt<Base>(str);
+  return is;
+}
 
-// // Accesor
-// template <size_t Base>
-// int BigInt<Base>::sign() const {
-//   return sign_;
-// }
+// Accesor
+template <size_t Base>
+int BigInt<Base>::sign() const {
+  return sign_;
+}
 
-// template <size_t Base>
-// char BigInt<Base>::operator[](int i) const {
-//   return digits_[i];
-// }
+template <size_t Base>
+char BigInt<Base>::operator[](int i) const {
+  return digits_[i];
+}
 
-#endif // _BIGINT_H_
+// Comparación
+template <size_t Base>
+bool operator==(const BigInt<Base>& a, const BigInt<Base>& b) {
+  BigInt<Base> number1 = a;
+  BigInt<Base> number2 = b;
+
+  if (number1.IsZero() && number2.IsZero()) {
+    return true;
+  }
+
+  if (number1.sign() != number2.sign()) {
+    return false;
+  }
+
+  if (number1.digits_.size() != number2.digits_.size()) {
+    return false;
+  }
+
+  for (int i = 0; i < number1.digits_.size(); i++) {
+    if (number1.digits_[i] != number2.digits_[i]) {
+      return false;
+    }
+  }
+
+  return true;
+}
+
+template <size_t Base>
+bool operator!=(const BigInt<Base>& a, const BigInt<Base>& b) {
+  return !(a == b);
+}
+
+template <size_t Base>
+bool operator<(const BigInt<Base>& a, const BigInt<Base>& b) {
+  BigInt<Base> number1 = a;
+  BigInt<Base> number2 = b;
+
+  if (number1.IsZero() && number2.IsZero()) {
+    return false;
+  }
+
+  if (number1.sign() == -1 && number2.sign() == 1) {
+    return true;
+  }
+
+  if (number1.sign() == 1 && number2.sign() == -1) {
+    return false;
+  }
+
+  if (number1.sign() == -1 && number2.sign() == -1) {
+    return -number2 < -number1;
+  }
+
+  if (number1.digits_.size() < number2.digits_.size()) {
+    return true;
+  }
+
+  if (number1.digits_.size() > number2.digits_.size()) {
+    return false;
+  }
+
+  for (int i = number1.digits_.size() - 1; i >= 0; i--) {
+    if (number1.digits_[i] < number2.digits_[i]) {
+      return true;
+    }
+    if (number1.digits_[i] > number2.digits_[i]) {
+      return false;
+    }
+  }
+
+  return false;
+}
+
+template <size_t Base>
+bool operator>(const BigInt<Base>& a, const BigInt<Base>& b) {
+  BigInt<Base> number1 = a;
+  BigInt<Base> number2 = b;
+}
+
+// Metodos auxiliares
+template <size_t Base>
+bool BigInt<Base>::IsZero() {
+  for (int i = 0; i < digits_.size(); i++) {
+    if (digits_[i] != 0) {
+      return false;
+    }
+  }
+  return true;
+}
+
+#endif  // _BIGINT_H_
