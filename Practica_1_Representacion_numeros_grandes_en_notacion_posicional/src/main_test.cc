@@ -13,6 +13,8 @@
  * @date 2023-02-17
  *
  * @copyright Copyright (c) 2023
+ * 
+ * g++ src/main_test.cc -o main_test
  *
  */
 
@@ -28,19 +30,37 @@
  * @return int
  */
 int main(int argc, char* argv[]) {
-  // long number = 124312121;
-  // std::string aux_string = "ADF124312121";
-  // char aux_char = 'A';
-  // BigInt<10> number1(number);
-  // BigInt<16> number2(aux_string);
-  // BigInt<16> number3(aux_char);
+  // Numeros en base 2
+  BigInt<2> num110(110);
+  BigInt<2> num111(111);
 
+  // Numeros en base 10
   BigInt<10> num123(123);
   BigInt<10> num456(456);
-  BigInt<10> num789(789);
-  BigInt<10> num123456789(123456789);
-  BigInt<10> num123456789123456789(123456789123456789);
+  BigInt<10> num_neg123(-123);
+  BigInt<10> num_neg456(-456);
 
+  // Numeros en base 16
+  BigInt<16> numABC("ABC");
+  BigInt<16> num1982ADC("1982ADC");
+
+  // ================================================================================================
+  // Pruebas para numeros en base 2
+  // Prueba del operador =
+  BigInt<2> num110_2 = num110;
+  std::cout << "num110_2: " << num110_2 << std::endl;
+
+  // Prueba de los operadores de comparacion
+  std::cout << "num110 == num110_2: " << std::boolalpha << (num110 == num110_2) << std::endl;
+  std::cout << "num110 == num111: " << std::boolalpha << (num110 == num111) << std::endl;
+  std::cout << "num110 != num110_2: " << std::boolalpha << (num110 != num110_2) << std::endl;
+  std::cout << "num110 != num111: " << std::boolalpha << (num110 != num111) << std::endl;
+  std::cout << "num110 > num111: " << std::boolalpha << (num110 < num111) << std::endl;
+  std::cout << "num111 > num110: " << std::boolalpha << (num111 < num110) << std::endl;
+  // ================================================================================================
+
+  // ================================================================================================
+  // Pruebas para numeros en base 10
   // Prueba de salida por pantalla
   std::cout << "num123: " << num123 << std::endl;
 
@@ -49,9 +69,17 @@ int main(int argc, char* argv[]) {
   std::cout << "num123_2: " << num123_2 << std::endl;
 
   // Prueba de los operadores de comparacion
-  std::cout << "num123 == num123_2: " << (num123 == num123_2) << std::endl;
-  // std::cout << "num123 != num123_2: " << (num123 != num123_2) << std::endl;
-  // std::cout << "num123 != num456: " << (num123 != num456) << std::endl;
-    
+  std::cout << "num123 == num123_2: " << std::boolalpha << (num123 == num123_2) << std::endl;
+  std::cout << "num123 == num456: " << std::boolalpha << (num123 == num456) << std::endl;
+  std::cout << "num123 != num123_2: " << std::boolalpha << (num123 != num123_2) << std::endl;
+  std::cout << "num123 != num456: " << std::boolalpha << (num123 != num456) << std::endl;
+  // std::cout << "num123 < num456: " << std::boolalpha << (num123 < num456) << std::endl;
+  // std::cout << "num456 < num123: " << std::boolalpha << (num456 < num123) << std::endl;
+  std::cout << "num123 > num456: " << std::boolalpha << (num123 > num456) << std::endl;
+  // ================================================================================================
+
+  // ================================================================================
+  // Pruebas para numeros en base 16
+
   return 0;
 }
