@@ -31,51 +31,54 @@
  */
 int main(int argc, char* argv[]) {
   // Numeros en base 2
-  BigInt<2> num110(110);
-  BigInt<2> num111(111);
+  BigInt<2> num110_str("110");
+  BigInt<2> num110_long(110);
+  // BigInt<2> num111(111);
 
   // Numeros en base 10
-  BigInt<10> num123(123);
-  BigInt<10> num456(456);
-  BigInt<10> num_neg123(-123);
-  BigInt<10> num_neg456(-456);
+  // BigInt<10> num123(123);
+  // BigInt<10> num456(456);
+  // BigInt<10> num_neg123(-123);
+  // BigInt<10> num_neg456(-456);
 
-  // Numeros en base 16
-  BigInt<16> numABC("ABC");
-  BigInt<16> num1982ADC("1982ADC");
+  // // Numeros en base 16
+  // BigInt<16> numABC("ABC");
+  // BigInt<16> num1982ADC("1982ADC");
 
-  // ================================================================================================
-  // Pruebas para numeros en base 2
-  // Prueba del operador =
-  BigInt<2> num110_2 = num110;
-  std::cout << "num110_2: " << num110_2 << std::endl;
+  // // ================================================================================================
+  // // Pruebas para numeros en base 2
+  // // Prueba del operador =
+  // BigInt<2> num110_2 = num110;
+  // std::cout << "num110_2: " << num110_2 << std::endl;
+  std::cout << "num110_str: " << num110_str << std::endl;
+  std::cout << "num110_long: " << num110_long << std::endl;
 
-  // Prueba de los operadores de comparacion
-  std::cout << "num110 == num110_2: " << std::boolalpha << (num110 == num110_2) << std::endl;
-  std::cout << "num110 == num111: " << std::boolalpha << (num110 == num111) << std::endl;
-  std::cout << "num110 != num110_2: " << std::boolalpha << (num110 != num110_2) << std::endl;
-  std::cout << "num110 != num111: " << std::boolalpha << (num110 != num111) << std::endl;
-  std::cout << "num110 > num111: " << std::boolalpha << (num110 < num111) << std::endl;
-  std::cout << "num111 > num110: " << std::boolalpha << (num111 < num110) << std::endl;
-  // ================================================================================================
+  // // Prueba de los operadores de comparacion
+  // std::cout << "num110 == num110_2: " << std::boolalpha << (num110 == num110_2) << std::endl;
+  // std::cout << "num110 == num111: " << std::boolalpha << (num110 == num111) << std::endl;
+  // std::cout << "num110 != num110_2: " << std::boolalpha << (num110 != num110_2) << std::endl;
+  // std::cout << "num110 != num111: " << std::boolalpha << (num110 != num111) << std::endl;
+  // std::cout << "num110 > num111: " << std::boolalpha << (num110 < num111) << std::endl;
+  // std::cout << "num111 > num110: " << std::boolalpha << (num111 < num110) << std::endl;
+  // // ================================================================================================
 
-  // ================================================================================================
-  // Pruebas para numeros en base 10
-  // Prueba de salida por pantalla
-  std::cout << "num123: " << num123 << std::endl;
+  // // ================================================================================================
+  // // Pruebas para numeros en base 10
+  // // Prueba de salida por pantalla
+  // std::cout << "num123: " << num123 << std::endl;
 
-  // Prueba del operador =
-  BigInt<10> num123_2 = num123;
-  std::cout << "num123_2: " << num123_2 << std::endl;
+  // // Prueba del operador =
+  // BigInt<10> num123_2 = num123;
+  // std::cout << "num123_2: " << num123_2 << std::endl;
 
-  // Prueba de los operadores de comparacion
-  std::cout << "num123 == num123_2: " << std::boolalpha << (num123 == num123_2) << std::endl;
-  std::cout << "num123 == num456: " << std::boolalpha << (num123 == num456) << std::endl;
-  std::cout << "num123 != num123_2: " << std::boolalpha << (num123 != num123_2) << std::endl;
-  std::cout << "num123 != num456: " << std::boolalpha << (num123 != num456) << std::endl;
-  // std::cout << "num123 < num456: " << std::boolalpha << (num123 < num456) << std::endl;
-  // std::cout << "num456 < num123: " << std::boolalpha << (num456 < num123) << std::endl;
-  std::cout << "num123 > num456: " << std::boolalpha << (num123 > num456) << std::endl;
+  // // Prueba de los operadores de comparacion
+  // std::cout << "num123 == num123_2: " << std::boolalpha << (num123 == num123_2) << std::endl;
+  // std::cout << "num123 == num456: " << std::boolalpha << (num123 == num456) << std::endl;
+  // std::cout << "num123 != num123_2: " << std::boolalpha << (num123 != num123_2) << std::endl;
+  // std::cout << "num123 != num456: " << std::boolalpha << (num123 != num456) << std::endl;
+  // // std::cout << "num123 < num456: " << std::boolalpha << (num123 < num456) << std::endl;
+  // // std::cout << "num456 < num123: " << std::boolalpha << (num456 < num123) << std::endl;
+  // std::cout << "num123 > num456: " << std::boolalpha << (num123 > num456) << std::endl;
   // ================================================================================================
 
   // ================================================================================
