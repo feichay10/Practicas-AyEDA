@@ -78,9 +78,36 @@ class BigInt {
       return false;
     }
     
+    for (int i = number1.digits_.size() - 1; i >= 0; i--) {
+      if (number1.digits_[i] > number2.digits_[i]) {
+        return true;
+      } else if (number1.digits_[i] < number2.digits_[i]) {
+        return false;
+      }
+    }
+
+    return false;
   }
 
   friend bool operator<(const BigInt<Base>& a, const BigInt<Base>& b) {
+    BigInt<Base> number1 = a;
+    BigInt<Base> number2 = b;
+
+    if (number1.sign_ < number2.sign_) {
+      return true;
+    } else if (number1.sign_ > number2.sign_) {
+      return false;
+    }
+    
+    for (int i = number1.digits_.size() - 1; i >= 0; i--) {
+      if (number1.digits_[i] < number2.digits_[i]) {
+        return true;
+      } else if (number1.digits_[i] > number2.digits_[i]) {
+        return false;
+      }
+    }
+
+    return false;
   }
   
  public:
