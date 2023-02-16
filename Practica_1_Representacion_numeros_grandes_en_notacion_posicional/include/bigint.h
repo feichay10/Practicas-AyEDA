@@ -109,6 +109,62 @@ class BigInt {
 
     return false;
   }
+
+  // Operaciones aritméticas
+  friend BigInt<Base> operator+(const BigInt<Base> &a, const BigInt<Base> &b) {
+    // 124321
+    // 212321
+    //-------
+    // 336642
+
+    // recorrer los numeros de derecha a izquierda y si el resultado es =< <base>, entonces:
+    // si resultado >= base hacer MOD de la base 2(resultado) % <10>, lo guarda en esa posicion
+    // si si el resultado se pasa de la base 
+    // 9 + 3 = 12 pos ahora con 2, y a la siguiente pos le suma el carry, en este caso 1
+    
+    BigInt<Base> number1 = a;
+    BigInt<Base> number2 = b;
+    BigInt<Base> result;
+    int carry = 0;
+
+    result.digits_.clear();
+
+    if (number1.sign_ == number2.sign_) {
+      result.sign_ = number1.sign_;
+    } else {
+      if (number1.sign_ == -1) {
+        number1.sign_ = 1;
+        result = number2 - number1;
+        number1.sign_ = -1;
+      } else {
+        number2.sign_ = 1;
+        result = number1 - number2;
+        number2.sign_ = -1;
+      }
+      return result;
+    }
+
+    for (int i = 0; i < number1.digits_.size() || i < number2.digits_.size(); i++) {
+      int sum = carry;
+      if (i < number1.digits_.size()) {
+        sum += number1.digits_[i];
+      }
+
+      if (i < number2.digits_.size()) {
+        sum += number2.digits_[i];
+      }
+
+      result.digits_.push_back(sum % Base);
+      carry = sum / Base;
+      
+    }
+
+    if (carry != 0) {
+      result.digits_.push_back(carry);
+    }
+
+    return result;
+  }
   
  public:
   // Constructores
@@ -118,7 +174,11 @@ class BigInt {
   BigInt(const BigInt<Base>&);  // Constructor de copia
 
   // Asignación
-  BigInt<Base>& operator=(const BigInt<Base>&);
+  BigInt<Base>& operator=(const BigInt<Base>& n) {
+    sign_ = n.sign_;
+    digits_ = n.digits_;
+    return *this;
+  }
 
   // Accesor
   int sign() const;            // Signo: 1 o -1
@@ -137,15 +197,40 @@ class BigInt {
     return !(*this > n);
   }
 
-  // // Incremento y decremento
-  // BigInt<Base>& operator++();    // Pre-incremento
-  // BigInt<Base> operator++(int);  // Post-incremento
-  // BigInt<Base>& operator--();    // Pre-decremento
-  // BigInt<Base> operator--(int);  // Post-decremento
+  // Incremento y decremento
+  // Pre-incremento 
+  // BigInt<Base>& operator++() {
+  //   BigInt<Base> one(1);
+  //   *this = *this + one;
+  //   return *this;
+  // }
+  
+  // // Post-incremento
+  // BigInt<Base> operator++(int) {
+  //   BigInt<Base> temp = *this;
+  //   ++*this;
+  //   return temp;
+  // }
+  
+  // Pre-decremento
+  // BigInt<Base>& operator--() {
+  //   BigInt<Base> one(1);
+  //   *this = *this - one;
+  //   return *this;
+  // }
+
+  // // Post-decremento
+  // BigInt<Base> operator--(int) {
+  //   BigInt<Base> temp = *this;
+  //   --*this;
+  //   return temp;
+  // } 
 
   // // Operaciones aritméticas
   // friend BigInt<Base> operator+(const BigInt<Base>&, const BigInt<Base>&);
-  // BigInt<Base> operator-(const BigInt<Base>&) const;
+  BigInt<Base> operator-(const BigInt<Base>& n) const {
+    
+  }
   // BigInt<Base> operator-() const;
   // BigInt<Base> operator*(const BigInt<Base>&) const;
   // friend BigInt<Base> operator/(const BigInt<Base>&, const BigInt<Base>&);
@@ -158,6 +243,16 @@ class BigInt {
   bool IsZero();
   std::string toString() const;
   BigInt<Base> fill_zeros(unsigned) const;
+  BigInt<Base> Abs() const;
+  void removeLeadingZeros();
+
+  // Getters
+  int GetSign() const { return sign_; }
+  const std::vector<char>& Getdigits_() const { return digits_; }
+
+  // Setters
+  void SetSign(int sign) { sign_ = sign; }
+  void Setdigits_(const std::vector<char>& digits_) { digits_ = digits_; }
 
  private:
   int sign_;                  // Signo: 1 o -1
@@ -188,12 +283,12 @@ BigInt<Base>::BigInt(long n) {
     n /= Base;
   }
 
-  std::cout << "digits_.size(): " << digits_.size() << std::endl;
+  // std::cout << "digits_.size(): " << digits_.size() << std::endl;
 
-  std::cout << "Constructor BigInt(long n): " << std::endl;
-  for (int i = 0; i < digits_.size(); i++) {
-    std::cout << (int)digits_[i] << std::endl;
-  }
+  // std::cout << "Constructor BigInt(long n): " << std::endl;
+  // for (int i = 0; i < digits_.size(); i++) {
+  //   std::cout << (int)digits_[i] << std::endl;
+  // }
 }
 
 /**
@@ -242,10 +337,10 @@ BigInt<Base>::BigInt(const char* s) {
   std::string str(s);
   *this = BigInt(str);
 
-  std::cout << "Constructor BigInt(const char* s): " << std::endl;
-  for (int i = 0; i < digits_.size(); i++) {
-    std::cout << (int)digits_[i] << std::endl;
-  }
+  // std::cout << "Constructor BigInt(const char* s): " << std::endl;
+  // for (int i = 0; i < digits_.size(); i++) {
+  //   std::cout << (int)digits_[i] << std::endl;
+  // }
 }
 
 /**
@@ -258,21 +353,6 @@ template <size_t Base>
 BigInt<Base>::BigInt(const BigInt<Base>& n) {
   sign_ = n.sign_;
   digits_ = n.digits_;
-}
-
-// Asignacion
-/**
- * @brief Operador de asignación de la clase BigInt
- *
- * @tparam Base
- * @param n
- * @return BigInt<Base>&
- */
-template <size_t Base>
-BigInt<Base>& BigInt<Base>::operator=(const BigInt<Base>& n) {
-  sign_ = n.sign_;
-  digits_ = n.digits_;
-  return *this;
 }
 
 // Accesor
@@ -314,5 +394,32 @@ std::string BigInt<Base>::toString() const {
 
   return str;
 }
+
+template <size_t Base>
+BigInt<Base> BigInt<Base>::fill_zeros(unsigned n) const {
+  std::string number_str = this->toString();
+  number_str.insert(number_str.begin(), n, '0');
+  return BigInt<Base>(number_str);
+}
+
+template <size_t Base>
+BigInt<Base> BigInt<Base>::Abs() const {
+  BigInt<Base> number_aux = *this;
+  number_aux.SetSign(1);
+  return number_aux;
+}
+
+template <size_t Base>
+void BigInt<Base>::removeLeadingZeros() {
+  for (size_t i = digits_.size() - 1; i > 0 && digits_[i] == 0; i--) {
+    std::cout << "Entra" << std::endl;
+    digits_.pop_back();
+  }
+
+  if (digits_.size() == 1 && digits_[0] == 0) {
+    sign_ = 0;
+  }
+}
+
 
 #endif  // _BIGINT_H_
