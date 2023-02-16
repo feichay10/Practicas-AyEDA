@@ -78,6 +78,11 @@ int main(int argc, char* argv[]) {
   BigInt<10> num456(456);
   BigInt<10> num_neg123(-123);
   BigInt<10> num_neg456(-456);
+  BigInt<10> num20(20);
+  BigInt<10> num12(12);
+  BigInt<10> num4(4);
+  BigInt<10> num5(5);
+  BigInt<10> num0("0");
 
   // // Prueba de salida por pantalla
   // std::cout << "num123: " << num123 << std::endl;
@@ -100,9 +105,9 @@ int main(int argc, char* argv[]) {
   // std::cout << "num123 <= num123_2: " << std::boolalpha << (num123 <= num123_2) << std::endl;
   // std::cout << "num123 <= num456: " << std::boolalpha << (num123 <= num456) << std::endl;
   
-  // Prueba de Incremento y decremento
-  // std::cout << "num123++: " << num123++ << std::endl;
-  // std::cout << "num456++: " << num456++ << std::endl;
+  // // Prueba de Incremento y decremento
+  std::cout << "num12++: " << num12++ << std::endl;
+  std::cout << "num0--: " << num0-- << std::endl;
 
   //Prueba de los operadores aritmeticos
   // 579
@@ -116,11 +121,6 @@ int main(int argc, char* argv[]) {
   // std::cout << "num123 * num456: " << num123 * num456 << std::endl;
 	// std::cout << "num_neg123 * num_neg456: " << num_neg123 * num_neg456 << std::endl;
   // std::cout << "num123 * num_neg456: " << num123 * num_neg456 << std::endl;
-  BigInt<10> num20(20);
-  BigInt<10> num12(12);
-  BigInt<10> num4(4);
-  BigInt<10> num5(5);
-  BigInt<10> num0("0");
   std::cout << "num20 / num5: " << num20 / num5 << std::endl;
   std::cout << "num12 / num4: " << num12 / num4 << std::endl;
   std::cout << "num12 / num5: " << num12 / num5 << std::endl;

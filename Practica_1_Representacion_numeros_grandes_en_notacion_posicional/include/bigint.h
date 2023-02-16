@@ -30,12 +30,26 @@
 template <size_t Base>
 class BigInt {
   // Inserción y extracción en flujo
+  /**
+   * @brief Operador de insercion en flujo
+   * 
+   * @param os 
+   * @param number_big 
+   * @return std::ostream& 
+   */
   friend std::ostream& operator<<(std::ostream& os, const BigInt<Base>& number_big) {
     std::string number_str = number_big.toString();
     os << number_str;
     return os;
   }
 
+  /**
+   * @brief Operador de extraccion de flujo
+   * 
+   * @param is 
+   * @param number_big 
+   * @return std::istream& 
+   */
   friend std::istream& operator>>(std::istream& is, BigInt<Base>& number_big) {
     std::string str;
     is >> str;
@@ -44,6 +58,14 @@ class BigInt {
   }
 
   // Operador de comparacion
+  /**
+   * @brief Operador de comparacion ==
+   * 
+   * @param a 
+   * @param b 
+   * @return true 
+   * @return false 
+   */
   friend bool operator==(const BigInt<Base>& a, const BigInt<Base>& b) {
     BigInt<Base> number1 = a;
     BigInt<Base> number2 = b;
@@ -69,6 +91,14 @@ class BigInt {
     return true;
   }
 
+  /**
+   * @brief Operador de comparacion >
+   * 
+   * @param a 
+   * @param b 
+   * @return true 
+   * @return false 
+   */
   friend bool operator>(const BigInt<Base>& a, const BigInt<Base>& b) {
     BigInt<Base> number1 = a;
     BigInt<Base> number2 = b;
@@ -90,6 +120,14 @@ class BigInt {
     return false;
   }
 
+  /**
+   * @brief Operador de comparacion <
+   * 
+   * @param a 
+   * @param b 
+   * @return true 
+   * @return false 
+   */
   friend bool operator<(const BigInt<Base>& a, const BigInt<Base>& b) {
     BigInt<Base> number1 = a;
     BigInt<Base> number2 = b;
@@ -112,6 +150,13 @@ class BigInt {
   }
 
   // Operaciones aritméticas
+  /**
+   * @brief Operador de suma +
+   * 
+   * @param a 
+   * @param b 
+   * @return BigInt<Base> 
+   */
   friend BigInt<Base> operator+(const BigInt<Base> &a, const BigInt<Base> &b) {
     // 124321
     // 212321
@@ -166,6 +211,13 @@ class BigInt {
     return result;
   }
 
+  /**
+   * @brief Operador de division /
+   * 
+   * @param number1 
+   * @param number2 
+   * @return BigInt<Base> 
+   */
   friend BigInt<Base> operator/(const BigInt<Base> &number1, const BigInt<Base> &number2) {
     BigInt<Base> number1_aux = number1.Abs();
     BigInt<Base> number2_aux = number2.Abs();
@@ -188,7 +240,6 @@ class BigInt {
 
     return i;
   }
-
   
  public:
   // Constructores
@@ -198,6 +249,12 @@ class BigInt {
   BigInt(const BigInt<Base>&);  // Constructor de copia
 
   // Asignación
+  /**
+   * @brief Operador de asignacion =
+   * 
+   * @param n 
+   * @return BigInt<Base>& 
+   */
   BigInt<Base>& operator=(const BigInt<Base>& n) {
     sign_ = n.sign_;
     digits_ = n.digits_;
@@ -209,27 +266,59 @@ class BigInt {
   char operator[](int) const;  // Acceso al i-ésimo dígito
 
   // Comparación
+  /**
+   * @brief Operador de comparacion !=
+   * 
+   * @param n 
+   * @return true 
+   * @return false 
+   */
   bool operator!=(const BigInt<Base>& n) const {
     return !(*this == n);
   }
 
+  /**
+   * @brief Operador de comparacion >=
+   * 
+   * @param n 
+   * @return true 
+   * @return false 
+   */
   bool operator>=(const BigInt<Base>& n) const {
     return !(*this < n);
   }
 
+  /**
+   * @brief Operador de comparacion <=
+   * 
+   * @param n 
+   * @return true 
+   * @return false 
+   */
   bool operator<=(const BigInt<Base>& n) const {
     return !(*this > n);
   }
 
   // Incremento y decremento
   // Pre-incremento 
+  /**
+   * @brief Operador de incremento ++
+   * 
+   * @return BigInt<Base>& 
+   */
   BigInt<Base>& operator++() {
-    BigInt<Base> one(1);
+    BigInt<Base> one("1");
     *this = *this + one;
     return *this;
   }
   
-  // // Post-incremento
+  // Post-incremento
+  /**
+   * @brief Operador de incremento ++
+   * 
+   * @param int 
+   * @return BigInt<Base> 
+   */
   BigInt<Base> operator++(int) {
     BigInt<Base> temp = *this;
     ++*this;
@@ -237,21 +326,36 @@ class BigInt {
   }
   
   // Pre-decremento
+  /**
+   * @brief Operador de decremento --
+   * 
+   * @return BigInt<Base>& 
+   */
   BigInt<Base>& operator--() {
-    BigInt<Base> one(1);
+    BigInt<Base> one("1");
     *this = *this - one;
     return *this;
   }
 
-  // // Post-decremento
+  // Post-decremento
+  /**
+   * @brief Operador de decremento --
+   * 
+   * @return BigInt<Base> 
+   */
   BigInt<Base> operator--(int) {
     BigInt<Base> temp = *this;
     --*this;
     return temp;
   } 
 
-  // // Operaciones aritméticas
-  // friend BigInt<Base> operator+(const BigInt<Base>&, const BigInt<Base>&);
+  // Operaciones aritméticas
+  /**
+   * @brief Operador de resta -
+   * 
+   * @param n 
+   * @return BigInt<Base> 
+   */
   BigInt<Base> operator-(const BigInt<Base>& n) const {
     BigInt<Base> number1 = *this;
     BigInt<Base> number2 = n;
@@ -259,8 +363,6 @@ class BigInt {
     int carry = 0;
 
     result.digits_.clear();
-
-    // -123 - (-456) = 333
 
     if (number1.sign_ == number2.sign_) {
       if (number1.sign_ == -1) {
@@ -308,12 +410,23 @@ class BigInt {
     return result;
   }
 
+  /**
+   * @brief Operador de cambio de signo -
+   * 
+   * @return BigInt<Base> 
+   */
   BigInt<Base> operator-() const {
     BigInt<Base> number_aux = *this;
     number_aux.SetSign(-number_aux.GetSign());
     return number_aux;
   }
 
+  /**
+   * @brief Operador de multiplicacion *
+   * 
+   * @param n 
+   * @return BigInt<Base> 
+   */
   BigInt<Base> operator*(const BigInt<Base>& n) const {
     BigInt<Base> number1 = *this;
     BigInt<Base> number2 = n;
@@ -353,7 +466,12 @@ class BigInt {
     return result;
   }
 
-  
+  /**
+   * @brief Operador de modulo %
+   * 
+   * @param n 
+   * @return BigInt<Base> 
+   */
   BigInt<Base> operator%(const BigInt<Base>& n) const {
     // BigInt<Base> number1 = *this;
     // BigInt<Base> number2 = n;
@@ -509,17 +627,37 @@ BigInt<Base>::BigInt(const BigInt<Base>& n) {
 }
 
 // Accesor
+/**
+ * @brief Devuelve el signo del BigInt
+ * 
+ * @tparam Base 
+ * @return int 
+ */
 template <size_t Base>
 int BigInt<Base>::sign() const {
   return sign_;
 }
 
+/**
+ * @brief Devuelve el dígito en la posición i del BigInt
+ * 
+ * @tparam Base 
+ * @param i 
+ * @return char 
+ */
 template <size_t Base>
 char BigInt<Base>::operator[](int i) const {
   return digits_[i];
 }
 
 // Metodos auxiliares
+/**
+ * @brief Comprueba si el BigInt es cero
+ * 
+ * @tparam Base 
+ * @return true 
+ * @return false 
+ */
 template <size_t Base>
 bool BigInt<Base>::IsZero() {
   for (int i = 0; i < digits_.size(); i++) {
@@ -530,6 +668,12 @@ bool BigInt<Base>::IsZero() {
   return true;
 }
 
+/**
+ * @brief Devuelve el string correspondiente al BigInt
+ * 
+ * @tparam Base 
+ * @return std::string 
+ */
 template <size_t Base>
 std::string BigInt<Base>::toString() const {
   std::string str;
