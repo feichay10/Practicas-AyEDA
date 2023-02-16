@@ -25,6 +25,7 @@
 #include <iostream>
 #include <string>
 #include <vector>
+#include <algorithm>
 
 template <size_t Base>
 class BigInt {
@@ -164,6 +165,30 @@ class BigInt {
 
     return result;
   }
+
+  friend BigInt<Base> operator/(const BigInt<Base> &number1, const BigInt<Base> &number2) {
+    BigInt<Base> number1_aux = number1.Abs();
+    BigInt<Base> number2_aux = number2.Abs();
+
+    // if number2_aux is 0 we can't divide
+    if (number2_aux.IsZero()) {
+      throw std::invalid_argument("Can't divide by 0");
+      return BigInt<Base>("0");
+    }
+
+    int i = -1;
+    while (number1_aux >= number2_aux) {
+      number1_aux = number1_aux - number2_aux;
+      i++;
+    }
+  
+    if (number1.GetSign() != number2.GetSign()) {
+      return -i;
+    }
+
+    return i;
+  }
+
   
  public:
   // Constructores
@@ -198,32 +223,32 @@ class BigInt {
 
   // Incremento y decremento
   // Pre-incremento 
-  // BigInt<Base>& operator++() {
-  //   BigInt<Base> one(1);
-  //   *this = *this + one;
-  //   return *this;
-  // }
+  BigInt<Base>& operator++() {
+    BigInt<Base> one(1);
+    *this = *this + one;
+    return *this;
+  }
   
   // // Post-incremento
-  // BigInt<Base> operator++(int) {
-  //   BigInt<Base> temp = *this;
-  //   ++*this;
-  //   return temp;
-  // }
+  BigInt<Base> operator++(int) {
+    BigInt<Base> temp = *this;
+    ++*this;
+    return temp;
+  }
   
   // Pre-decremento
-  // BigInt<Base>& operator--() {
-  //   BigInt<Base> one(1);
-  //   *this = *this - one;
-  //   return *this;
-  // }
+  BigInt<Base>& operator--() {
+    BigInt<Base> one(1);
+    *this = *this - one;
+    return *this;
+  }
 
   // // Post-decremento
-  // BigInt<Base> operator--(int) {
-  //   BigInt<Base> temp = *this;
-  //   --*this;
-  //   return temp;
-  // } 
+  BigInt<Base> operator--(int) {
+    BigInt<Base> temp = *this;
+    --*this;
+    return temp;
+  } 
 
   // // Operaciones aritméticas
   // friend BigInt<Base> operator+(const BigInt<Base>&, const BigInt<Base>&);
@@ -284,9 +309,9 @@ class BigInt {
   }
 
   BigInt<Base> operator-() const {
-    BigInt<Base> result = *this;
-    result.sign_ = -result.sign_;
-    return result;
+    BigInt<Base> number_aux = *this;
+    number_aux.SetSign(-number_aux.GetSign());
+    return number_aux;
   }
 
   BigInt<Base> operator*(const BigInt<Base>& n) const {
@@ -327,9 +352,46 @@ class BigInt {
 
     return result;
   }
+
   
-  // friend BigInt<Base> operator/(const BigInt<Base>&, const BigInt<Base>&);
-  // BigInt<Base> operator%(const BigInt<Base>&) const;
+  BigInt<Base> operator%(const BigInt<Base>& n) const {
+    // BigInt<Base> number1 = *this;
+    // BigInt<Base> number2 = n;
+    // BigInt<Base> result;
+    // int carry = 0;
+
+    // result.digits_.clear();
+
+    // if (number1.sign_ == number2.sign_) {
+    //   result.sign_ = 1;
+    // } else {
+    //   result.sign_ = -1;
+    // }
+
+    // for (int i = 0; i < number1.digits_.size(); i++) {
+    //   for (int j = 0; j < number2.digits_.size(); j++) {
+    //     int mul = number1.digits_[i] * number2.digits_[j] + carry;
+    //     if (i + j < result.digits_.size()) {
+    //       mul += result.digits_[i + j];
+    //     }
+
+    //     if (i + j >= result.digits_.size()) {
+    //       result.digits_.push_back(mul % Base);
+    //     } else {
+    //       result.digits_[i + j] = mul % Base;
+    //     }
+
+    //     carry = mul / Base;
+    //   }
+
+    //   if (carry != 0) {
+    //     result.digits_.push_back(carry);
+    //     carry = 0;
+    //   }
+    // }
+
+    // return result;
+  }
 
   // // Potencia a^b
   // friend BigInt<Base> pow(const BigInt<Base>&, const BigInt<Base>&);
@@ -337,17 +399,13 @@ class BigInt {
   // Metodos auxiliares
   bool IsZero();
   std::string toString() const;
-  BigInt<Base> fill_zeros(unsigned) const;
   BigInt<Base> Abs() const;
-  void removeLeadingZeros();
 
-  // Getters
-  int GetSign() const { return sign_; }
-  const std::vector<char>& Getdigits_() const { return digits_; }
-
-  // Setters
-  void SetSign(int sign) { sign_ = sign; }
-  void Setdigits_(const std::vector<char>& digits_) { digits_ = digits_; }
+  // Getters y Setters
+  BigInt<Base> SetSign(int);
+  BigInt<Base> SetDigits(std::vector<char>);
+  std::vector<char> GetDigits() const;
+  int GetSign() const;
 
  private:
   int sign_;                  // Signo: 1 o -1
@@ -415,10 +473,10 @@ BigInt<Base>::BigInt(std::string& s) {
     }
   }
 
-  std::cout << "Constructor BigInt(std::string& s): " << std::endl;
-  for (int i = 0; i < digits_.size(); i++) {
-    std::cout << (int)digits_[i] << std::endl;
-  }
+  // std::cout << "Constructor BigInt(std::string& s): " << std::endl;
+  // for (int i = 0; i < digits_.size(); i++) {
+  //   std::cout << (int)digits_[i] << std::endl;
+  // }
 }
 
 /**
@@ -490,31 +548,40 @@ std::string BigInt<Base>::toString() const {
   return str;
 }
 
-template <size_t Base>
-BigInt<Base> BigInt<Base>::fill_zeros(unsigned n) const {
-  std::string number_str = this->toString();
-  number_str.insert(number_str.begin(), n, '0');
-  return BigInt<Base>(number_str);
-}
-
+/**
+ * @brief Devuelve el valor absoluto del BigInt
+ * 
+ * @tparam Base 
+ * @return BigInt<Base> 
+ */
 template <size_t Base>
 BigInt<Base> BigInt<Base>::Abs() const {
-  BigInt<Base> number_aux = *this;
-  number_aux.SetSign(1);
-  return number_aux;
+  BigInt<Base> abs = *this;
+  abs.sign_ = 1;
+  return abs;
+}
+
+// Getters y Setters
+template <size_t Base>
+BigInt<Base> BigInt<Base>::SetSign(int sign) {
+  sign_ = sign;
+  return *this;
 }
 
 template <size_t Base>
-void BigInt<Base>::removeLeadingZeros() {
-  for (size_t i = digits_.size() - 1; i > 0 && digits_[i] == 0; i--) {
-    std::cout << "Entra" << std::endl;
-    digits_.pop_back();
-  }
-
-  if (digits_.size() == 1 && digits_[0] == 0) {
-    sign_ = 0;
-  }
+BigInt<Base> BigInt<Base>::SetDigits(std::vector<char> digits) {
+  digits_ = digits;
+  return *this;
 }
 
+template <size_t Base>
+std::vector<char> BigInt<Base>::GetDigits() const {
+  return digits_;
+}
+
+template <size_t Base>
+int BigInt<Base>::GetSign() const {
+  return sign_;
+}
 
 #endif  // _BIGINT_H_
