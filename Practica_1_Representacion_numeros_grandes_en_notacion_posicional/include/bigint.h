@@ -156,7 +156,6 @@ class BigInt {
 
       result.digits_.push_back(sum % Base);
       carry = sum / Base;
-      
     }
 
     if (carry != 0) {
@@ -229,10 +228,106 @@ class BigInt {
   // // Operaciones aritméticas
   // friend BigInt<Base> operator+(const BigInt<Base>&, const BigInt<Base>&);
   BigInt<Base> operator-(const BigInt<Base>& n) const {
-    
+    BigInt<Base> number1 = *this;
+    BigInt<Base> number2 = n;
+    BigInt<Base> result;
+    int carry = 0;
+
+    result.digits_.clear();
+
+    // -123 - (-456) = 333
+
+    if (number1.sign_ == number2.sign_) {
+      if (number1.sign_ == -1) {
+        number1.sign_ = 1;
+        number2.sign_ = -1;
+        result = number2 + number1;
+        result.sign_ = (number1 > number2) ? 1 : -1;
+        return result;
+      } else {
+        if (number1 < number2) {
+          result = number2 - number1;
+          result.sign_ = -1;
+          return result;
+        }
+      }
+    } else {
+      if (number1.sign_ == -1) {
+        number1.sign_ = 1;
+        result = number1 + number2;
+        result.sign_ = -1;
+        return result;
+      } else {
+        number2.sign_ = 1;
+        result = number1 + number2;
+        return result;
+      }
+    }
+
+    for (int i = 0; i < number1.digits_.size(); i++) {
+      int sub = number1.digits_[i] - carry;
+      if (i < number2.digits_.size()) {
+        sub -= number2.digits_[i];
+      }
+
+      if (sub < 0) {
+        sub += Base;
+        carry = 1;
+      } else {
+        carry = 0;
+      }
+
+      result.digits_.push_back(sub);
+    }
+
+    return result;
   }
-  // BigInt<Base> operator-() const;
-  // BigInt<Base> operator*(const BigInt<Base>&) const;
+
+  BigInt<Base> operator-() const {
+    BigInt<Base> result = *this;
+    result.sign_ = -result.sign_;
+    return result;
+  }
+
+  BigInt<Base> operator*(const BigInt<Base>& n) const {
+    BigInt<Base> number1 = *this;
+    BigInt<Base> number2 = n;
+    BigInt<Base> result;
+    int carry = 0;
+
+    result.digits_.clear();
+
+    if (number1.sign_ == number2.sign_) {
+      result.sign_ = 1;
+    } else {
+      result.sign_ = -1;
+    }
+
+    for (int i = 0; i < number1.digits_.size(); i++) {
+      for (int j = 0; j < number2.digits_.size(); j++) {
+        int mul = number1.digits_[i] * number2.digits_[j] + carry;
+        if (i + j < result.digits_.size()) {
+          mul += result.digits_[i + j];
+        }
+
+        if (i + j >= result.digits_.size()) {
+          result.digits_.push_back(mul % Base);
+        } else {
+          result.digits_[i + j] = mul % Base;
+        }
+
+        carry = mul / Base;
+      }
+
+      if (carry != 0) {
+        result.digits_.push_back(carry);
+        carry = 0;
+      }
+    }
+
+    return result;
+  }
+  
   // friend BigInt<Base> operator/(const BigInt<Base>&, const BigInt<Base>&);
   // BigInt<Base> operator%(const BigInt<Base>&) const;
 
