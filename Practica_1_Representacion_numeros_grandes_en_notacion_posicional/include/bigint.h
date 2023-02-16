@@ -473,42 +473,29 @@ class BigInt {
    * @return BigInt<Base> 
    */
   BigInt<Base> operator%(const BigInt<Base>& n) const {
-    // BigInt<Base> number1 = *this;
-    // BigInt<Base> number2 = n;
-    // BigInt<Base> result;
-    // int carry = 0;
+    BigInt<Base> number_x_aux = this->Abs();
+    BigInt<Base> number_y_aux = n.Abs();
+    BigInt<Base> result("0");
 
-    // result.digits_.clear();
+    // if number_y_aux is 0 we can't divide
+    if (number_y_aux == result) {
+      throw std::invalid_argument("Can't divide by 0");
+    }
 
-    // if (number1.sign_ == number2.sign_) {
-    //   result.sign_ = 1;
-    // } else {
-    //   result.sign_ = -1;
-    // }
+    if (number_x_aux > number_y_aux) {
+      return number_x_aux;
+    }
 
-    // for (int i = 0; i < number1.digits_.size(); i++) {
-    //   for (int j = 0; j < number2.digits_.size(); j++) {
-    //     int mul = number1.digits_[i] * number2.digits_[j] + carry;
-    //     if (i + j < result.digits_.size()) {
-    //       mul += result.digits_[i + j];
-    //     }
+    for (; number_x_aux >= number_y_aux; ++result) {
+      std::cout << "number_x_aux: " << number_x_aux.toString() << std::endl;
+      number_x_aux = number_x_aux - number_y_aux;
+    }
 
-    //     if (i + j >= result.digits_.size()) {
-    //       result.digits_.push_back(mul % Base);
-    //     } else {
-    //       result.digits_[i + j] = mul % Base;
-    //     }
+    if (this->GetSign() == -1) {
+      return -number_x_aux;
+    }
 
-    //     carry = mul / Base;
-    //   }
-
-    //   if (carry != 0) {
-    //     result.digits_.push_back(carry);
-    //     carry = 0;
-    //   }
-    // }
-
-    // return result;
+    return number_x_aux;
   }
 
   // // Potencia a^b
