@@ -128,10 +128,10 @@ int main(int argc, char* argv[]) {
   std::cout << "num12 / num4: " << num12 / num4 << std::endl;
   std::cout << "num12 / num5: " << num12 / num5 << std::endl;
   std::cout << "num12 / num0: " << num12 / num0 << std::endl;
-  std::cout << "((num8 % num2) == num_0): " << ((num8 % num2) == num0) << std::endl;
-  std::cout << "(((-num8) % num2) == num_0): " << (((-num8) % num2) == num0) << std::endl;
-  std::cout << "((num8 % (-num2)) == num_0): " << ((num8 % (-num2)) == num0) << std::endl;
-  std::cout << "((num8 % (-num2)) == num_0): " << (((-num8) % (-num2)) == num0) << std::endl;
+  std::cout << "((num8 % num2) == num0): " << num8 % num2 << " " << ((num8 % num2) == num0) << std::endl;
+  std::cout << "(((-num8) % num2) == num0): " << (-num8) % num2 << " " << (((-num8) % num2) == num0) << std::endl;
+  std::cout << "((num8 % (-num2)) == num0): " << (num8 % (-num2)) << " "  << ((num8 % (-num2)) == num0) << std::endl;
+  std::cout << "((num8 % (-num2)) == num0): " << ((-num8) % (-num2)) << " "  << (((-num8) % (-num2)) == num0) << std::endl;
   // Cambiando el orden de los operandos
   std::cout << "((num2 % num8) == num2): " << ((num2 % num8) == num2) << std::endl;
   std::cout << "(((-num2) % num8) == num_neg2): " << (((-num2) % num8) == num_neg2) << std::endl;

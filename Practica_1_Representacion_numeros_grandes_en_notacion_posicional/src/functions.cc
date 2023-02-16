@@ -31,6 +31,12 @@ Functions::Functions() {}
 int Functions::getBase() const { return base_; }
 
 /**
+ * @brief Devuelve las expresiones leídas del archivo de entrada
+ * @return Mapa con las expresiones
+ */
+std::map<std::string, std::string> Functions::getLabels() const { return labels_; }
+
+/**
  * @brief Comprueba si el número de parámetros es correcto
  *
  * @param argc Número de parámetros

@@ -477,17 +477,13 @@ class BigInt {
     BigInt<Base> number_y_aux = n.Abs();
     BigInt<Base> result("0");
 
-    // if number_y_aux is 0 we can't divide
+    // Si el numerto number_y_aux es 0, lanzamos una excepción
     if (number_y_aux == result) {
       throw std::invalid_argument("Can't divide by 0");
     }
 
-    if (number_x_aux > number_y_aux) {
-      return number_x_aux;
-    }
-
-    for (; number_x_aux >= number_y_aux; ++result) {
-      std::cout << "number_x_aux: " << number_x_aux.toString() << std::endl;
+    for (; number_y_aux <= number_x_aux; ++result) {
+      // std::cout << "number_x_aux: " << number_x_aux.toString() << std::endl;
       number_x_aux = number_x_aux - number_y_aux;
     }
 

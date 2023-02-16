@@ -39,6 +39,7 @@ class Functions {
   Functions();
 
   int getBase() const;
+  std::map<std::string, std::string> getLabels() const;
 
   void CheckParameters(int, char**);
   void ReadFile(const std::string& filename);

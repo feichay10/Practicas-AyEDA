@@ -32,10 +32,10 @@
 int main(int argc, char* argv[]) {
   Functions functions;
   Functions check;
-  // Calculator<BigInt<2>> calculator2;
-  // Calculator<BigInt<8>> calculator8;
-  // Calculator<BigInt<10>> calculator10;
-  // Calculator<BigInt<16>> calculator16;
+  Calculator<BigInt<2>> calculator2;
+  Calculator<BigInt<8>> calculator8;
+  Calculator<BigInt<10>> calculator10;
+  Calculator<BigInt<16>> calculator16;
 
   long number = 124312121;
   std::string aux_string = "ADF124312121";
@@ -51,6 +51,7 @@ int main(int argc, char* argv[]) {
   switch (functions.getBase()) {
     case 2:
       std::cout << "Base 2" << std::endl;
+      
       break;
     case 8:
       std::cout << "Base 8" << std::endl;
