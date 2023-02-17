@@ -22,8 +22,6 @@
 #include "../include/bigint.h"
 #include "../include/calculator.h"
 
-void ReadFile(std::string&);
-
 /**
  * @brief Funcion principal del programa
  *
@@ -65,24 +63,28 @@ int main(int argc, char* argv[]) {
       std::cout << "Base 2" << std::endl;
       calculator2.SetExpression(expressions);
       calculator2.ProcessExpression();
+      std::cout << calculator2;
       file_out << calculator2;
       break;
     case 8:
       std::cout << "Base 8" << std::endl;
       calculator8.SetExpression(expressions);
       calculator8.ProcessExpression();
+      std::cout << calculator8;
       file_out << calculator8;
       break;
     case 10:
       std::cout << "Base 10" << std::endl;
       calculator10.SetExpression(expressions);
       calculator10.ProcessExpression();
+      std::cout << calculator10;
       file_out << calculator10;
       break;
     case 16:
       std::cout << "Base 16" << std::endl;
       calculator16.SetExpression(expressions);
       calculator16.ProcessExpression();
+      std::cout << calculator16;
       file_out << calculator16;
       break;
     default:

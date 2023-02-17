@@ -37,8 +37,8 @@ class BigInt {
    * @param number_big 
    * @return std::ostream& 
    */
-  friend std::ostream& operator<<(std::ostream& os, const BigInt<Base>& number_big) {
-    std::string number_str = number_big.toString();
+  friend std::ostream& operator<<(std::ostream& os, const BigInt<Base>& number) {
+    std::string number_str = number.toString();
     os << number_str;
     return os;
   }
@@ -50,10 +50,10 @@ class BigInt {
    * @param number_big 
    * @return std::istream& 
    */
-  friend std::istream& operator>>(std::istream& is, BigInt<Base>& number_big) {
+  friend std::istream& operator>>(std::istream& is, BigInt<Base>& number) {
     std::string str;
     is >> str;
-    number_big = BigInt<Base>(str);
+    number = BigInt<Base>(str);
     return is;
   }
 
@@ -240,7 +240,13 @@ class BigInt {
     return i;
   }
 
-  // Potencia a^b
+  /**
+   * @brief Operador pow ^
+   * 
+   * @param a 
+   * @param b 
+   * @return BigInt<Base> 
+   */
   friend BigInt<Base> pow(const BigInt<Base>& a, const BigInt<Base>& b) {
     BigInt<Base> number1 = a.Abs();
     BigInt<Base> number2 = b.Abs();
@@ -276,7 +282,6 @@ class BigInt {
   BigInt(std::string&);
   BigInt(const char*);
   BigInt(const BigInt<Base>&);  // Constructor de copia
-  BigInt(const std::vector<char> &, const int & );
 
   // Asignación
   /**
@@ -524,6 +529,12 @@ class BigInt {
     return number1_aux;
   }
 
+  /**
+   * @brief Operador de ^ (potencia)
+   * 
+   * @param n 
+   * @return BigInt<Base> 
+   */
   BigInt<Base> operator^(const BigInt<Base>& n) const {
     return pow(*this, n);
   }
@@ -568,13 +579,6 @@ BigInt<Base>::BigInt(long n) {
     digits_.push_back(n % Base);
     n /= Base;
   }
-
-  // std::cout << "digits_.size(): " << digits_.size() << std::endl;
-
-  // std::cout << "Constructor BigInt(long n): " << std::endl;
-  // for (int i = 0; i < digits_.size(); i++) {
-  //   std::cout << (int)digits_[i] << std::endl;
-  // }
 }
 
 /**
@@ -605,11 +609,6 @@ BigInt<Base>::BigInt(std::string& s) {
       digits_.push_back(big_number[i] - 'A' + 10);
     }
   }
-
-  // std::cout << "Constructor BigInt(std::string& s): " << std::endl;
-  // for (int i = 0; i < digits_.size(); i++) {
-  //   std::cout << (int)digits_[i] << std::endl;
-  // }
 }
 
 /**
@@ -622,11 +621,6 @@ template <size_t Base>
 BigInt<Base>::BigInt(const char* s) {
   std::string str(s);
   *this = BigInt(str);
-
-  // std::cout << "Constructor BigInt(const char* s): " << std::endl;
-  // for (int i = 0; i < digits_.size(); i++) {
-  //   std::cout << (int)digits_[i] << std::endl;
-  // }
 }
 
 /**
@@ -639,18 +633,6 @@ template <size_t Base>
 BigInt<Base>::BigInt(const BigInt<Base>& n) {
   sign_ = n.sign_;
   digits_ = n.digits_;
-}
-
-template <size_t Base>
-BigInt<Base>::BigInt(const std::vector<char>& digits_aux, const int &sign_aux) {
-  char max_digit = static_cast<char>(Base);
-  for (size_t i = 0; i < digits_aux.size(); i++) {
-    if (digits_aux[i] >= max_digit) {
-      throw std::invalid_argument("Constructor(vector): Invalid digit");
-    }
-  }
-  digits_ = digits_aux;
-  sign_ = sign_aux;
 }
 
 // Accesor
@@ -732,6 +714,13 @@ BigInt<Base> BigInt<Base>::Abs() const {
   return abs;
 }
 
+/**
+ * @brief Añades ceros a la izquierda del BigInt hasta que tenga el número de ceros indicado
+ * 
+ * @tparam Base 
+ * @param number_zero 
+ * @return BigInt<Base> 
+ */
 template <size_t Base>
 BigInt<Base> BigInt<Base>::fill_zeros(unsigned number_zero) const {
   std::string number_str = this->toString();
@@ -740,23 +729,49 @@ BigInt<Base> BigInt<Base>::fill_zeros(unsigned number_zero) const {
 }
 
 // Getters y Setters
+/**
+ * @brief Establece el signo del BigInt
+ * 
+ * @tparam Base 
+ * @param sign 
+ * @return BigInt<Base> 
+ */
 template <size_t Base>
 BigInt<Base> BigInt<Base>::SetSign(int sign) {
   sign_ = sign;
   return *this;
 }
 
+/**
+ * @brief Establece los dígitos del BigInt
+ * 
+ * @tparam Base 
+ * @param digits 
+ * @return BigInt<Base> 
+ */
 template <size_t Base>
 BigInt<Base> BigInt<Base>::SetDigits(std::vector<char> digits) {
   digits_ = digits;
   return *this;
 }
 
+/**
+ * @brief Devuelve los dígitos del BigInt
+ * 
+ * @tparam Base 
+ * @return std::vector<char> 
+ */
 template <size_t Base>
 std::vector<char> BigInt<Base>::GetDigits() const {
   return digits_;
 }
 
+/**
+ * @brief Devuelve el signo del BigInt
+ * 
+ * @tparam Base 
+ * @return int 
+ */
 template <size_t Base>
 int BigInt<Base>::GetSign() const {
   return sign_;

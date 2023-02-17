@@ -8,7 +8,7 @@
  * Práctica 1: Representación de números grandes en notación posicional
  * @file calculator.h
  * @author Cheuk Kelly Ng Pante (alu0101364544@ull.edu.es)
- * @brief
+ * @brief Clase que representa una calculadora de expresiones
  * @version 0.1
  * @date 2023-02-17
  *
@@ -33,24 +33,28 @@
 
 template <class T>
 class Calculator {
-
-  template <class U>
-  friend std::ostream& operator<<(std::ostream& os, const Calculator<U>& c) {
-    for (auto& variable : c.variables_) {
-      os << variable.first << " = " << variable.second << std::endl;
-    }
-    return os;
-  }
-
  public:
+  /**
+   * @brief Constructor por defecto
+   * 
+   */
   Calculator() {
     InitializeOperations();
   }
 
+  /**
+   * @brief Conjunto de expresiones a calcular
+   * 
+   * @param expression 
+   */
   void SetExpression(const std::vector<std::vector<std::string>>& expression) {
     this->expressions_ = expression;
   }
 
+  /**
+   * @brief Calcula el resultado de una expresión
+   * 
+   */
   void InitializeOperations() {
     // Operaciones
     operations_["+"] = [](T a, T b) { return a + b; };
@@ -73,6 +77,12 @@ class Calculator {
     unary_operations_["-"] = [](T a) { return -a; };
   }
   
+  /**
+   * @brief Calcula el resultado de una expresión con notación polaca inversa
+   * 
+   * @param expression 
+   * @return T 
+   */
   T Calculate(std::vector<std::string> expression) {
     std::stack<T> stack;
     for (auto& token : expression) {
@@ -93,6 +103,10 @@ class Calculator {
     return stack.top();
   }
 
+  /**
+   * @brief Calcula el resultado de una expresión
+   * 
+   */
   void ProcessExpression() {
     for (auto& line : expressions_) {
       if (line.size() == 3 && line[1] == "=") {
@@ -120,14 +134,30 @@ class Calculator {
     }
   }
 
+  /**
+   * @brief Impresión de las variables y sus valores
+   * 
+   * @tparam U 
+   * @param os 
+   * @param c 
+   * @return std::ostream& 
+   */
+  template <class U>
+  friend std::ostream& operator<<(std::ostream& os, const Calculator<U>& c);
+
  private:
   std::vector<std::vector<std::string>> expressions_;
-  std::stack<T> stack_;
-  std::string input_;
-  std::string output_;
   std::map<std::string, T> variables_;
   std::map<std::string, std::function<T(T, T)>> operations_;
   std::map<std::string, std::function<T(T)>> unary_operations_;
 };
+
+template <class U>
+std::ostream& operator<<(std::ostream& os, const Calculator<U>& c) {
+  for (auto& variable : c.variables_) {
+    os << variable.first << " = " << variable.second << std::endl;
+  }
+  return os;
+}
 
 #endif  // CALCULATOR_H_
