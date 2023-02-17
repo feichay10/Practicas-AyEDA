@@ -134,14 +134,6 @@ class Calculator {
     }
   }
 
-  /**
-   * @brief Impresión de las variables y sus valores
-   * 
-   * @tparam U 
-   * @param os 
-   * @param c 
-   * @return std::ostream& 
-   */
   template <class U>
   friend std::ostream& operator<<(std::ostream& os, const Calculator<U>& c);
 
@@ -152,6 +144,14 @@ class Calculator {
   std::map<std::string, std::function<T(T)>> unary_operations_;
 };
 
+/**
+ * @brief Impresión de las variables y sus valores
+ * 
+ * @tparam U 
+ * @param os 
+ * @param c 
+ * @return std::ostream& 
+ */
 template <class U>
 std::ostream& operator<<(std::ostream& os, const Calculator<U>& c) {
   for (auto& variable : c.variables_) {
