@@ -108,12 +108,17 @@ int main(int argc, char* argv[]) {
   // std::cout << "num123 <= num123_2: " << std::boolalpha << (num123 <= num123_2) << std::endl;
   // std::cout << "num123 <= num456: " << std::boolalpha << (num123 <= num456) << std::endl;
   
+  BigInt<10> num1(1);
   // // Prueba de Incremento y decremento
-  std::cout << "num12++: " << num12++ << std::endl;
-  std::cout << "num0--: " << num0-- << std::endl;
+  // std::cout << "num12++: " << num12++ << std::endl;
+  // std::cout << "num12 + num1: " << num12 + num1 << std::endl;
+  std::cout << "num12 + num2: " << num12 + num2 << std::endl;
+  // std::cout << "num0--: " << num0-- << std::endl;
 
   //Prueba de los operadores aritmeticos
   // 579
+  // BigInt<10> num1234981230("1234981230");
+  // std::cout << "num1234981230 + num2: " << num1234981230 + num2 << std::endl;
   // std::cout << "num123 + num456: " << num123 + num456 << std::endl;
   // BigInt<10> num12(12);
   // std::cout << "num12 + num12: " << num12 + num12 << std::endl;
@@ -124,19 +129,19 @@ int main(int argc, char* argv[]) {
   // std::cout << "num123 * num456: " << num123 * num456 << std::endl;
 	// std::cout << "num_neg123 * num_neg456: " << num_neg123 * num_neg456 << std::endl;
   // std::cout << "num123 * num_neg456: " << num123 * num_neg456 << std::endl;
-  std::cout << "num20 / num5: " << std::boolalpha << ((num20 / num5) == num4)<< std::endl;
-  std::cout << "num12 / num4: " << num12 / num4 << std::endl;
-  std::cout << "num12 / num5: " << num12 / num5 << std::endl;
-  std::cout << "num12 / num0: " << num12 / num0 << std::endl;
-  std::cout << "((num8 % num2) == num0): " << num8 % num2 << " " << ((num8 % num2) == num0) << std::endl;
-  std::cout << "(((-num8) % num2) == num0): " << (-num8) % num2 << " " << (((-num8) % num2) == num0) << std::endl;
-  std::cout << "((num8 % (-num2)) == num0): " << (num8 % (-num2)) << " "  << ((num8 % (-num2)) == num0) << std::endl;
-  std::cout << "((num8 % (-num2)) == num0): " << ((-num8) % (-num2)) << " "  << (((-num8) % (-num2)) == num0) << std::endl;
-  // Cambiando el orden de los operandos
-  std::cout << "((num2 % num8) == num2): " << ((num2 % num8) == num2) << std::endl;
-  std::cout << "(((-num2) % num8) == num_neg2): " << (((-num2) % num8) == num_neg2) << std::endl;
-  std::cout << "((num2 % (-num8)) == num2): " << ((num2 % (-num8)) == num2) << std::endl;
-  std::cout << "(((-num2) % (-num8)) == num_neg2): " << (((-num2) % (-num8)) == num_neg2) << std::endl;
+  // std::cout << "num20 / num5: " << std::boolalpha << ((num20 / num5) == num4)<< std::endl;
+  // std::cout << "num12 / num4: " << num12 / num4 << std::endl;
+  // std::cout << "num12 / num5: " << num12 / num5 << std::endl;
+  // std::cout << "num12 / num0: " << num12 / num0 << std::endl;
+  // std::cout << "((num8 % num2) == num0): " << num8 % num2 << " " << ((num8 % num2) == num0) << std::endl;
+  // std::cout << "(((-num8) % num2) == num0): " << (-num8) % num2 << " " << (((-num8) % num2) == num0) << std::endl;
+  // std::cout << "((num8 % (-num2)) == num0): " << (num8 % (-num2)) << " "  << ((num8 % (-num2)) == num0) << std::endl;
+  // std::cout << "((num8 % (-num2)) == num0): " << ((-num8) % (-num2)) << " "  << (((-num8) % (-num2)) == num0) << std::endl;
+  // // Cambiando el orden de los operandos
+  // std::cout << "((num2 % num8) == num2): " << ((num2 % num8) == num2) << std::endl;
+  // std::cout << "(((-num2) % num8) == num_neg2): " << (((-num2) % num8) == num_neg2) << std::endl;
+  // std::cout << "((num2 % (-num8)) == num2): " << ((num2 % (-num8)) == num2) << std::endl;
+  // std::cout << "(((-num2) % (-num8)) == num_neg2): " << (((-num2) % (-num8)) == num_neg2) << std::endl;
 
 
   // std::cout << "==============================================================================" << std::endl;

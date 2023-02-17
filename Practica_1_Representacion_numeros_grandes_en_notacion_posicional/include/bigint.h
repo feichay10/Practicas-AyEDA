@@ -158,31 +158,27 @@ class BigInt {
    * @return BigInt<Base> 
    */
   friend BigInt<Base> operator+(const BigInt<Base> &a, const BigInt<Base> &b) {
-    // 124321
-    // 212321
-    //-------
-    // 336642
-
     // recorrer los numeros de derecha a izquierda y si el resultado es =< <base>, entonces:
     // si resultado >= base hacer MOD de la base 2(resultado) % <10>, lo guarda en esa posicion
     // si si el resultado se pasa de la base 
     // 9 + 3 = 12 pos ahora con 2, y a la siguiente pos le suma el carry, en este caso 1
-    
     BigInt<Base> number1 = a;
     BigInt<Base> number2 = b;
     BigInt<Base> result;
     int carry = 0;
+    std::vector<char> digits_sum;
 
     result.digits_.clear();
 
+    // Si los dos numeros son del mismo signo
     if (number1.sign_ == number2.sign_) {
       result.sign_ = number1.sign_;
-    } else {
-      if (number1.sign_ == -1) {
+    } else {                      // Si los dos numeros son de signos diferentes
+      if (number1.sign_ == -1) {  // Si el primer numero es negativo
         number1.sign_ = 1;
         result = number2 - number1;
         number1.sign_ = -1;
-      } else {
+      } else {                    // Si el segundo numero es negativo
         number2.sign_ = 1;
         result = number1 - number2;
         number2.sign_ = -1;
@@ -190,23 +186,40 @@ class BigInt {
       return result;
     }
 
-    for (int i = 0; i < number1.digits_.size() || i < number2.digits_.size(); i++) {
-      int sum = carry;
-      if (i < number1.digits_.size()) {
-        sum += number1.digits_[i];
+    // Si el primer numero es mayor que el segundo
+    if (number1 > number2) {
+      // Añadir ceros al principio del numero mas pequeño
+      for (int i = 0; i < number1.digits_.size() - number2.digits_.size(); i++) {
+        number2.digits_.insert(number2.digits_.end(), 0);
       }
-
-      if (i < number2.digits_.size()) {
-        sum += number2.digits_[i];
+    } else {                      // Si el segundo numero es mayor que el primero
+      // Añadir ceros al principio del numero mas pequeño
+      for (int i = 0; i < number2.digits_.size() - number1.digits_.size(); i++) {
+        number1.digits_.insert(number2.digits_.end(), 0);
       }
+    }
 
-      result.digits_.push_back(sum % Base);
+    std::cout << "number1: " << number1 << std::endl;
+    std::cout << "number2: " << number2 << std::endl;
+
+    // Hacer la suma de los digitos
+    for (int i = number1.digits_.size() - 1; i >= 0; i--) {
+      int sum = number1.digits_[i] + number2.digits_[i] + carry;
       carry = sum / Base;
+      sum = sum % Base;
+
+      digits_sum.push_back(sum);
     }
 
-    if (carry != 0) {
-      result.digits_.push_back(carry);
+    if (carry == 1) {
+      digits_sum.push_back(carry);
     }
+
+    // Invertir el vector
+    std::reverse(digits_sum.begin(), digits_sum.end());
+
+    // Guardar los digitos en el resultado
+    result.digits_ = digits_sum;
 
     return result;
   }
@@ -473,25 +486,25 @@ class BigInt {
    * @return BigInt<Base> 
    */
   BigInt<Base> operator%(const BigInt<Base>& n) const {
-    BigInt<Base> number_x_aux = this->Abs();
-    BigInt<Base> number_y_aux = n.Abs();
+    BigInt<Base> number1_aux = this->Abs();
+    BigInt<Base> number2_aux = n.Abs();
     BigInt<Base> result("0");
 
-    // Si el numerto number_y_aux es 0, lanzamos una excepción
-    if (number_y_aux == result) {
+    // Si el numerto number2_aux es 0, lanzamos una excepción
+    if (number2_aux == result) {
       throw std::invalid_argument("Can't divide by 0");
     }
 
-    for (; number_y_aux <= number_x_aux; ++result) {
-      // std::cout << "number_x_aux: " << number_x_aux.toString() << std::endl;
-      number_x_aux = number_x_aux - number_y_aux;
+    for (; number2_aux <= number1_aux; ++result) {
+      // std::cout << "number1_aux: " << number1_aux.toString() << std::endl;
+      number1_aux = number1_aux - number2_aux;
     }
 
     if (this->GetSign() == -1) {
-      return -number_x_aux;
+      return -number1_aux;
     }
 
-    return number_x_aux;
+    return number1_aux;
   }
 
   // // Potencia a^b
@@ -501,6 +514,7 @@ class BigInt {
   bool IsZero();
   std::string toString() const;
   BigInt<Base> Abs() const;
+  BigInt<Base> fill_zeros(unsigned) const ;
 
   // Getters y Setters
   BigInt<Base> SetSign(int);
@@ -686,6 +700,13 @@ BigInt<Base> BigInt<Base>::Abs() const {
   BigInt<Base> abs = *this;
   abs.sign_ = 1;
   return abs;
+}
+
+template <size_t Base>
+BigInt<Base> BigInt<Base>::fill_zeros(unsigned number_zero) const {
+  std::string number_str = this->toString();
+  number_str.insert(number_str.begin(), number_zero, '0');
+  return BigInt<Base>(number_str);
 }
 
 // Getters y Setters
