@@ -250,6 +250,36 @@ class BigInt {
 
     return i;
   }
+
+  // Potencia a^b
+  friend BigInt<Base> pow(const BigInt<Base>& a, const BigInt<Base>& b) {
+    BigInt<Base> number1 = a.Abs();
+    BigInt<Base> number2 = b.Abs();
+    BigInt<Base> result("1");
+    BigInt<Base> i("0");
+    BigInt<Base> zero("0");
+    BigInt<Base> two("2");
+
+    if (number2 == i) {
+      return result;
+    }
+
+    if (number2.GetSign() == -1) {
+      throw std::invalid_argument("Can't pow by negative number");
+    }
+
+    for (i = zero; i < number2; ++i) {
+      result = result * number1;
+    }
+
+    if (a.GetSign() == -1) {
+      if (number1 % two == zero) {
+        return result;
+      }
+      return -result;
+    }
+    return result;
+  }
   
  public:
   // Constructores
@@ -504,8 +534,9 @@ class BigInt {
     return number1_aux;
   }
 
-  // // Potencia a^b
-  // friend BigInt<Base> pow(const BigInt<Base>&, const BigInt<Base>&);
+  BigInt<Base> operator^(const BigInt<Base>& n) const {
+    return pow(*this, n);
+  }
 
   // Metodos auxiliares
   bool IsZero();
