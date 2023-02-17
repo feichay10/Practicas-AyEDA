@@ -84,20 +84,20 @@ class Calculator {
    * @return T 
    */
   T Calculate(std::vector<std::string> expression) {
-    std::stack<T> stack;
-    for (auto& token : expression) {
-      if (operations_.find(token) != operations_.end()) {
-        T a = stack.top();
-        stack.pop();
-        T b = stack.top();
-        stack.pop();
-        stack.push(operations_[token](b, a));
-      } else if (unary_operations_.find(token) != unary_operations_.end()) {
-        T a = stack.top();
-        stack.pop();
-        stack.push(unary_operations_[token](a));
-      } else {
-        stack.push(variables_[token]);
+    std::stack<T> stack;                                                      // Pila para almacenar los operandos
+    for (auto& token : expression) {                                          // Se recorre cada token de la expresión  
+      if (operations_.find(token) != operations_.end()) {                     // Se comprueba si el token es una operación
+        T a = stack.top();                                                    // Se obtiene el primer operando de la pila
+        stack.pop();                                                          // Se elimina el primer operando de la pila
+        T b = stack.top();                                                    // Se obtiene el segundo operando de la pila  
+        stack.pop();                                                          // Se elimina el segundo operando de la pila
+        stack.push(operations_[token](b, a));                                 // Se realiza la operación y se almacena en la pila
+      } else if (unary_operations_.find(token) != unary_operations_.end()) {  // Se comprueba si el token es una operación unaria
+        T a = stack.top();                                                    // Se obtiene el primer operando de la pila
+        stack.pop();                                                          // Se elimina el primer operando de la pila
+        stack.push(unary_operations_[token](a));                              // Se realiza la operación y se almacena en la pila
+      } else {                                                                // Se comprueba si el token es una variable
+        stack.push(variables_[token]);                                        // Se almacena el valor de la variable en la pila
       }
     }
     return stack.top();
@@ -108,23 +108,23 @@ class Calculator {
    * 
    */
   void ProcessExpression() {
-    for (auto& line : expressions_) {
-      if (line.size() == 3 && line[1] == "=") {
-        if (variables_.count(line[2]) == 1) {
-          variables_[line[0]] = variables_[line[2]];
+    for (auto& line : expressions_) {                   // Se recorre cada línea de la expresión
+      if (line.size() == 3 && line[1] == "=") {         // Se comprueba que la línea tenga 3 elementos y que el segundo sea un igual
+        if (variables_.count(line[2]) == 1) {           // Se comprueba si la variable existe en el mapa de variables
+          variables_[line[0]] = variables_[line[2]];    // Se asigna el valor de la variable a la variable de la izquierda
         } else {
-          variables_[line[0]] = T(line[2]);
+          variables_[line[0]] = T(line[2]);             // Se asigna el valor de la variable a la variable de la izquierda
         }
-      } else if (line.size() > 3) {
-        if (line[1] != "=") {
-          std::cout << "Error in line: ";
-          for (auto& token : line) {
+      } else if (line.size() > 3) {                     // Se comprueba que la línea tenga más de 3 elementos
+        if (line[1] != "=") {     
+          std::cout << "Error in line: ";               
+          for (auto& token : line) {   
             std::cout << token << " ";
           }
-          continue;
+          continue;                                     
         }
-        std::vector<std::string> expressions_line(line.begin() + 2, line.end());
-        variables_[line[0]] = Calculate(expressions_line);
+        std::vector<std::string> expressions_line(line.begin() + 2, line.end());    // Vector de expresiones a calcular con notación polaca inversa 
+        variables_[line[0]] = Calculate(expressions_line);                          // Se calcula el resultado de la expresión
       } else {
         std::cout << "Error in line: ";
         for (auto& token : line) {
