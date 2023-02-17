@@ -22,6 +22,11 @@
 #include "../include/bigint.h"
 #include "../include/calculator.h"
 
+const std::string HELP1 = "--help";
+const std::string HELP2 = "-h";
+
+void CheckParameters(int, char**);
+
 /**
  * @brief Funcion principal del programa
  *
@@ -38,6 +43,8 @@ int main(int argc, char* argv[]) {
   std::ofstream file_out(argv[2]);
   std::vector<std::vector<std::string>> expressions;
   std::string line;
+
+  CheckParameters(argc, argv);
 
   if (file_in.is_open()) {
     while (getline(file_in, line)) {
@@ -93,4 +100,21 @@ int main(int argc, char* argv[]) {
   }
 
   return 0;
+}
+
+void CheckParameters(int argc, char* argv[]) {
+  if (argc == 3) {
+    std::string parameter = argv[1];
+    if (parameter == HELP1 || parameter == HELP2) {
+      std::cout << "Uso: " << argv[0] << " <input file> || -h || --help" << std::endl;
+      std::cout << "OPCION:" << std::endl;
+      std::cout << "  -h, --help\t\tAyuda del programa." << std::endl;
+      std::cout << "  <input file>\t\tFichero de entrada con los datos de entrada." << std::endl;
+      exit(EXIT_SUCCESS);
+    }
+  } else {
+    std::cout << "Error: El número de parámetros es incorrecto." << std::endl;
+    std::cout << "Use -h o --help para más información." << std::endl;
+    exit(EXIT_FAILURE);
+  }
 }
