@@ -199,9 +199,6 @@ class BigInt {
       }
     }
 
-    std::cout << "number1: " << number1 << std::endl;
-    std::cout << "number2: " << number2 << std::endl;
-
     // Hacer la suma de los digitos
     for (int i = number1.digits_.size() - 1; i >= 0; i--) {
       int sum = number1.digits_[i] + number2.digits_[i] + carry;
@@ -514,7 +511,6 @@ class BigInt {
   bool IsZero();
   std::string toString() const;
   BigInt<Base> Abs() const;
-  BigInt<Base> fill_zeros(unsigned) const ;
 
   // Getters y Setters
   BigInt<Base> SetSign(int);
@@ -700,13 +696,6 @@ BigInt<Base> BigInt<Base>::Abs() const {
   BigInt<Base> abs = *this;
   abs.sign_ = 1;
   return abs;
-}
-
-template <size_t Base>
-BigInt<Base> BigInt<Base>::fill_zeros(unsigned number_zero) const {
-  std::string number_str = this->toString();
-  number_str.insert(number_str.begin(), number_zero, '0');
-  return BigInt<Base>(number_str);
 }
 
 // Getters y Setters
