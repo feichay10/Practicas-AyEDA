@@ -86,7 +86,12 @@ int main(int argc, char* argv[]) {
   BigInt<10> num8(8);
   BigInt<10> num2(2);
   BigInt<10> num_neg2(-2);
-    BigInt<10> num1(1);
+  BigInt<10> num1(1);
+
+  BigInt<10> num442142117615672(442142117615672);
+  BigInt<10> num46651367647546(46651367647546);
+
+  // std::cout << "sum442142117615672 + num46651367647546: " << num442142117615672 + num46651367647546 << std::endl;
 
   // // Prueba de salida por pantalla
   // std::cout << "num123: " << num123 << std::endl;
@@ -110,10 +115,10 @@ int main(int argc, char* argv[]) {
   // std::cout << "num123 <= num456: " << std::boolalpha << (num123 <= num456) << std::endl;
 
   // // Prueba de Incremento y decremento
-  // std::cout << "num12++: " << num12++ << std::endl;
-  // std::cout << "num12 + num12: " << num12 + num12 << std::endl;
-  // std::cout << "num12 + num2: " << num12 + num2 << std::endl;
-  // std::cout << "num0--: " << num0-- << std::endl;
+  std::cout << "num12++: " << num12++ << std::endl;
+  std::cout << "num12 + num12: " << num12 + num12 << std::endl;
+  std::cout << "num12 + num2: " << num12 + num2 << std::endl;
+  std::cout << "num0--: " << num0-- << std::endl;
 
   //Prueba de los operadores aritmeticos
   // 579
@@ -194,3 +199,52 @@ int main(int argc, char* argv[]) {
 
   return 0;
 }
+
+// int a_size = a.digits_.size();
+//     int b_size = b.digits_.size();
+//     BigInt<Base> result;
+
+//     result.GetDigits().clear();
+
+//     while (result.digits_.size() < b_size) {
+//       result.digits_.push_back(0);
+//       ++a_size;
+//     }
+
+//     int i, bit_result, carry = 0;
+//     if (a.sign_ == b.sign_) {
+//       for (i = 0; i < a_size; ++i) {
+//         bit_result = a.digits_[i] + carry;
+//         if (i < b_size) {
+//           bit_result += b.digits_[i];
+//         }
+//         carry = bit_result / Base;
+//         result.digits_[i] = bit_result % Base;
+//       }
+//       if (carry != 0) {
+//         result.digits_.push_back(carry);
+//       }
+//     } else {
+//       for (i = 0; i < a_size; ++i) {
+//         bit_result = a.digits_[i] - carry;
+//         carry = 0;
+//         if (i < b_size) {
+//           bit_result -= b.digits_[i];
+//         }
+//         if (bit_result < 0) {
+//           carry++;
+//           bit_result = Base + bit_result;
+//         }
+//         result.digits_[i] = bit_result;
+//       }
+
+//       if (carry != 0) {
+//         result.digits_.push_back(carry);
+//       }
+
+//       while (result.digits_.back() == 0 && result.digits_.size() > 1) {
+//         result.digits_.resize(result.digits_.size() - 1);
+//       }
+//     }
+
+//     return result;

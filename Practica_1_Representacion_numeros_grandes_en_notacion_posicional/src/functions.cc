@@ -34,7 +34,7 @@ int Functions::getBase() const { return base_; }
  * @brief Devuelve las expresiones leídas del archivo de entrada
  * @return Mapa con las expresiones
  */
-std::map<std::string, std::string> Functions::getLabels() const { return labels_; }
+std::map<std::string, std::string> Functions::getExpressions() const { return expressions_; }
 
 /**
  * @brief Comprueba si el número de parámetros es correcto
@@ -82,22 +82,14 @@ void Functions::ReadFile(const std::string& filename) {
     std::string label = line.substr(0, pos);
     std::string value = line.substr(pos + 2);
 
-    if (label[0] == 'N') {
-      labels_.insert(std::pair<std::string, std::string>(label, value));
-    } else if (label[0] == 'E'){
-      expressions_.insert(std::pair<std::string, std::string>(label, value));
-    }
+    expressions_.insert(std::pair<std::string, std::string>(label, value));
   }
 }
 
 void Functions::WriteOnScreen() {
   std::cout << "Base: " << base_ << std::endl;
   std::cout << "Etiquetas: " << std::endl;
-  for (auto& label : labels_) {
-    std::cout << "\t" << label.first << " = " << label.second << std::endl;
-  }
-  std::cout << "Expresiones: " << std::endl;
   for (auto& expression : expressions_) {
-    std::cout << "\t" << expression.first << " = " << expression.second << std::endl;
+    std::cout << expression.first << " = " << expression.second << std::endl;
   }
 }

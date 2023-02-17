@@ -26,6 +26,7 @@
 #include <map>
 #include <string>
 #include <vector>
+#include <sstream>
 
 const std::string HELP1 = "--help";
 const std::string HELP2 = "-h";
@@ -39,7 +40,7 @@ class Functions {
   Functions();
 
   int getBase() const;
-  std::map<std::string, std::string> getLabels() const;
+  std::map<std::string, std::string> getExpressions() const;
 
   void CheckParameters(int, char**);
   void ReadFile(const std::string& filename);
@@ -48,7 +49,6 @@ class Functions {
 
  private:
   int base_;
-  std::map<std::string, std::string> labels_;
   std::map<std::string, std::string> expressions_;
 };
 

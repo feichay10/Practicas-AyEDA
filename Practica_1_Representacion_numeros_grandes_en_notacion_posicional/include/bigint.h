@@ -158,27 +158,30 @@ class BigInt {
    * @return BigInt<Base> 
    */
   friend BigInt<Base> operator+(const BigInt<Base> &a, const BigInt<Base> &b) {
-    // recorrer los numeros de derecha a izquierda y si el resultado es =< <base>, entonces:
-    // si resultado >= base hacer MOD de la base 2(resultado) % <10>, lo guarda en esa posicion
-    // si si el resultado se pasa de la base 
-    // 9 + 3 = 12 pos ahora con 2, y a la siguiente pos le suma el carry, en este caso 1
+    // Recorrer los numeros de derecha a izquierda por cada posicion, si la suma de cada posicion, el resultado es
+    // menor o igual que la base, se guarda en la posicion actual en un vector de resultado, si el resultado es mayor
+    // que la base, se guarda el modulo de la base en la posicion actual, y se suma el carry a la siguiente posicion
+    // En caso de que alguno de los numeros es mas grande que el otro, se rellena con 0s hasta que tengan el mismo tamaño
+    
+    // 12 + 12 = 24
+    // 12++ = 13
+    // 12 + 2 = 14
+
     BigInt<Base> number1 = a;
     BigInt<Base> number2 = b;
     BigInt<Base> result;
     int carry = 0;
-    std::vector<char> digits_sum;
 
     result.digits_.clear();
 
-    // Si los dos numeros son del mismo signo
     if (number1.sign_ == number2.sign_) {
       result.sign_ = number1.sign_;
-    } else {                      // Si los dos numeros son de signos diferentes
-      if (number1.sign_ == -1) {  // Si el primer numero es negativo
+    } else {
+      if (number1.sign_ == -1) {
         number1.sign_ = 1;
         result = number2 - number1;
         number1.sign_ = -1;
-      } else {                    // Si el segundo numero es negativo
+      } else {
         number2.sign_ = 1;
         result = number1 - number2;
         number2.sign_ = -1;
@@ -186,37 +189,23 @@ class BigInt {
       return result;
     }
 
-    // Si el primer numero es mayor que el segundo
-    if (number1 > number2) {
-      // Añadir ceros al principio del numero mas pequeño
-      for (int i = 0; i < number1.digits_.size() - number2.digits_.size(); i++) {
-        number2.digits_.insert(number2.digits_.end(), 0);
+    for (int i = 0; i < number1.digits_.size() || i < number2.digits_.size(); i++) {
+      int sum = carry;
+      if (i < number1.digits_.size()) {
+        sum += number1.digits_[i];
       }
-    } else {                      // Si el segundo numero es mayor que el primero
-      // Añadir ceros al principio del numero mas pequeño
-      for (int i = 0; i < number2.digits_.size() - number1.digits_.size(); i++) {
-        number1.digits_.insert(number2.digits_.end(), 0);
-      }
-    }
 
-    // Hacer la suma de los digitos
-    for (int i = number1.digits_.size() - 1; i >= 0; i--) {
-      int sum = number1.digits_[i] + number2.digits_[i] + carry;
+      if (i < number2.digits_.size()) {
+        sum += number2.digits_[i];
+      }
+
+      result.digits_.push_back(sum % Base);
       carry = sum / Base;
-      sum = sum % Base;
-
-      digits_sum.push_back(sum);
     }
 
-    if (carry == 1) {
-      digits_sum.push_back(carry);
+    if (carry != 0) {
+      result.digits_.push_back(carry);
     }
-
-    // Invertir el vector
-    std::reverse(digits_sum.begin(), digits_sum.end());
-
-    // Guardar los digitos en el resultado
-    result.digits_ = digits_sum;
 
     return result;
   }
@@ -287,6 +276,7 @@ class BigInt {
   BigInt(std::string&);
   BigInt(const char*);
   BigInt(const BigInt<Base>&);  // Constructor de copia
+  BigInt(const std::vector<char> &, const int & );
 
   // Asignación
   /**
@@ -542,6 +532,7 @@ class BigInt {
   bool IsZero();
   std::string toString() const;
   BigInt<Base> Abs() const;
+  BigInt<Base> fill_zeros(unsigned) const;
 
   // Getters y Setters
   BigInt<Base> SetSign(int);
@@ -650,6 +641,18 @@ BigInt<Base>::BigInt(const BigInt<Base>& n) {
   digits_ = n.digits_;
 }
 
+template <size_t Base>
+BigInt<Base>::BigInt(const std::vector<char>& digits_aux, const int &sign_aux) {
+  char max_digit = static_cast<char>(Base);
+  for (size_t i = 0; i < digits_aux.size(); i++) {
+    if (digits_aux[i] >= max_digit) {
+      throw std::invalid_argument("Constructor(vector): Invalid digit");
+    }
+  }
+  digits_ = digits_aux;
+  sign_ = sign_aux;
+}
+
 // Accesor
 /**
  * @brief Devuelve el signo del BigInt
@@ -727,6 +730,13 @@ BigInt<Base> BigInt<Base>::Abs() const {
   BigInt<Base> abs = *this;
   abs.sign_ = 1;
   return abs;
+}
+
+template <size_t Base>
+BigInt<Base> BigInt<Base>::fill_zeros(unsigned number_zero) const {
+  std::string number_str = this->toString();
+  number_str.insert(number_str.begin(), number_zero, '0');
+  return BigInt<Base>(number_str);
 }
 
 // Getters y Setters
