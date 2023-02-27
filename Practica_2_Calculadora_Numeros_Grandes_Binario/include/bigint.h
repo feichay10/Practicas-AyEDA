@@ -220,6 +220,7 @@ class BigInt {
   friend BigInt<Base> operator/(const BigInt<Base> &number1, const BigInt<Base> &number2) {
     BigInt<Base> number1_aux = number1.Abs();
     BigInt<Base> number2_aux = number2.Abs();
+    BigInt<Base> zero("0");
 
     // if number2_aux is 0 we can't divide
     if (number2_aux.IsZero()) {
@@ -227,16 +228,18 @@ class BigInt {
       return BigInt<Base>("0");
     }
 
-    int i = -1;
+    int i = 0;
     while (number1_aux >= number2_aux) {
       number1_aux = number1_aux - number2_aux;
       i++;
     }
   
-    if (number1.GetSign() != number2.GetSign()) {
+    if ((number1.GetSign() != number2.GetSign()) && (i != 0)) {
+      // std::cout << "Entra" << std::endl;
       return -i;
     }
 
+    // std::cout << "i: " << i << std::endl;
     return i;
   }
 
@@ -391,7 +394,7 @@ class BigInt {
    * @param n 
    * @return BigInt<Base> 
    */
-  BigInt<Base> operator-(const BigInt<Base>& n) const {
+  BigInt<Base> operator-(const BigInt<Base>& n) const { 
     BigInt<Base> number1 = *this;
     BigInt<Base> number2 = n;
     BigInt<Base> result;
@@ -399,7 +402,7 @@ class BigInt {
 
     result.digits_.clear();
 
-    if (number1.sign_ == number2.sign_) {
+    if (number1.sign_ == number2.sign_) { // 4 - 2 = 2
       if (number1.sign_ == -1) {
         number1.sign_ = 1;
         number2.sign_ = -1;
@@ -551,8 +554,8 @@ class BigInt {
     BigInt<Base> n(*this), zero("0"), two("2"), next_digit, mod;
 
     while (n != zero) {
-      next_digit = n / two;
-      mod = n % two;
+      next_digit = n / two; 
+      mod = n % two;        
       binary.insert(binary.begin(), mod.GetDigits()[0] + '0');
       n = next_digit;
     }
@@ -613,6 +616,7 @@ BigInt<Base>::BigInt(std::string& s) {
   if (s.empty()) {
     sign_ = 0;
     digits_.push_back(0);
+    return;
   }
 
   std::string big_number = s;
@@ -623,6 +627,7 @@ BigInt<Base>::BigInt(std::string& s) {
   } else {
     sign_ = 1;
   }
+
   for (int i = big_number.size() - 1; i >= 0; i--) {
     if (isdigit(big_number[i])) {
       digits_.push_back(big_number[i] - '0');
@@ -797,5 +802,26 @@ template <size_t Base>
 int BigInt<Base>::GetSign() const {
   return sign_;
 }
+
+// Clase BigInt<2>
+template <>
+class BigInt<2> {
+  public:
+    operator BigInt<8>() { // Codigo de conversion de binario a BigInt<8> 
+
+    }
+
+    operator BigInt<10>() { // Codigo de conversion de binario a BigInt<10> 
+
+    }
+
+    operator BigInt<16>() { // Codigo de conversion de binario a BigInt<16> 
+
+    }
+
+  private:
+    std::vector<bool> digits_;
+};
+
 
 #endif  // _BIGINT_H_
