@@ -539,6 +539,27 @@ class BigInt {
     return pow(*this, n);
   }
 
+  // Modificacion: Sobre cargar el operador de cambio de tipo
+  /**
+   * @brief Operador de cambio de tipo para cambiar un BigInt<Base> a un BigInt<2>
+   * 
+   * @param n 
+   * @return BigInt<Base> 
+   */
+  operator BigInt<2>() const {
+    std::string binary;
+    BigInt<Base> n(*this), zero("0"), two("2"), next_digit, mod;
+
+    while (n != zero) {
+      next_digit = n / two;
+      mod = n % two;
+      binary.insert(binary.begin(), mod.GetDigits()[0] + '0');
+      n = next_digit;
+    }
+
+    return BigInt<2>(binary);
+  }
+
   // Metodos auxiliares
   bool IsZero();
   std::string toString() const;
