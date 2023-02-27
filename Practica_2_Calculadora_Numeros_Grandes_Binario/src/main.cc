@@ -5,12 +5,12 @@
  * Grado en Ingeniería Informática
  * Asignatura: Algoritmos y Estructura de Datos Avanzada
  * Curso: 2º
- * Práctica 1: Representación de números grandes en notación posicional
+ * Práctica 2: Calculadora de números grandes en binario
  * @file main.cc
  * @author Cheuk Kelly Ng Pante (alu0101364544@ull.edu.es)
  * @brief
- * @version 0.1
- * @date 2023-02-17
+ * @version 0.2
+ * @date 2023-03-03
  *
  * @copyright Copyright (c) 2023
  *
@@ -103,7 +103,7 @@ int main(int argc, char* argv[]) {
 }
 
 void CheckParameters(int argc, char* argv[]) {
-  if (argc == 3) {
+  if (argc != 3) {
     std::string parameter = argv[1];
     if (parameter == HELP1 || parameter == HELP2) {
       std::cout << "Uso: " << argv[0] << " <input file> || -h || --help" << std::endl;
