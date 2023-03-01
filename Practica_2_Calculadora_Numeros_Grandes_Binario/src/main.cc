@@ -103,7 +103,7 @@ int main(int argc, char* argv[]) {
 }
 
 void CheckParameters(int argc, char* argv[]) {
-  if (argc != 3) {
+  if (argc == 3) {
     std::string parameter = argv[1];
     if (parameter == HELP1 || parameter == HELP2) {
       std::cout << "Uso: " << argv[0] << " <input file> || -h || --help" << std::endl;
