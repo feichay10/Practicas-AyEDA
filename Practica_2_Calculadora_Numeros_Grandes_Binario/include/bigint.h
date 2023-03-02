@@ -141,11 +141,11 @@ class BigInt {
     } else {
       return 1;
     }
-  }        
+  }
 
   char operator[](int i) const {  // Acceso al i-ésimo dígito
     return digits_[i];
-  }  
+  }
 
   // Comparación
   bool operator!=(const BigInt<Base>& n) const { return !(*this == n); }
@@ -192,7 +192,7 @@ class BigInt {
 
     result.digits_.clear();
 
-    if (number1.sign_ == number2.sign_) {  // 4 - 2 = 2
+    if (number1.sign_ == number2.sign_) {  
       if (number1.sign_ == -1) {
         number1.sign_ = 1;
         number2.sign_ = -1;
@@ -220,10 +220,12 @@ class BigInt {
     }
 
     for (int i = 0; i < number1.digits_.size(); i++) {
-      int sub = (int)(number1.digits_[i]) - (int)(carry);
+      int sub = number1.digits_[i] - carry;
       if (i < number2.digits_.size()) {
-        sub -= (int)(number2.digits_[i]);
+        sub -= number2.digits_[i];
       }
+
+
 
       if (sub < 0) {
         sub += Base;
@@ -307,7 +309,7 @@ class BigInt {
 
   BigInt<Base> operator^(const BigInt<Base>& n) const { return pow(*this, n); }
 
-  // Modificacion: Sobre cargar el operador de cambio de tipo
+  // Modificacion: Sobrecargar el operador de cambio de tipo
   operator BigInt<2>() const {
     std::string binary;
     BigInt<Base> n(*this), zero("0"), two("2"), next_digit, mod;
@@ -334,7 +336,7 @@ class BigInt {
 
   BigInt<Base> SetDigits(std::vector<char> digits) {
     digits_ = digits;
-    return *this; 
+    return *this;
   }
 
   std::vector<char> GetDigits() const {
@@ -370,7 +372,7 @@ class BigInt {
 
   BigInt<Base> Abs() const {
     BigInt<Base> abs = *this;
-    abs.sign_ = 1;
+    abs.SetSign(1);
     return abs;
   }
 
@@ -440,71 +442,44 @@ bool operator==(const BigInt<Base>& a, const BigInt<Base>& b) {
 
 template <size_t Base>
 bool operator>(const BigInt<Base>& a, const BigInt<Base>& b) {
-  BigInt<Base> number1 = a;
-  BigInt<Base> number2 = b;
 
-  if (number1.sign_ > number2.sign_) {
-    return true;
-  } else if (number1.sign_ < number2.sign_) {
-    return false;
-  }
+  std::cout << "a: " << a.toString() << std::endl;
+  std::cout << "b: " << b.toString() << std::endl;
 
-  for (int i = number1.digits_.size() - 1; i >= 0; i--) {
-    // std::cout << number1.digits_[i] - '0' << " " << number2.digits_[i]  -
-    // '0' << std::endl;
-    if (number1.digits_[i] > number2.digits_[i]) {
-      return true;
-    } else if (number1.digits_[i] < number2.digits_[i]) {
-      return false;
-    }
-  }
-
-  return false;
+  return !(a < b) && !(a == b);
 }
 
 template <size_t Base>
 bool operator<(const BigInt<Base>& a, const BigInt<Base>& b) {
-  BigInt<Base> number1 = a;
-  BigInt<Base> number2 = b;
+  BigInt<Base> number1 = a.Abs();
+  BigInt<Base> number2 = b.Abs();
+  BigInt<Base> zero("0");
+
+  std::cout << "number1 <: " << number1.toString() << std::endl;
+  std::cout << "number2 <: " << number2.toString() << std::endl;
 
   if (number1.sign_ < number2.sign_) {
-    return false;
-  } else if (number1.sign_ > number2.sign_) {
     return true;
+  } else if (number1.sign_ > number2.sign_) {
+    return false;
   }
-  
-  for (int i = number1.digits_.size() - 1; i >= 0; i--) {
-    if (number1[i] < number2[i]) {
-      return true;
-    } else if (number1[i] > number2[i]) {
-      return false;
+
+  if (number1.digits_.size() < number2.digits_.size()) {
+    return true;
+  } else if (number1.digits_.size() > number2.digits_.size()) {
+    std::cout << "entra" << std::endl;
+    return false;
+  } else {
+    for (int i = number1.digits_.size() - 1; i >= 0; i--) {
+      if (number1[i] < number2[i]) {
+        return true;
+      } else if (number1[i] > number2[i]) {
+        return false;
+      }
     }
   }
 
   return false;
-
-
-  // if (num1.sign_ == -1 && num2.sign_ == 1)
-  //     return false;
-  // if (num1.sign_ == 1 && num2.sign_ == -1)
-  //     return true;
-
-  
-  // if (num1.sign_ == 1 && num2.sign_ == 1) {
-  //     if (num1.digits_.size() > num2.digits_.size())
-  //         return true;
-  //     else if (num1.digits_.size() < num2.digits_.size())
-  //         return false;
-  //     else {
-  //         for (int i = num1.digits_.size() - 1; i >= 0; i--) {
-  //             if (num1[i] > num2[i])
-  //                 return true;
-  //             else if (num1[i] < num2[i])
-  //                 return false;
-  //         }
-  //     }
-  // }
-  // return false;
 }
 
 // Operaciones aritméticas
@@ -559,37 +534,38 @@ BigInt<Base> operator/(const BigInt<Base>& number1, const BigInt<Base>& number2)
   BigInt<Base> number2_aux = number2;
   BigInt<Base> one("01");
 
-  // std::cout << "number1_aux: " << number1_aux << std::endl;
-  // std::cout << "number2_aux: " << number2_aux << std::endl;
+  std::cout << "\nnumber1_aux: " << number1_aux << std::endl;
+  std::cout << "number2_aux: " << number2_aux << std::endl;
+
+  std::cin.get();
 
   // if number2_aux is 0 we can't divide
   if (number2_aux.IsZero()) {
     throw std::invalid_argument("Can't divide by 0");
-    return BigInt<Base>("0");
+    return BigInt<Base>("01");
   }
 
   int i = 0;
   while (number1_aux >= number2_aux) {
-    // std::cout << "number1_aux_before_resta: " << number1_aux << std::endl;
-    // std::cout << "number2_aux_before_resta: " << number2_aux << std::endl;
+    std::cout << "number1_aux_before_resta: " << number1_aux << std::endl;
+    std::cout << "number2_aux_before_resta: " << number2_aux << std::endl;
     number1_aux = number1_aux - number2_aux;
-    // std::cout << "number1_aux_in_while: " << number1_aux << std::endl;
+    std::cin.get();
+    std::cout << "number1_aux_in_while: " << number1_aux << std::endl;
     i++;
-    // std::cout << "number1_aux_after_resta: " << number1_aux << std::endl;
-    // std::cout << "number2_aux_after_resta: " << number2_aux << std::endl;
+    std::cout << "number1_aux_after_resta: " << number1_aux << std::endl;
+    std::cout << "number2_aux_after_resta: " << number2_aux << std::endl;
     // std::cout << "number1_aux >= number2_aux: " << std::boolalpha << (number1_aux >= number2_aux) << std::endl;
-  
-    if (number1_aux == one) {
-      break;
-    }
+
+    // if (number1_aux == one) {
+    //   break;
+    // }
   }
 
   if ((number1.GetSign() != number2.GetSign()) && (i != 0)) {
-    // std::cout << "Entra" << std::endl;
     return -i;
   }
 
-  // std::cout << "i: " << i << std::endl;
   return i;
 }
 
