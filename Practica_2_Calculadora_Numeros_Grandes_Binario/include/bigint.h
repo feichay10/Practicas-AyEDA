@@ -442,43 +442,40 @@ bool operator==(const BigInt<Base>& a, const BigInt<Base>& b) {
 
 template <size_t Base>
 bool operator>(const BigInt<Base>& a, const BigInt<Base>& b) {
-
-  std::cout << "a: " << a.toString() << std::endl;
-  std::cout << "b: " << b.toString() << std::endl;
-
   return !(a < b) && !(a == b);
 }
 
 template <size_t Base>
-bool operator<(const BigInt<Base>& a, const BigInt<Base>& b) {
-  BigInt<Base> number1 = a.Abs();
-  BigInt<Base> number2 = b.Abs();
-  BigInt<Base> zero("0");
-
-  std::cout << "number1 <: " << number1.toString() << std::endl;
-  std::cout << "number2 <: " << number2.toString() << std::endl;
-
-  if (number1.sign_ < number2.sign_) {
-    return true;
-  } else if (number1.sign_ > number2.sign_) {
-    return false;
-  }
-
-  if (number1.digits_.size() < number2.digits_.size()) {
-    return true;
-  } else if (number1.digits_.size() > number2.digits_.size()) {
-    std::cout << "entra" << std::endl;
-    return false;
-  } else {
+bool operator<(const BigInt<Base>& number1, const BigInt<Base>& number2) {
+  if (number1.GetSign() < number2.GetSign()) { // -1 < 1 || 1 < -1
     for (int i = number1.digits_.size() - 1; i >= 0; i--) {
       if (number1[i] < number2[i]) {
+        std::cout << "entra 0" << std::endl;
         return true;
       } else if (number1[i] > number2[i]) {
+        std::cout << "entra 1" << std::endl;
+        return false;
+      }
+    }
+  } else if ((number1.GetSign() == number2.GetSign()) && (number1.GetSign() == 1)) {
+    if (number1.digits_.size() < number2.digits_.size()) {
+      return true;
+    } else if (number1.digits_.size() > number2.digits_.size()) {
+      return false;
+    }
+  } else {
+    for (int i = number1.digits_.size() - 1; i >= 0; i--) {
+      if (number1[i] > number2[i]) {
+        std::cout << "entra 2" << std::endl;
+        return true;
+      } else if (number1[i] < number2[i]) {
+        
         return false;
       }
     }
   }
 
+  std::cout << "entra 3" << std::endl;
   return false;
 }
 

@@ -33,7 +33,7 @@ int main(int argc, char* argv[]) {
   // BigInt<10> test(5);         // 110
   // BigInt<8> test2(4);         // 100
   // BigInt<16> test3("A");      // 1010
-  BigInt<10> test4(128);    // 10000000
+  // BigInt<10> test4(128);    // 10000000
   // // // (BigInt<2>)test;
   // // // (BigInt<2>)test2;
   // // std::cout << "test: " << (BigInt<2>)test << std::endl;
@@ -41,15 +41,15 @@ int main(int argc, char* argv[]) {
   // // std::cout << "test3: " << (BigInt<2>)test3 << std::endl;
   // std::cout << "test4: " << (BigInt<2>)test4 << std::endl;
 
-  BigInt<10> num15(15);
-  BigInt<10> num2(2);
-  BigInt<10> result;
-  BigInt<10> num13(13);
+  // BigInt<10> num15(15);
+  // BigInt<10> num2(2);
+  // BigInt<10> result;
+  // BigInt<10> num13(13);
 
-  result = num15 / num2;
+  // result = num15 / num2;
 
-  std::cout << "num15 / num2 " << result << std::endl;
-  std::cout << "test4 / num2: " << test4 / num2 << std::endl;
+  // std::cout << "num15 / num2 " << result << std::endl;
+  // std::cout << "test4 / num2: " << test4 / num2 << std::endl;
 
   // std::cout << "num13 > num2: " << std::boolalpha << (num13 > num2) << std::endl;
   // ================================================================================================
@@ -95,20 +95,20 @@ int main(int argc, char* argv[]) {
   // // Pruebas para numeros en base 10
   // Numeros en base 10
   // std::cout << "====== Pruebas para numeros en base 10 ======" << std::endl;
-  BigInt<10> num123(123);
-  BigInt<10> num456(456);
-  BigInt<10> num_neg123(-123);
-  BigInt<10> num_neg456(-456);
-  BigInt<10> num20(20);
-  BigInt<10> num12(12);
-  BigInt<10> num4("04");
-  BigInt<10> num0("0");
-  BigInt<10> num8(8);
-  BigInt<10> num_neg2(-2);
-  BigInt<10> num5(5);
-  BigInt<10> num1(1);
-  BigInt<10> num9977553311(9977553311);
-  BigInt<10> num8866442200(8866442200);
+  // BigInt<10> num123(123);
+  // BigInt<10> num456(456);
+  // BigInt<10> num_neg123(-123);
+  // BigInt<10> num_neg456(-456);
+  // BigInt<10> num20(20);
+  // BigInt<10> num12(12);
+  // BigInt<10> num4("04");
+  // BigInt<10> num0("0");
+  // BigInt<10> num8(8);
+  // BigInt<10> num_neg2(-2);
+  // BigInt<10> num5(5);
+  // BigInt<10> num1(1);
+  // BigInt<10> num9977553311(9977553311);
+  // BigInt<10> num8866442200(8866442200);
 
   // std::cout << "num8866442200 / num2: " << num9977553311 / num2 << std::endl; // 1111111111
 
@@ -121,19 +121,22 @@ int main(int argc, char* argv[]) {
   // BigInt<10> num123_2 = num123;
   // std::cout << "num123_2: " << num123_2 << std::endl;
 
+  BigInt<10> num13("13");
+  BigInt<10> num_neg13("-13");
+  BigInt<10> num2("2");
+  BigInt<10> num_neg2("-2");
+
   // // Prueba de los operadores de comparacion
-  // std::cout << "num123 == num123_2: " << std::boolalpha << (num123 == num123_2) << std::endl;
-  // std::cout << "num123 == num456: " << std::boolalpha << (num123 == num456) << std::endl;
-  // std::cout << "num123 != num123_2: " << std::boolalpha << (num123 != num123_2) << std::endl;
-  // std::cout << "num123 != num456: " << std::boolalpha << (num123 != num456) << std::endl;
-  // std::cout << "num123 > num456: " << std::boolalpha << (num123 > num456) << std::endl;
-  // std::cout << "num456 > num123: " << std::boolalpha << (num456 > num123) << std::endl;
-  // std::cout << "num123 < num456: " << std::boolalpha << (num123 < num456) << std::endl;
-  // std::cout << "num456 < num123: " << std::boolalpha << (num456 < num123) << std::endl;
-  // std::cout << "num123 >= num123_2: " << std::boolalpha << (num123 >= num123_2) << std::endl;
-  // std::cout << "num123 >= num456: " << std::boolalpha << (num123 >= num456) << std::endl;
-  // std::cout << "num123 <= num123_2: " << std::boolalpha << (num123 <= num123_2) << std::endl;
-  // std::cout << "num123 <= num456: " << std::boolalpha << (num123 <= num456) << std::endl;
+  std::cout << "num13 < num2: " << std::boolalpha << (num13 < num2) << std::endl;
+  std::cout << "num13 > num2: " << std::boolalpha << (num13 > num2) << std::endl;
+  std::cout << "num13 < num_neg13: " << std::boolalpha << (num13 < num_neg13) << std::endl;
+  std::cout << "num13 > num_neg13: " << std::boolalpha << (num13 > num_neg13) << std::endl;
+  std::cout << "num13 < num_neg2: " << std::boolalpha << (num13 < num_neg2) << std::endl;
+  std::cout << "num13 > num_neg2: " << std::boolalpha << (num13 > num_neg2) << std::endl;
+  std::cout << "num_neg13 < num_neg2: " << std::boolalpha << (num_neg13 < num_neg2) << std::endl;
+  std::cout << "num_neg13 > num_neg2: " << std::boolalpha << (num_neg13 > num_neg2) << std::endl;
+  std::cout << "num_neg13 < num2: " << std::boolalpha << (num_neg13 < num2) << std::endl;
+  std::cout << "num_neg13 > num2: " << std::boolalpha << (num_neg13 > num2) << std::endl;
 
   // // Prueba de Incremento y decremento
   // std::cout << "num12++: " << num12++ << std::endl;
@@ -219,3 +222,5 @@ int main(int argc, char* argv[]) {
 
   return 0;
 }
+
+
