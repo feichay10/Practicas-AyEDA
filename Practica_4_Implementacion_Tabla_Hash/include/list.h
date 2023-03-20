@@ -18,11 +18,19 @@
 #ifndef LIST_H
 #define LIST_H
 
+#include "sequence.h"
+
 template<class Key>
-class List {
+class List : public Sequence<Key> {
   public:
+    List() = default;
+    ~List() = default;
+    bool search(const Key& k) const;
+    bool insert(const Key& k);
+    bool ifFull() const;
 
   private:
+    std::list<Key> list_;
 };
 
 #endif // LIST_H
