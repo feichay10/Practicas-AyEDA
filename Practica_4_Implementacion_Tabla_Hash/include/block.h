@@ -18,11 +18,23 @@
 #ifndef BLOCK_H
 #define BLOCK_H
 
+#include "sequence.h"
+#include <vector>
+
 template<class Key>
-class Block {
+class Block : public Sequence<Key> {
   public:
+    Block() = default;
+    Block(int size);
+    ~Block() = default;
+    bool search(const Key& k) const;
+    bool insert(const Key& k);
+    bool ifFull() const;
 
   private:
+    int blockSize_;
+    int numElements_;
+    std::vector<Key> block_;
 };
 
 #endif // BLOCK_H
