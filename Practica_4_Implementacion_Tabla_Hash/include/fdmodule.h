@@ -18,14 +18,20 @@
 #ifndef FDMODULE_H
 #define FDMODULE_H
 
+#include "dispersionfunction.h"
 template <class Key>
 class fdModule : public DispersionFunction<Key> {
  public:
-  fdModule(const unsigned n) : tableSize(n) {}
-  unsigned operator()(const Key& k) const { return k % tableSize; }
+  explicit fdModule(const unsigned n) : tableSize(n) {}
+  unsigned operator()(const Key& k) const;
 
  private:
-  unsigned tableSize;
+  unsigned tableSize_;
 };
+
+template <class Key>
+unsigned fdModule<Key>::operator()(const Key& k) const {
+  return k % tableSize_;
+}
 
 #endif  // FDMODULE_H
