@@ -21,7 +21,7 @@
 template <class Key>
 class DispersionFunction {
  public:
-  unsigned operator()(const Key& k) const = 0;
+  virtual unsigned operator()(const Key& k) const = 0;
 };
 
 #endif  // DISPERSIONFUNCTION_H

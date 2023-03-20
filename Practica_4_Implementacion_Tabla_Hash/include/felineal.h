@@ -18,10 +18,17 @@
 #ifndef FELINEAL_H
 #define FELINEAL_H
 
+#include "explorationfunction.h"
+
 template <class Key>
-class feLineal : public FuncionExploracion<Key> {
+class feLineal : public ExplorationFunction<Key> {
  public:
   unsigned operator()(const Key& k, unsigned i) const { return i; }
 };
+
+template<class Key>
+unsigned feLineal<Key>::operator()(const Key& k, unsigned i) const {
+  return i;
+}
 
 #endif  // FELINEAL_H
