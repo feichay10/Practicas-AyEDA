@@ -18,11 +18,25 @@
 #ifndef HASHTABLE_H
 #define HASHTABLE_H
 
-template<class Key>
-class HashTable {
-  public:
+#include "block.h"
+#include "dispersionfunction.h"
+#include "explorationfunction.h"
+#include "list.h"
+#include "sequence.h"
 
-  private:
+template <class Key>
+class HashTable {
+ public:
+  HashTable(int size, DispersionFunction<Key> *dispersionFunction, ExplorationFunction<Key> *explorationFunction = nullptr, int blockSize = 0);
+  ~HashTable() = default;
+  bool search(const Key& k) const;
+  bool insert(const Key& k);
+ private:
+  int tableSize;
+  int blockSize;
+  Sequence<Key> *table;
+  DispersionFunction<Key> *fd;
+  ExplorationFunction<Key> *fe;
 };
 
-#endif // HASHTABLE_H
+#endif  // HASHTABLE_H
