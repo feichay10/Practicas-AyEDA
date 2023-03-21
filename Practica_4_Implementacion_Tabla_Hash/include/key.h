@@ -54,4 +54,87 @@ class Key {
   long entireKey_;
 };
 
+Key::Key(long key1, long key2) {
+  key_.key1_ = key1;
+  key_.key2_ = key2;
+  entireKey_ = key1 + key2;
+}
+
+Key::Key() {
+  Key(0, 0);
+}
+
+long Key::getEntireKey() {
+  return entireKey_;
+}
+
+long Key::getEntireKey() const {
+  return entireKey_;
+}
+
+void Key::setKey(const long key1, const long key2) {
+  key_.key1_ = key1;
+  key_.key2_ = key2;
+  entireKey_ = key1 + key2;
+}
+
+// Sobrecarga de operadores de comparación
+bool Key::operator==(const Key& key) {
+  return this->entireKey_ == key.entireKey_;
+}
+
+bool Key::operator!=(const Key& key) {
+  return this->entireKey_ != key.entireKey_;
+}
+
+bool Key::operator<(const Key& key) {
+  return this->entireKey_ < key.entireKey_;
+}
+
+bool Key::operator>(const Key& key) {
+  return this->entireKey_ > key.entireKey_;
+}
+
+bool Key::operator<=(const Key& key) {
+  return this->entireKey_ <= key.entireKey_;
+}
+
+bool Key::operator>=(const Key& key) {
+  return this->entireKey_ >= key.entireKey_;
+}
+
+// Sobrecarga de operadores aritméticos
+Key Key::operator+(const Key& key) {
+  return Key(this->key_.key1_ + key.key_.key1_, this->key_.key2_ + key.key_.key2_);
+}
+
+Key Key::operator-(const Key& key) {
+  return Key(this->key_.key1_ - key.key_.key1_, this->key_.key2_ - key.key_.key2_);
+}
+
+Key Key::operator*(const Key& key) {
+  return Key(this->key_.key1_ * key.key_.key1_, this->key_.key2_ * key.key_.key2_);
+}
+
+Key Key::operator/(const Key& key) {
+  return Key(this->key_.key1_ / key.key_.key1_, this->key_.key2_ / key.key_.key2_);
+}
+
+Key Key::operator%(const Key& key) {
+  return Key(this->key_.key1_ % key.key_.key1_, this->key_.key2_ % key.key_.key2_);
+}
+
+// Sobrecarga de operadores >> y <<
+std::ostream& operator<<(std::ostream& os, const Key& key) {
+  os << key.entireKey_;
+  return os;
+}
+
+std::istream& operator>>(std::istream& is, Key& key) {
+  long key1, key2;
+  is >> key1 >> key2;
+  key.setKey(key1, key2);
+  return is;
+}
+
 #endif  // KEY_H
