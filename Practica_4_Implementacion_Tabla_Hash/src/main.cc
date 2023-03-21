@@ -35,8 +35,8 @@ const std::string kReset = "\033[0m";
 typedef long keyType;
 
 int main() {
-  int tableSize, td, blockSize, fe;
-  char fd;
+  int tableSize, td, blockSize;
+  char fd, fe;
 
   std::cout << "Introduzca el tamaño de la tabla: ";
   std::cin >> tableSize;
