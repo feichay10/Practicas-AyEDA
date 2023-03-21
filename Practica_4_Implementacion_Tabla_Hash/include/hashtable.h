@@ -27,68 +27,80 @@
 template <class Key>
 class HashTable {
  public:
-  HashTable(int size, DispersionFunction<Key> *dispersionFunction, ExplorationFunction<Key> *explorationFunction = nullptr, int blockSize = 0);
+  HashTable(int size, DispersionFunction<Key> *dispersionFunction,
+            ExplorationFunction<Key> *explorationFunction = nullptr,
+            int blockSize = 0);
   ~HashTable() = default;
-  bool search(const Key& k) const;
-  bool insert(const Key& k);
+  bool search(const Key &k) const;
+  bool insert(const Key &k);
+
  private:
-  int tableSize;
-  int blockSize;
-  Sequence<Key> *table;
-  DispersionFunction<Key> *fd;
-  ExplorationFunction<Key> *fe;
+  int tableSize_;
+  int blockSize_;
+  Sequence<Key> **table_;
+  DispersionFunction<Key> *fd_;
+  ExplorationFunction<Key> *fe_;
 };
 
-template<class Key>
-HashTable<Key>::HashTable(int tableSz, DispersionFunction<Key> *dispersionFunction, ExplorationFunction<Key> *explorationFunction, int blockSz) {
-  tableSize = tableSz;
-  blockSize = blockSz;
-  fd = dispersionFunction;
-  fe = explorationFunction;
-  if (fe == nullptr) {
-    table = new List<Key>(tableSize);
+template <class Key>
+HashTable<Key>::HashTable(int tableSz,
+                          DispersionFunction<Key> *dispersionFunction,
+                          ExplorationFunction<Key> *explorationFunction,
+                          int blockSz) {
+  tableSize_ = tableSz;
+  blockSize_ = blockSz;
+  fd_ = dispersionFunction;
+  fe_ = explorationFunction;
+  if (fe_ == nullptr) {
+    table_ = new List<Key>(tableSize_);
   } else {
-    table = new Block<Key>(tableSize, blockSize);
-    for (int i = 0; i < tableSize; i++) {
-      table[i] = Block<Key>(blockSize);
+    table_ = new Block<Key>(tableSize_, blockSize_);
+    for (int i = 0; i < tableSize_; i++) {
+      table_[i] = Block<Key>(blockSize_);
     }
   }
 }
 
-template<class Key>
-bool HashTable<Key>::insert(const Key& key) {
-  unsigned index = (*fd)(key);
-  if (fe == nullptr) {
-    return table[index].insert(key);
-  } else {
-    unsigned i = 0;
-    while (i < tableSize) {
-      if (table[index].insert(key)) {
-        return true;
+template <class Key>
+bool HashTable<Key>::insert(const Key &key) {
+  int dir = fd_->operator()(key);
+  for (int i = 0; i < tableSize_; ++i) {
+    if ((table_[dir]->Search(key) == false) && (table_[dir]->IsFull() == false)) {
+      table_[dir]->Insert(key);
+      return true;
+    } else if (table_[dir]->Search(key) == true) {
+      return false;
+    } else if (table_[dir]->IsFull() == true) {
+      int displacement = fe_->operator()(key, i);
+      for (int j = 0; j < displacement; ++j) {
+        ++dir;
+        if (dir == tableSize_) {
+          dir = 0;
+        }
       }
-      index = (*fe)(index, i);
-      i++;
     }
-    return false;
   }
+  return false;
 }
 
-template<class Key>
-bool HashTable<Key>::search(const Key& key) const {
-  unsigned index = (*fd)(key);
-  if (fe == nullptr) {
-    return table[index].search(key);
-  } else {
-    unsigned i = 0;
-    while (i < tableSize) {
-      if (table[index].search(key)) {
-        return true;
+template <class Key>
+bool HashTable<Key>::search(const Key &key) const {
+  int dir = fd_(key);
+  if (blockSize_ != 0) {
+    for (int i = 0; i < tableSize_; ++i) {
+      for (int j = 0; j < blockSize_; ++j) {
+        if (table_[i][j] == key) {
+          return true;
+        }
       }
-      index = (*fe)(index, i);
-      i++;
     }
-    return false;
   }
+  for (int i = 0; i < tableSize_; ++i) {
+    if (table_[dir] == key) {
+      return true;
+    }
+  }
+  return false;
 }
 
 #endif  // HASHTABLE_H
