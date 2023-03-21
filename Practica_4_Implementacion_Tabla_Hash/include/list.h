@@ -29,7 +29,7 @@ class List : public Sequence<Key> {
     ~List() = default;
     bool search(const Key& k) const;
     bool insert(const Key& k);
-    bool ifFull() const;
+    bool isFull() const;
 
   private:
     std::list<Key> list_;
@@ -55,7 +55,7 @@ bool List<Key>::insert(const Key& k) {
 }
 
 template<class Key>
-bool List<Key>::ifFull() const {
+bool List<Key>::isFull() const {
   return false;
 }
 

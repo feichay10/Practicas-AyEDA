@@ -21,13 +21,13 @@
 #include "explorationfunction.h"
 
 template<class Key>
-class FeQuadratic : public ExplorationFunction<Key> {
+class feQuadratic : public ExplorationFunction<Key> {
  public:
   unsigned operator()(const Key& k, unsigned i) const;
 };
 
 template<class Key>
-unsigned FeQuadratic<Key>::operator()(const Key& k, unsigned i) const {
+unsigned feQuadratic<Key>::operator()(const Key& k, unsigned i) const {
   return i * i;
 }
 

@@ -22,9 +22,9 @@
 #include "dispersionfunction.h"
 
 template <class Key>
-class FeDoubleDispersion : public ExplorationFunction<Key> {
+class feDoubleDispersion : public ExplorationFunction<Key> {
  public:
-  FeDoubleDispersion(DispersionFunction<Key> *function) : fd_(function) {}
+  feDoubleDispersion(DispersionFunction<Key> *function) : fd_(function) {}
   unsigned operator()(const Key &k, unsigned i) const;
 
  private:
@@ -32,7 +32,7 @@ class FeDoubleDispersion : public ExplorationFunction<Key> {
 };
 
 template <class Key>
-unsigned FeDoubleDispersion<Key>::operator()(const Key &k, unsigned i) const {
+unsigned feDoubleDispersion<Key>::operator()(const Key &k, unsigned i) const {
   return i * fd_->operator()(k);
 }
 

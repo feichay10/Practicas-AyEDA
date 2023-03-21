@@ -37,7 +37,7 @@ class HashTable {
  private:
   int tableSize_;
   int blockSize_;
-  Sequence<Key> **table_;
+  Sequence<Key> *table_;
   DispersionFunction<Key> *fd_;
   ExplorationFunction<Key> *fe_;
 };
@@ -51,56 +51,49 @@ HashTable<Key>::HashTable(int tableSz,
   blockSize_ = blockSz;
   fd_ = dispersionFunction;
   fe_ = explorationFunction;
-  if (fe_ == nullptr) {
-    table_ = new List<Key>(tableSize_);
+  if(fe_ == nullptr) {
+    table_ = new List<Key> [tableSize_];
   } else {
-    table_ = new Block<Key>(tableSize_, blockSize_);
-    for (int i = 0; i < tableSize_; i++) {
-      table_[i] = Block<Key>(blockSize_);
-    }
+      table_ = new Block<Key> [tableSize_];
+      for(int i = 0; i < tableSize_; i++){
+        table_[i] = Block<Key>(blockSize_);
+      }
   }
 }
 
 template <class Key>
 bool HashTable<Key>::insert(const Key &key) {
-  int dir = fd_->operator()(key);
-  for (int i = 0; i < tableSize_; ++i) {
-    if ((table_[dir]->Search(key) == false) && (table_[dir]->IsFull() == false)) {
-      table_[dir]->Insert(key);
-      return true;
-    } else if (table_[dir]->Search(key) == true) {
+  unsigned index = (*fd_)(key);
+  if(table_[index].insert(key)) {
+    return true;
+  } else {
+    int attempt = 0;
+    while (attempt < blockSize_ && !table_[index].insert(key)) {
+        index = (*fe_)(key, index);
+        attempt++;
+    }
+    if(attempt == blockSize_) {
       return false;
-    } else if (table_[dir]->IsFull() == true) {
-      int displacement = fe_->operator()(key, i);
-      for (int j = 0; j < displacement; ++j) {
-        ++dir;
-        if (dir == tableSize_) {
-          dir = 0;
-        }
-      }
+    } else {
+      return true;
     }
   }
-  return false;
 }
 
 template <class Key>
 bool HashTable<Key>::search(const Key &key) const {
-  int dir = fd_(key);
-  if (blockSize_ != 0) {
-    for (int i = 0; i < tableSize_; ++i) {
-      for (int j = 0; j < blockSize_; ++j) {
-        if (table_[i][j] == key) {
-          return true;
-        }
+  bool output = false;
+  unsigned index = (*fd_)(key);
+  if(table_[index].search(key)) output = true;
+  else {
+      int attempt = 0;
+      while (attempt < blockSize_ && !table_[index].search(key)) {
+          index = (*fe_)(key, index);
+          if(table_[index].search(key)) output = true;
+          attempt++;
       }
-    }
   }
-  for (int i = 0; i < tableSize_; ++i) {
-    if (table_[dir] == key) {
-      return true;
-    }
-  }
-  return false;
+  return output;
 }
 
 #endif  // HASHTABLE_H

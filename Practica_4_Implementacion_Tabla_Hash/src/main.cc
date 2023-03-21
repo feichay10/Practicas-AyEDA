@@ -73,11 +73,68 @@ int main() {
   HashTable<keyType>* hashTable;
   switch(td) {
     case 1:
-
+      hashTable = new HashTable<keyType>(tableSize, dispersionFunction);
+      break;
     case 2:
+      std::cout << "Introduce el tamaño del bloque: " << std::endl;
+      std::cin >> blockSize;
+      std::cout << "Selecciona una función de exploración: " << std::endl;
+      std::cout << kRedBold << "  [L]." << kReset << kBold << " Lineal" << std::endl;
+      std::cout << kRedBold << "  [Q]." << kReset << kBold << " Cuadrática" << std::endl;
+      std::cout << kRedBold << "  [D]." << kReset << kBold << " Doble Dispersión" << std::endl;
+      std::cout << kRedBold << "  [R]." << kReset << kBold << " Redispersión" << std::endl;
+      std::cin >> fe;
 
+      ExplorationFunction<keyType>* explorationFunction;
+      switch(fe) {
+        case 'L':
+        case 'l':
+          explorationFunction = new feLineal<keyType>();
+          break;
+        case 'Q':
+        case 'q':
+          explorationFunction = new feQuadratic<keyType>();
+          break;
+        case 'D':
+        case 'd':
+          explorationFunction = new feDoubleDispersion<keyType>(dispersionFunction);
+          break;
+        case 'R':
+        case 'r':
+          explorationFunction = new feRedispersion<keyType>();
+          break;
+      };
     default:
       std::cout << "Opción no válida" << std::endl;
       exit(EXIT_FAILURE);
   };
+
+  while(true) {
+    int option;
+
+    std::cout << "Selecciona una opción: " << std::endl;
+    std::cout << kRedBold << "  [1]." << kReset << kBold << " Insertar" << std::endl;
+    std::cout << kRedBold << "  [2]." << kReset << kBold << " Buscar" << std::endl;
+    std::cout << kRedBold << "  [3]." << kReset << kBold << " Salir" << std::endl;
+    std::cin >> option;
+
+    keyType element;
+    switch(option) {
+      case 1:
+        std::cout << "Introduce el elemento a insertar: ";
+        std::cin >> element;
+        hashTable->insert(element);
+        break;
+      case 2:
+        std::cout << "Introduce el elemento a buscar: ";
+        std::cin >> element;
+        hashTable->search(element);
+        break;
+      case 3:
+        exit(EXIT_SUCCESS);
+      default:
+        std::cout << "Opción no válida" << std::endl;
+        exit(EXIT_FAILURE);
+    }
+  }
 }
