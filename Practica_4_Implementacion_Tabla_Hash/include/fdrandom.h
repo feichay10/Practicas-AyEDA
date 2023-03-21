@@ -23,7 +23,7 @@
 template <class Key>
 class fdRandom : public DispersionFunction<Key> {
  public:
-  explicit fdRandom(const unsigned n) : tableSize(n) {}
+  explicit fdRandom(const unsigned n) : tableSize_(n) {}
   unsigned operator()(const Key& k) const;
 
  private:

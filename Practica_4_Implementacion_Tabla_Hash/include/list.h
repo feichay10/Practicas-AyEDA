@@ -18,6 +18,8 @@
 #ifndef LIST_H
 #define LIST_H
 
+#include <list>
+
 #include "sequence.h"
 
 template<class Key>

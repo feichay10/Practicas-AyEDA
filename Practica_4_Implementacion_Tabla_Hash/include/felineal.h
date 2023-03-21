@@ -23,7 +23,7 @@
 template <class Key>
 class feLineal : public ExplorationFunction<Key> {
  public:
-  unsigned operator()(const Key& k, unsigned i) const { return i; }
+  unsigned operator()(const Key& k, unsigned i) const;
 };
 
 template<class Key>

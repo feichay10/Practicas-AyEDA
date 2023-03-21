@@ -22,7 +22,7 @@
 template <class Key>
 class fdModule : public DispersionFunction<Key> {
  public:
-  explicit fdModule(const unsigned n) : tableSize(n) {}
+  explicit fdModule(const unsigned n) : tableSize_(n) {}
   unsigned operator()(const Key& k) const;
 
  private:

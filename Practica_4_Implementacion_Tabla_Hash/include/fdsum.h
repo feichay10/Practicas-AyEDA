@@ -23,7 +23,7 @@
 template <class Key>
 class fdSum : public DispersionFunction<Key> {
  public:
-  explicit fdSum(const unsigned n) : tableSize(n) {}
+  explicit fdSum(const unsigned n) : tableSize_(n) {}
   unsigned operator()(const Key& k) const;
 
  private:
