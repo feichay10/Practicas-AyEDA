@@ -39,4 +39,56 @@ class HashTable {
   ExplorationFunction<Key> *fe;
 };
 
+template<class Key>
+HashTable<Key>::HashTable(int tableSz, DispersionFunction<Key> *dispersionFunction, ExplorationFunction<Key> *explorationFunction, int blockSz) {
+  tableSize = tableSz;
+  blockSize = blockSz;
+  fd = dispersionFunction;
+  fe = explorationFunction;
+  if (fe == nullptr) {
+    table = new List<Key>(tableSize);
+  } else {
+    table = new Block<Key>(tableSize, blockSize);
+    for (int i = 0; i < tableSize; i++) {
+      table[i] = Block<Key>(blockSize);
+    }
+  }
+}
+
+template<class Key>
+bool HashTable<Key>::insert(const Key& key) {
+  unsigned index = (*fd)(key);
+  if (fe == nullptr) {
+    return table[index].insert(key);
+  } else {
+    unsigned i = 0;
+    while (i < tableSize) {
+      if (table[index].insert(key)) {
+        return true;
+      }
+      index = (*fe)(index, i);
+      i++;
+    }
+    return false;
+  }
+}
+
+template<class Key>
+bool HashTable<Key>::search(const Key& key) const {
+  unsigned index = (*fd)(key);
+  if (fe == nullptr) {
+    return table[index].search(key);
+  } else {
+    unsigned i = 0;
+    while (i < tableSize) {
+      if (table[index].search(key)) {
+        return true;
+      }
+      index = (*fe)(index, i);
+      i++;
+    }
+    return false;
+  }
+}
+
 #endif  // HASHTABLE_H
