@@ -35,4 +35,28 @@ class List : public Sequence<Key> {
     std::list<Key> list_;
 };
 
+template<class Key>
+bool List<Key>::search(const Key& k) const {
+  for (auto it = list_.begin(); it != list_.end(); it++) {
+    if (*it == k) {
+      return true;
+    }
+  }
+  return false;
+}
+
+template<class Key>
+bool List<Key>::insert(const Key& k) {
+  if (search(k)) {
+    return false;
+  }
+  list_.push_back(k);
+  return true;
+}
+
+template<class Key>
+bool List<Key>::ifFull() const {
+  return false;
+}
+
 #endif // LIST_H
