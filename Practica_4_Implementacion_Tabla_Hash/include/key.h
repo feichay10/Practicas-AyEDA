@@ -18,8 +18,40 @@
 #ifndef KEY_H
 #define KEY_H
 
-class Key {
+#include <iostream>
 
+class Key {
+ public:
+  Key() = default;
+  Key(long key1, long key2);
+  long getEntireKey();
+  long getEntireKey() const;
+  void setKey(const long key1, const long key2);
+
+  // Sobrecarga de operadores de comparación
+  bool operator==(const Key& key);
+  bool operator!=(const Key& key);
+  bool operator<(const Key& key);
+  bool operator>(const Key& key);
+  bool operator<=(const Key& key);
+  bool operator>=(const Key& key);
+
+  // Sobrecarga de operadores aritméticos
+  Key operator+(const Key& key);
+  Key operator-(const Key& key);
+  Key operator*(const Key& key);
+  Key operator/(const Key& key);
+  Key operator%(const Key& key);
+
+  // Sobrecarga de operadores >> y <<
+  friend std::ostream& operator<<(std::ostream& os, const Key& key);
+  friend std::istream& operator>>(std::istream& is, Key& key);
+ private:
+  struct {
+    long key1_;
+    long key2_;
+  } key_;
+  long entireKey_;
 };
 
-#endif // KEY_H
+#endif  // KEY_H
