@@ -29,10 +29,11 @@ class feRedispersion : public ExplorationFunction<Key> {
 template<class Key>
 unsigned feRedispersion<Key>::operator()(const Key& k, unsigned i) const {
   srand(k);
-  for(unsigned j = 1; j <= 1; j++) {
-    rand();
+  int aux;
+  for(unsigned j = 0; j <= i; j++) {
+    aux = rand();
   }
-  return rand();
+  return aux;
 }
 
 #endif  // FEREDISPERSION_H

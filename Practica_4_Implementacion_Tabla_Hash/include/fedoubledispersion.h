@@ -24,6 +24,7 @@
 template <class Key>
 class feDoubleDispersion : public ExplorationFunction<Key> {
  public:
+  feDoubleDispersion() {}
   feDoubleDispersion(DispersionFunction<Key> *function) : fd_(function) {}
   unsigned operator()(const Key &k, unsigned i) const;
 

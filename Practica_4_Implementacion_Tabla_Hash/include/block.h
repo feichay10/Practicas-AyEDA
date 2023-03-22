@@ -27,64 +27,68 @@ class Block : public Sequence<Key> {
  public:
   Block();
   Block(int size);
-  ~Block();
   bool search(const Key& k) const;
   bool insert(const Key& k);
   bool isFull() const;
+  void print();
 
  private:
+  Key* synonyms_;
   int blockSize_;
-  int numElements_;
-  std::vector<Key> block_;
 };
 
-template <class Key>
-Block<Key>::Block(){
-  blockSize_ = 0;
-  numElements_ = 0;
+template<class Key>
+Block<Key>::Block() {
+
 }
 
-template <class Key>
+template<class Key>
 Block<Key>::Block(int size) {
+  synonyms_ = new Key[size];
   blockSize_ = size;
-  numElements_ = 0;
-  block_.resize(size);
 }
 
-template <class Key>
-Block<Key>::~Block() {}
-
-template <class Key>
+template<class Key>
 bool Block<Key>::search(const Key& k) const {
-  bool output = false;
-  for (auto& i : block_) {
-    if (i == k) {
-      output = true;
-      break;
+  for (int i = 0; i < blockSize_; i++) {
+    if (synonyms_[i] == k) {
+      return true;
     }
   }
-  return output;
+  return false;
 }
 
-template <class Key>
+template<class Key>
 bool Block<Key>::insert(const Key& k) {
-  bool output = true;
-  if (!isFull() && !search(k)) {
-    block_[numElements_] = k;
-    numElements_++;
-  } else {
-    output = false;
+  if (!search(k)) {
+    for (int i = 0; i < blockSize_; ++i) {
+      if (synonyms_[i] == NULL) {
+        synonyms_[i] = k;
+        return true;
+      }
+    }
   }
-  return output;
+  return false;
+}
+
+template<class Key>
+bool Block<Key>::isFull() const {
+  for (int i = 0; i < blockSize_; ++i) {
+    if (synonyms_[i] == NULL) {
+      return false;
+    }
+  }
+  return true;
 }
 
 template <class Key>
-bool Block<Key>::isFull() const {
-  bool output = false;
-  if (numElements_ == blockSize_) {
-      output = true;
+void Block<Key>::print() {
+  for (int i = 0; i < blockSize_; ++i) {
+    if (synonyms_[i] == NULL) {
+      continue;
+    }
+    std::cout << "[" << synonyms_[i] << "] "; 
   }
-  return output;
 }
 
 #endif  // BLOCK_H

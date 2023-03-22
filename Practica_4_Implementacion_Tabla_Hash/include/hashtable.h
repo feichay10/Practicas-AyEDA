@@ -18,82 +18,104 @@
 #ifndef HASHTABLE_H
 #define HASHTABLE_H
 
+#include <vector>
+
 #include "block.h"
 #include "dispersionfunction.h"
 #include "explorationfunction.h"
+#include "fdmodule.h"
+#include "fdrandom.h"
+#include "fdsum.h"
+#include "fedoubledispersion.h"
+#include "felineal.h"
+#include "fequadratic.h"
+#include "feredispersion.h"
 #include "list.h"
 #include "sequence.h"
 
 template <class Key>
 class HashTable {
  public:
-  HashTable(int size, DispersionFunction<Key> *dispersionFunction,
-            ExplorationFunction<Key> *explorationFunction = nullptr,
-            int blockSize = 0);
-  ~HashTable() = default;
-  bool search(const Key &k) const;
-  bool insert(const Key &k);
+  HashTable(int table_size, DispersionFunction<Key>* fd, ExplorationFunction<Key>* fe = nullptr, int block_size = 0);
+  bool search(const Key& key) const;
+  bool insert(const Key& key);
+  void print();
 
  private:
-  int tableSize_;
-  int blockSize_;
-  Sequence<Key> *table_;
-  DispersionFunction<Key> *fd_;
-  ExplorationFunction<Key> *fe_;
+  int table_size_;
+  Sequence<Key>** table;
+  DispersionFunction<Key>* fd_;
+  ExplorationFunction<Key>* fe_;
+  int block_size_ = 0;
 };
 
 template <class Key>
-HashTable<Key>::HashTable(int tableSz,
-                          DispersionFunction<Key> *dispersionFunction,
-                          ExplorationFunction<Key> *explorationFunction,
-                          int blockSz) {
-  tableSize_ = tableSz;
-  blockSize_ = blockSz;
-  fd_ = dispersionFunction;
-  fe_ = explorationFunction;
-  if(fe_ == nullptr) {
-    table_ = new List<Key> [tableSize_];
+HashTable<Key>::HashTable(int table_size, DispersionFunction<Key>* fd,
+                          ExplorationFunction<Key>* fe, int block_size) {
+  table_size_ = table_size;
+  fe_ = fe;
+  fd_ = fd;
+  table = new Sequence<Key>*[table_size_];
+  if (fe_ == nullptr) {
+    for (int i = 0; i < table_size_; ++i) {
+      table[i] = new List<Key>;
+    }
   } else {
-      table_ = new Block<Key> [tableSize_];
-      for(int i = 0; i < tableSize_; i++){
-        table_[i] = Block<Key>(blockSize_);
-      }
+    for (int i = 0; i < table_size_; ++i) {
+      table[i] = new Block<Key>(block_size);
+    }
   }
 }
 
 template <class Key>
-bool HashTable<Key>::insert(const Key &key) {
-  unsigned index = (*fd_)(key);
-  if(table_[index].insert(key)) {
-    return true;
-  } else {
-    int attempt = 0;
-    while (attempt < blockSize_ && !table_[index].insert(key)) {
-        index = (*fe_)(key, index);
-        attempt++;
+bool HashTable<Key>::search(const Key& k) const {
+  int dir = fd_(k);
+  if (block_size_ != 0) {
+    for (int i = 0; i < table_size_; ++i) {
+      for (int j = 0; j < block_size_; ++j) {
+        if (table[i][j] == k) {
+          return true;
+        }
+      }
     }
-    if(attempt == blockSize_) {
-      return false;
-    } else {
+  }
+  for (int i = 0; i < table_size_; ++i) {
+    if (table[dir] == k) {
       return true;
     }
   }
+  return false;
 }
 
 template <class Key>
-bool HashTable<Key>::search(const Key &key) const {
-  bool output = false;
-  unsigned index = (*fd_)(key);
-  if(table_[index].search(key)) output = true;
-  else {
-      int attempt = 0;
-      while (attempt < blockSize_ && !table_[index].search(key)) {
-          index = (*fe_)(key, index);
-          if(table_[index].search(key)) output = true;
-          attempt++;
+bool HashTable<Key>::insert(const Key& k) {
+  int dir = fd_->operator()(k);
+  for (int i = 0; i < table_size_; ++i) {
+    if ((table[dir]->search(k) == false) && (table[dir]->isFull() == false)) {
+      table[dir]->insert(k);
+      return true;
+    } else if (table[dir]->search(k) == true) {
+      return false;
+    } else if (table[dir]->isFull() == true) {
+      int displacement = fe_->operator()(k, i);
+      for (int j = 0; j < displacement; ++j) {
+        ++dir;
+        if (dir == table_size_) {
+          dir = 0;
+        }
       }
+    }
   }
-  return output;
+  return false;
+}
+
+template <class Key>
+void HashTable<Key>::print() {
+  for (int i = 0; i < table_size_; ++i) {
+    std::cout << i << ")";
+    table[i]->print();
+    std::cout << "\n";
+  }
 }
 
 #endif  // HASHTABLE_H

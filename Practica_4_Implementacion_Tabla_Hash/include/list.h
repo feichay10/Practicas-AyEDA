@@ -18,27 +18,34 @@
 #ifndef LIST_H
 #define LIST_H
 
-#include <list>
+#include <vector>
+#include <iostream>
 
 #include "sequence.h"
 
 template<class Key>
 class List : public Sequence<Key> {
   public:
-    List() = default;
-    ~List() = default;
+    List();
     bool search(const Key& k) const;
     bool insert(const Key& k);
     bool isFull() const;
+    void print();
 
   private:
-    std::list<Key> list_;
+    Key* synonyms_;
+    int tam_ = 0;
 };
 
 template<class Key>
+List<Key>::List() {
+  synonyms_ = new Key[tam_];
+}
+
+template<class Key>
 bool List<Key>::search(const Key& k) const {
-  for (auto it = list_.begin(); it != list_.end(); it++) {
-    if (*it == k) {
+  for (int i = 0; i < tam_; ++i) {
+    if (synonyms_[i] == k) {
       return true;
     }
   }
@@ -47,16 +54,29 @@ bool List<Key>::search(const Key& k) const {
 
 template<class Key>
 bool List<Key>::insert(const Key& k) {
-  if (search(k)) {
-    return false;
+  if (!search(k)) {
+    tam_++;
+    for (int i = 0; i < tam_; ++i) {
+      if (synonyms_[i] == NULL) {
+        synonyms_[i] = k;
+        return true;
+      }
+    }
+    return true;
   }
-  list_.push_back(k);
-  return true;
+  return false;
 }
 
 template<class Key>
 bool List<Key>::isFull() const {
   return false;
+}
+
+template<class Key>
+void List<Key>::print() {
+  for (int i = 0; i < tam_; ++i) {
+    std::cout << "[" << synonyms_[i] << "] "; 
+  }
 }
 
 #endif // LIST_H
