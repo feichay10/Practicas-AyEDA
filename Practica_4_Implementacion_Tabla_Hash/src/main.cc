@@ -44,13 +44,10 @@ int main() {
   std::cout << "Introduzca el tamaño de la tabla: ";
   std::cin >> tableSize;
   system("clear");
-  std::cout << "###### Función de dispersión ######" << std::endl;
-  std::cout << kRedBold << "  [M]." << kReset << kBold << " Módulo"
-            << std::endl;
-  std::cout << kRedBold << "  [S]." << kReset << kBold << " Basada en Suma"
-            << std::endl;
-  std::cout << kRedBold << "  [P]." << kReset << kBold << " Pseudoaleatoria"
-            << std::endl;
+  std::cout << kBold << "###### Función de dispersión ######" << kReset << std::endl;
+  std::cout << kRedBold << "  [M]." << kReset << " Módulo" << std::endl;
+  std::cout << kRedBold << "  [S]." << kReset << " Basada en Suma" << std::endl;
+  std::cout << kRedBold << "  [P]." << kReset << " Pseudoaleatoria" << std::endl;
   std::cout << "Introduzca el tipo de función de dispersión: ";
   std::cin >> fd;
   system("clear");
@@ -71,13 +68,12 @@ int main() {
       break;
     default:
       std::cout << "Opción no válida" << std::endl;
+      exit(EXIT_FAILURE);
   };
 
-  std::cout << "###### Técnica de dispersión ######" << std::endl;
-  std::cout << kRedBold << "  [1]." << kReset << kBold << " Abierta"
-            << std::endl;
-  std::cout << kRedBold << "  [2]." << kReset << kBold << " Cerrada"
-            << std::endl;
+  std::cout << kBold << "###### Técnica de dispersión ######" << kReset << std::endl;
+  std::cout << kRedBold << "  [1]." << kReset << " Abierta" << std::endl;
+  std::cout << kRedBold << "  [2]." << kReset << " Cerrada" << std::endl;
   std::cout << "\nSelecciona una técnica de dispersión: ";
   std::cin >> td;
   system("clear");
@@ -93,18 +89,13 @@ int main() {
       std::cout << "Introduce el tamaño del bloque: ";
       std::cin >> blockSize;
       system("clear");
-      std::cout << "###### Función de exploración ######" << std::endl;
-      std::cout << kRedBold << "  [L]." << kReset << kBold << " Lineal"
-                << std::endl;
-      std::cout << kRedBold << "  [Q]." << kReset << kBold << " Cuadrática"
-                << std::endl;
-      std::cout << kRedBold << "  [D]." << kReset << kBold
-                << " Doble Dispersión" << std::endl;
-      std::cout << kRedBold << "  [R]." << kReset << kBold << " Redispersión"
-                << std::endl;
+      std::cout << kBold << "###### Función de exploración ######" << std::endl;
+      std::cout << kRedBold << "  [L]." << kReset << kBold << " Lineal" << std::endl;
+      std::cout << kRedBold << "  [Q]." << kReset << kBold << " Cuadrática" << std::endl;
+      std::cout << kRedBold << "  [D]." << kReset << kBold << " Doble Dispersión" << std::endl;
+      std::cout << kRedBold << "  [R]." << kReset << kBold << " Redispersión" << std::endl;
       std::cout << "Selecciona una función de exploración: ";
       std::cin >> fe;
-      system("clear");
 
       switch (fe) {
         case 'L':
@@ -125,9 +116,10 @@ int main() {
           break;
         default:
           std::cout << "Opción no válida" << std::endl;
+          exit(EXIT_FAILURE);
       }
-      hashTable = new HashTable<keyType>(tableSize, dispersionFunction,
-                                         explorationFunction, blockSize);
+      system("clear");
+      hashTable = new HashTable<keyType>(tableSize, dispersionFunction, explorationFunction, blockSize);
       break;
     default:
       std::cout << "Opción no válida" << std::endl;
@@ -139,14 +131,10 @@ int main() {
 
   do {
     std::cout << "###### Tabla de Hash ######" << std::endl;
-    std::cout << kRedBold << "  [1]." << kReset << kBold << " Insertar"
-              << std::endl;
-    std::cout << kRedBold << "  [2]." << kReset << kBold << " Buscar"
-              << std::endl;
-    std::cout << kRedBold << "  [3]." << kReset << kBold << " Imprimir tabla"
-              << std::endl;
-    std::cout << kRedBold << "  [4]." << kReset << kBold << " Salir"
-              << std::endl;
+    std::cout << kRedBold << "  [1]." << kReset << kBold << " Insertar" << std::endl;
+    std::cout << kRedBold << "  [2]." << kReset << kBold << " Buscar" << std::endl;
+    std::cout << kRedBold << "  [3]." << kReset << kBold << " Imprimir tabla" << std::endl;
+    std::cout << kRedBold << "  [4]." << kReset << kBold << " Salir" << std::endl;
     std::cout << "Selecciona una opción: ";
     std::cin >> option;
 
@@ -165,15 +153,9 @@ int main() {
         std::cout << "\nIntroduce el elemento a buscar: ";
         std::cin >> element;
         if (!hashTable->search(element)) {
-          std::cout << "El elemento " << kCyanBold << element << kReset
-                    << kRedBold << " no se encuentra en la tabla" << kReset
-                    << std::endl
-                    << std::endl;
+          std::cout << "El elemento " << kCyanBold << element << kReset << kRedBold << " no se encuentra en la tabla" << kReset << std::endl << std::endl;
         } else {
-          std::cout << "El elemento " << kCyanBold << element << kReset
-                    << kGreenBold << " se encuentra en la tabla" << kReset
-                    << std::endl
-                    << std::endl;
+          std::cout << "El elemento " << kCyanBold << element << kReset << kGreenBold << " se encuentra en la tabla" << kReset << std::endl << std::endl;
         }
         break;
       case 3:
@@ -182,6 +164,8 @@ int main() {
         std::cout << std::endl;
         break;
       case 4:
+        system("clear");
+        std::cout << "Saliendo..." << std::endl;
         exit(EXIT_SUCCESS);
       default:
         std::cout << "Opción no válida" << std::endl << std::endl;

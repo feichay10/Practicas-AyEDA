@@ -42,26 +42,26 @@ class HashTable {
   void print();
 
  private:
-  int table_size_;
+  int tableSize_;
   Sequence<Key>** table;
   DispersionFunction<Key>* fd_;
   ExplorationFunction<Key>* fe_;
-  int block_size_ = 0;
+  int blockSize_ = 0;
 };
 
 template <class Key>
 HashTable<Key>::HashTable(int table_size, DispersionFunction<Key>* fd,
                           ExplorationFunction<Key>* fe, int block_size) {
-  table_size_ = table_size;
+  tableSize_ = table_size;
   fe_ = fe;
   fd_ = fd;
-  table = new Sequence<Key>*[table_size_];
+  table = new Sequence<Key>*[tableSize_];
   if (fe_ == nullptr) {
-    for (int i = 0; i < table_size_; ++i) {
+    for (int i = 0; i < tableSize_; ++i) {
       table[i] = new List<Key>;
     }
   } else {
-    for (int i = 0; i < table_size_; ++i) {
+    for (int i = 0; i < tableSize_; ++i) {
       table[i] = new Block<Key>(block_size);
     }
   }
@@ -74,7 +74,7 @@ bool HashTable<Key>::search(const Key& k) const {
   if(table[index]->search(k)) output = true;
   else {
       int attempt = 0;
-      while (attempt < block_size_ && !table[index]->search(k)) {
+      while (attempt < blockSize_ && !table[index]->search(k)) {
           index = (*fe_)(k, index);
           if(table[index]->search(k)) output = true;
           attempt++;
@@ -86,7 +86,7 @@ bool HashTable<Key>::search(const Key& k) const {
 template <class Key>
 bool HashTable<Key>::insert(const Key& k) {
   int dir = fd_->operator()(k);
-  for (int i = 0; i < table_size_; ++i) {
+  for (int i = 0; i < tableSize_; ++i) {
     if ((table[dir]->search(k) == false) && (table[dir]->isFull() == false)) {
       table[dir]->insert(k);
       return true;
@@ -96,7 +96,7 @@ bool HashTable<Key>::insert(const Key& k) {
       int displacement = fe_->operator()(k, i);
       for (int j = 0; j < displacement; ++j) {
         ++dir;
-        if (dir == table_size_) {
+        if (dir == tableSize_) {
           dir = 0;
         }
       }
@@ -107,7 +107,7 @@ bool HashTable<Key>::insert(const Key& k) {
 
 template <class Key>
 void HashTable<Key>::print() {
-  for (int i = 0; i < table_size_; ++i) {
+  for (int i = 0; i < tableSize_; ++i) {
     std::cout << i << ") [ ";
     table[i]->print();
     std::cout << "]" << std::endl;
