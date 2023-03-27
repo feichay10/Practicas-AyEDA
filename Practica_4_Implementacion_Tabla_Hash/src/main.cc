@@ -153,9 +153,9 @@ int main() {
         std::cout << "\nIntroduce el elemento a buscar: ";
         std::cin >> element;
         if (!hashTable->search(element)) {
-          std::cout << "El elemento " << kCyanBold << element << kReset << kRedBold << " no se encuentra en la tabla" << kReset << std::endl << std::endl;
+          std::cout << "El elemento " << kCyanBold << element << kReset << kRedBold << " NO" << kReset << " no se encuentra en la tabla" << kReset << std::endl << std::endl;
         } else {
-          std::cout << "El elemento " << kCyanBold << element << kReset << kGreenBold << " se encuentra en la tabla" << kReset << std::endl << std::endl;
+          std::cout << "El elemento " << kCyanBold << element << kReset << kGreenBold << " SI" << kReset << " se encuentra en la tabla" << kReset << std::endl << std::endl;
         }
         break;
       case 3:
@@ -165,7 +165,6 @@ int main() {
         break;
       case 4:
         system("clear");
-        std::cout << "Saliendo..." << std::endl;
         exit(EXIT_SUCCESS);
       default:
         std::cout << "Opción no válida" << std::endl << std::endl;
