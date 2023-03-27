@@ -69,22 +69,18 @@ HashTable<Key>::HashTable(int table_size, DispersionFunction<Key>* fd,
 
 template <class Key>
 bool HashTable<Key>::search(const Key& k) const {
-  int dir = fd_(k);
-  if (block_size_ != 0) {
-    for (int i = 0; i < table_size_; ++i) {
-      for (int j = 0; j < block_size_; ++j) {
-        if (table[i][j] == k) {
-          return true;
-        }
+  bool output = false;
+  unsigned index = (*fd_)(k);
+  if(table[index]->search(k)) output = true;
+  else {
+      int attempt = 0;
+      while (attempt < block_size_ && !table[index]->search(k)) {
+          index = (*fe_)(k, index);
+          if(table[index]->search(k)) output = true;
+          attempt++;
       }
-    }
   }
-  for (int i = 0; i < table_size_; ++i) {
-    if (table[dir] == k) {
-      return true;
-    }
-  }
-  return false;
+  return output;
 }
 
 template <class Key>
@@ -112,9 +108,9 @@ bool HashTable<Key>::insert(const Key& k) {
 template <class Key>
 void HashTable<Key>::print() {
   for (int i = 0; i < table_size_; ++i) {
-    std::cout << i << ")";
+    std::cout << i << ") [ ";
     table[i]->print();
-    std::cout << "\n";
+    std::cout << "]" << std::endl;
   }
 }
 
