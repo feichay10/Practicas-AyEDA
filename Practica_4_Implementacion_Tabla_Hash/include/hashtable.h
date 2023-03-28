@@ -43,7 +43,7 @@ class HashTable {
 
  private:
   int tableSize_;
-  Sequence<Key>** table;
+  Sequence<Key>** table_;
   DispersionFunction<Key>* fd_;
   ExplorationFunction<Key>* fe_;
   int blockSize_ = 0;
@@ -58,11 +58,11 @@ HashTable<Key>::HashTable(int table_size, DispersionFunction<Key>* fd,
   table = new Sequence<Key>*[tableSize_];
   if (fe_ == nullptr) {
     for (int i = 0; i < tableSize_; ++i) {
-      table[i] = new List<Key>;
+      table_[i] = new List<Key>;
     }
   } else {
     for (int i = 0; i < tableSize_; ++i) {
-      table[i] = new Block<Key>(block_size);
+      table_[i] = new Block<Key>(block_size);
     }
   }
 }
@@ -71,12 +71,12 @@ template <class Key>
 bool HashTable<Key>::search(const Key& k) const {
   bool output = false;
   unsigned index = (*fd_)(k);
-  if(table[index]->search(k)) output = true;
+  if(table_[index]->search(k)) output = true;
   else {
       int attempt = 0;
-      while (attempt < blockSize_ && !table[index]->search(k)) {
+      while (attempt < blockSize_ && !table_[index]->search(k)) {
           index = (*fe_)(k, index);
-          if(table[index]->search(k)) output = true;
+          if(table_[index]->search(k)) output = true;
           attempt++;
       }
   }
@@ -87,12 +87,12 @@ template <class Key>
 bool HashTable<Key>::insert(const Key& k) {
   int dir = fd_->operator()(k);
   for (int i = 0; i < tableSize_; ++i) {
-    if ((table[dir]->search(k) == false) && (table[dir]->isFull() == false)) {
-      table[dir]->insert(k);
+    if ((table_[dir]->search(k) == false) && (table_[dir]->isFull() == false)) {
+      table_[dir]->insert(k);
       return true;
-    } else if (table[dir]->search(k) == true) {
+    } else if (table_[dir]->search(k) == true) {
       return false;
-    } else if (table[dir]->isFull() == true) {
+    } else if (table_[dir]->isFull() == true) {
       int displacement = fe_->operator()(k, i);
       for (int j = 0; j < displacement; ++j) {
         ++dir;
@@ -109,7 +109,7 @@ template <class Key>
 void HashTable<Key>::print() {
   for (int i = 0; i < tableSize_; ++i) {
     std::cout << i << ") [ ";
-    table[i]->print();
+    table_[i]->print();
     std::cout << "]" << std::endl;
   }
 }
