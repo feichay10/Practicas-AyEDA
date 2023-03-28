@@ -36,9 +36,10 @@
 template <class Key>
 class HashTable {
  public:
-  HashTable(int table_size, DispersionFunction<Key>* fd, ExplorationFunction<Key>* fe = nullptr, int block_size = 0);
+  HashTable(int table_size, DispersionFunction<Key>* fd,
+            ExplorationFunction<Key>* fe = nullptr, int block_size = 0);
   bool search(const Key& key) const;
-  bool insert(const Key& key);
+  void insert(const Key& key);
   void print();
 
  private:
@@ -55,7 +56,7 @@ HashTable<Key>::HashTable(int table_size, DispersionFunction<Key>* fd,
   tableSize_ = table_size;
   fe_ = fe;
   fd_ = fd;
-  table = new Sequence<Key>*[tableSize_];
+  table_ = new Sequence<Key>*[tableSize_];
   if (fe_ == nullptr) {
     for (int i = 0; i < tableSize_; ++i) {
       table_[i] = new List<Key>;
@@ -71,38 +72,30 @@ template <class Key>
 bool HashTable<Key>::search(const Key& k) const {
   bool output = false;
   unsigned index = (*fd_)(k);
-  if(table_[index]->search(k)) output = true;
-  else {
-      int attempt = 0;
-      while (attempt < blockSize_ && !table_[index]->search(k)) {
-          index = (*fe_)(k, index);
-          if(table_[index]->search(k)) output = true;
-          attempt++;
-      }
+  if (table_[index]->search(k)) {
+    output = true;
+  } else {
+    int attempt = 0;
+    while (attempt < blockSize_ && !table_[index]->search(k)) {
+      index = (*fe_)(k, index);
+      if (table_[index]->search(k)) output = true;
+      attempt++;
+    }
   }
   return output;
 }
 
 template <class Key>
-bool HashTable<Key>::insert(const Key& k) {
-  int dir = fd_->operator()(k);
-  for (int i = 0; i < tableSize_; ++i) {
-    if ((table_[dir]->search(k) == false) && (table_[dir]->isFull() == false)) {
-      table_[dir]->insert(k);
-      return true;
-    } else if (table_[dir]->search(k) == true) {
-      return false;
-    } else if (table_[dir]->isFull() == true) {
-      int displacement = fe_->operator()(k, i);
-      for (int j = 0; j < displacement; ++j) {
-        ++dir;
-        if (dir == tableSize_) {
-          dir = 0;
-        }
-      }
+void HashTable<Key>::insert(const Key& k) {
+  unsigned index = (*fd_)(k);
+  if (!table_[index]->insert(k)) {
+    int attempt = 0;
+    while (attempt < blockSize_ && !table_[index]->insert(k)) {
+      index = (*fe_)(k, index);
+      table_[index]->insert(k);
+      attempt++;
     }
   }
-  return false;
 }
 
 template <class Key>

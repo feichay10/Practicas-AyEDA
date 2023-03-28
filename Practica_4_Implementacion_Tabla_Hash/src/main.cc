@@ -134,7 +134,7 @@ int main() {
     std::cout << kRedBold << "  [1]." << kReset << kBold << " Insertar" << std::endl;
     std::cout << kRedBold << "  [2]." << kReset << kBold << " Buscar" << std::endl;
     std::cout << kRedBold << "  [3]." << kReset << kBold << " Imprimir tabla" << std::endl;
-    std::cout << kRedBold << "  [4]." << kReset << kBold << " Salir" << std::endl;
+    std::cout << kRedBold << "  [4]." << kReset << kBold << " Salir" << kReset << std::endl;
     std::cout << "Selecciona una opción: ";
     std::cin >> option;
 
