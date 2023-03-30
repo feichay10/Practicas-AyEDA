@@ -36,10 +36,9 @@
 template <class Key>
 class HashTable {
  public:
-  HashTable(int table_size, DispersionFunction<Key>* fd,
-            ExplorationFunction<Key>* fe = nullptr, int block_size = 0);
+  HashTable(int table_size, DispersionFunction<Key>* fd, ExplorationFunction<Key>* fe = nullptr, int block_size = 0);
   bool search(const Key& key) const;
-  void insert(const Key& key);
+  bool insert(const Key& key);
   void print();
 
  private:
@@ -51,8 +50,7 @@ class HashTable {
 };
 
 template <class Key>
-HashTable<Key>::HashTable(int table_size, DispersionFunction<Key>* fd,
-                          ExplorationFunction<Key>* fe, int block_size) {
+HashTable<Key>::HashTable(int table_size, DispersionFunction<Key>* fd, ExplorationFunction<Key>* fe, int block_size) {
   tableSize_ = table_size;
   fe_ = fe;
   fd_ = fd;
@@ -86,16 +84,20 @@ bool HashTable<Key>::search(const Key& k) const {
 }
 
 template <class Key>
-void HashTable<Key>::insert(const Key& k) {
+bool HashTable<Key>::insert(const Key& k) {
+  bool output = false;
   unsigned index = (*fd_)(k);
-  if (!table_[index]->insert(k)) {
+  if (table_[index]->insert(k)) {
+    output = true;
+  } else {
     int attempt = 0;
     while (attempt < blockSize_ && !table_[index]->insert(k)) {
       index = (*fe_)(k, index);
-      table_[index]->insert(k);
+      if (table_[index]->insert(k)) output = true;
       attempt++;
     }
   }
+  return output;
 }
 
 template <class Key>
