@@ -43,7 +43,7 @@ int main() {
   std::vector<long> vector(vectorSize);
 
   std::cout << "  1. Aleatorio" << std::endl;
-  std::cout << "  2. Ordenado" << std::endl;
+  std::cout << "  2. Manual" << std::endl;
   std::cout << "Introduzca como quiere rellenar el vector: ";
   std::cin >> generateOption;
 
@@ -96,14 +96,23 @@ int main() {
       sortMethod = new ShellSort<keyType>();
       break;
     case 4:
-      sortMethod = new HeapSort<keyType>();
+      // sortMethod = new HeapSort<keyType>();
       break;
     case 5:
-      sortMethod = new RadixSort<keyType>();
+      // sortMethod = new RadixSort<keyType>();
       break;
     default:
       std::cout << "Opción no válida" << std::endl;
       break;
   } 
+
+  std::cout << "\nOrdenando... " << std::endl;
+  sortMethod->Sort(vector, vectorSize);
+  std::cout << "Vector ordenado: " << std::endl;
+  for (int i = 0; i < vectorSize; i++) {
+    std::cout << vector[i] << " ";
+  }
+  std::cout << std::endl;
+  return 0;
 }
 
