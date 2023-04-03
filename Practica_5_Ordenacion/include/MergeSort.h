@@ -27,4 +27,9 @@ class MergeSort : public SortMethod<Key> {
     void Sort(std::vector<Key> &vector, int size);
 };
 
+template<class Key>
+void MergeSort<Key>::Sort(std::vector<Key> &vector, int size) {
+  
+}
+
 #endif // MERGESORT_H

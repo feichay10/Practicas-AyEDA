@@ -27,4 +27,23 @@ class ShellSort : public SortMethod<Key> {
     void Sort(std::vector<Key> &vector, int size);
 };
 
+template<class Key>
+void ShellSort<Key>::Sort(std::vector<Key> &vector, int size) {
+  int j;
+  Key temp;
+  float alpha;
+  std::cout << "Introduzca un alfa entre 0 y 1: ";
+  std::cin >> alpha;
+  for (int h = (size * alpha) / 2; h > 0; h /= 2) {
+    for (int i = h; i < size; i++) {
+      temp = vector[i];
+      for (j = i; j >= h && vector[j - h] > temp; j -= h) {
+        vector[j] = vector[j - h];
+      }
+      vector[j] = temp;
+    }
+    // print(vector, size);
+  }
+}
+
 #endif // SHELLSORT_H

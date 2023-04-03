@@ -25,9 +25,18 @@ template<class Key>
 class SortMethod {
   public:
     virtual void Sort(std::vector<Key> &vector, int size) = 0;
+    void print(std::vector<Key> &vector, int size);
 
   private:
     unsigned size_;
 };
+
+template<class Key>
+void SortMethod<Key>::print(std::vector<Key> &vector, int size) {
+  for (int i = 0; i < size; i++) {
+    std::cout << vector[i] << " ";
+  }
+  std::cout << std::endl;
+}
 
 #endif // SORTMETHOD_H
