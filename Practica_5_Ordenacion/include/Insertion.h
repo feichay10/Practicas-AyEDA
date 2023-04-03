@@ -27,4 +27,17 @@ class Insertion : public SortMethod<Key> {
     void Sort(std::vector<Key> &vector, int size);
 };
 
+template<class Key>
+void Insertion<Key>::Sort(std::vector<Key> &vector, int size) {
+  for (int i = 1; i < size; i++) {
+    Key key = vector[i];
+    int j = i - 1;
+    while (j >= 0 && vector[j] > key) {
+      vector[j + 1] = vector[j];
+      j--;
+    }
+    vector[j + 1] = key;
+  }
+}
+
 #endif // INSERTION_H
