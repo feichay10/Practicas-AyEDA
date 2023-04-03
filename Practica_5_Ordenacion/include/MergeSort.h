@@ -27,4 +27,4 @@ class MergeSort : public SortMethod<Key> {
     void Sort(std::vector<Key> &vector, int size);
 };
 
-#enfif // MERGESORT_H
+#endif // MERGESORT_H
