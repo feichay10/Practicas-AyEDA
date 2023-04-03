@@ -21,6 +21,9 @@
 
 #include <vector>
 
+const int kMaximunNumber = 9999;
+const int kMinimunNumber = 1000;
+
 template<class Key>
 class SortMethod {
   public:
@@ -32,7 +35,7 @@ class SortMethod {
 };
 
 template<class Key>
-void SortMethod<Key>::print(std::vector<Key> &vector, int size) {
+void print(std::vector<Key> &vector, int size) {
   for (int i = 0; i < size; i++) {
     std::cout << vector[i] << " ";
   }

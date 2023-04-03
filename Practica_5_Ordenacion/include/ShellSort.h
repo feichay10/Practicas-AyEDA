@@ -42,7 +42,7 @@ void ShellSort<Key>::Sort(std::vector<Key> &vector, int size) {
       }
       vector[j] = temp;
     }
-    // print(vector, size);
+    print(vector, size);
   }
 }
 

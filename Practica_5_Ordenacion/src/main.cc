@@ -96,10 +96,10 @@ int main() {
       sortMethod = new ShellSort<keyType>();
       break;
     case 4:
-      // sortMethod = new HeapSort<keyType>();
+      sortMethod = new HeapSort<keyType>();
       break;
     case 5:
-      // sortMethod = new RadixSort<keyType>();
+      sortMethod = new RadixSort<keyType>();
       break;
     default:
       std::cout << "Opción no válida" << std::endl;
@@ -108,7 +108,7 @@ int main() {
 
   std::cout << "\nOrdenando... " << std::endl;
   sortMethod->Sort(vector, vectorSize);
-  std::cout << "Vector ordenado: " << std::endl;
+  std::cout << "\n\nVector ordenado: " << std::endl;
   for (int i = 0; i < vectorSize; i++) {
     std::cout << vector[i] << " ";
   }

@@ -27,4 +27,32 @@ class HeapSort : public SortMethod<Key> {
     void Sort(std::vector<Key> &vector, int size);
 };
 
+template<class Key>
+void HeapSort<Key>::Sort(std::vector<Key> &vector, int size) {
+  Key temp;
+  for (int i = size / 2 - 1; i >= 0; i--) {
+    for (int j = i; j < size; j++) {
+      if (vector[j] > vector[i]) {
+        temp = vector[i];
+        vector[i] = vector[j];
+        vector[j] = temp;
+      }
+    }
+    print(vector, size);
+  }
+  for (int i = size - 1; i >= 0; i--) {
+    temp = vector[0];
+    vector[0] = vector[i];
+    vector[i] = temp;
+    for (int j = 0; j < i; j++) {
+      if (vector[j] > vector[j + 1]) {
+        temp = vector[j];
+        vector[j] = vector[j + 1];
+        vector[j + 1] = temp;
+      }
+    }
+    print(vector, size);
+  }
+}
+
 #endif // HEAPSORT_H

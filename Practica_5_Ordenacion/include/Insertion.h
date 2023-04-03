@@ -37,6 +37,7 @@ void Insertion<Key>::Sort(std::vector<Key> &vector, int size) {
       j--;
     }
     vector[j + 1] = key;
+    print(vector, size);
   }
 }
 
