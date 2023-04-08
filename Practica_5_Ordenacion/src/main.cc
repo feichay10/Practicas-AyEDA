@@ -27,6 +27,12 @@
 #include "../include/RadixSort.h"
 #include "../include/ShellSort.h"
 
+const std::string kRedBold = "\033[31m\033[1m";
+const std::string kGreenBold = "\033[32m\033[1m";
+const std::string kCyanBold = "\033[36m\033[1m";
+const std::string kBold = "\033[1m";
+const std::string kReset = "\033[0m"; 
+
 // typedef Key<int> keyType;
 typedef long keyType;
 
@@ -36,50 +42,54 @@ int main() {
   std::mt19937 gen(rd());
   std::uniform_int_distribution<> dis(1000, 9999);
 
-  std::cout << " ====== Algoritmos de Ordenación ====== " << std::endl;
-  std::cout << "Introduzca el tamaño del vector: ";
+  std::cout << kBold << " ====== Algoritmos de Ordenación ====== " << std::endl;
+  std::cout << "Introduzca el tamaño del vector: " << kReset;
   std::cin >> vectorSize;
 
   std::vector<long> vector(vectorSize);
 
-  std::cout << "  1. Aleatorio" << std::endl;
-  std::cout << "  2. Manual" << std::endl;
-  std::cout << "Introduzca como quiere rellenar el vector: ";
+  std::cout << kRedBold << "  1." << kReset << kBold << " Aleatorio" << std::endl;
+  std::cout << kRedBold << "  2." << kReset << kBold << " Manual" << std::endl;
+  std::cout << "Introduzca como quiere rellenar el vector: " << kReset;
   std::cin >> generateOption;
 
+  system("clear");
   switch(generateOption) {
     case 1:
-      std::cout << "Vector aleatorio" << std::endl;
+      std::cout << kBold << "Vector aleatorio" << kReset << std::endl;
       for (int i = 0; i < vectorSize; i++) {
         vector[i] = dis(gen);
       }
+      std::cout << "El vector generado aleatoriamente es: " << std::endl;
       break;
     case 2:
+      std::cout << kBold << "Vector manual" << kReset << std::endl;
       std::cout << "Introduzca hasta " << vectorSize << " números para el vector: " << std::endl;
       for (int i = 0; i < vectorSize; i++) {
-        std::cout << "Número " << i << " del vector: ";
+        std::cout << "Número " << kRedBold << i << kReset << " del vector: ";
         std::cin >> vector[i];
-      }  
+      }
+      std::cout << "El vector es: " << std::endl;
       break;
     default:
       std::cout << "Opción no válida" << std::endl;
       break;
   }
 
-  std::cout << "El vector es: " << std::endl;
-  std::cout << "[ ";
+
+  std::cout << kCyanBold << "[ ";
   for (int i = 0; i < vectorSize; i++) {
     std::cout << vector[i] << " ";
   }
-  std::cout << "]" << std::endl;
+  std::cout << "]" << kReset << std::endl;
   std::cout << std::endl;
 
   std::cout << "Seleccione algun algoritmo de ordenación: " << std::endl;
-  std::cout << "  1. Inserción" << std::endl;
-  std::cout << "  2. MergeSort" << std::endl;
-  std::cout << "  3. ShellSort" << std::endl;
-  std::cout << "  4. HeapSort" << std::endl;
-  std::cout << "  5. RadixSort" << std::endl;
+  std::cout << kRedBold << "  1." << kReset << kBold << " Inserción" << std::endl;
+  std::cout << kRedBold << "  2." << kReset << kBold << " MergeSort" << std::endl;
+  std::cout << kRedBold << "  3." << kReset << kBold << " ShellSort" << std::endl;
+  std::cout << kRedBold << "  4." << kReset << kBold << " HeapSort" << std::endl;
+  std::cout << kRedBold << "  5." << kReset << kBold << " RadixSort" << std::endl;
     std::cout << "Seleccione el algoritmo de ordenación: ";
   std::cin >> algorithmOption;
 
@@ -103,15 +113,18 @@ int main() {
       break;
     default:
       std::cout << "Opción no válida" << std::endl;
+      exit(EXIT_FAILURE);
       break;
   } 
 
   std::cout << "\nOrdenando... " << std::endl;
   sortMethod->Sort(vector, vectorSize);
-  std::cout << "\n\nVector ordenado: " << std::endl;
+  std::cout << "\n\nVector ordenado es: " << std::endl;
+  std::cout << kGreenBold << "[ ";
   for (int i = 0; i < vectorSize; i++) {
     std::cout << vector[i] << " ";
   }
+  std::cout << "]" << kReset << std::endl;
   std::cout << std::endl;
   return 0;
 }
