@@ -21,15 +21,63 @@
 
 #include "SortMethod.h"
 
-template<class Key>
+template <class Key>
 class MergeSort : public SortMethod<Key> {
-  public:
-    void Sort(std::vector<Key> &vector, int size);
+ public:
+  void Msort(std::vector<Key> &vector, int ini, int fin);
+  void Sort(std::vector<Key> &vector, int size);
+  void Mix(std::vector<Key> &vector, int ini, int cen, int fin);
 };
 
-template<class Key>
-void MergeSort<Key>::Sort(std::vector<Key> &vector, int size) {
-  
+template <class Key>
+void MergeSort<Key>::Msort(std::vector<Key> &vector, int ini, int fin) {
+  if (ini < fin) {
+    int cen = (ini + fin) / 2;
+    Msort(vector, ini, cen);
+    Msort(vector, cen + 1, fin);
+    Mix(vector, ini, cen, fin);
+  }
 }
 
-#endif // MERGESORT_H
+template <class Key>
+void MergeSort<Key>::Sort(std::vector<Key> &vector, int size) {
+  Msort(vector, 0, size - 1);
+}
+
+template <class Key>
+void MergeSort<Key>::Mix(std::vector<Key> &vector, int ini, int cen, int fin) {
+  int i = ini;
+  int j = cen + 1;
+
+  std::vector<Key> aux(fin + 1);
+
+  int k = ini;
+  while ((i <= cen) && (j <= fin)) {
+    if ((vector[i]) < (vector[j])) {
+      aux[k] = vector[i];
+      i++;
+    } else {
+      aux[k] = vector[j];
+      j++;
+    }
+    k++;
+  }
+
+  if (i > cen)
+    while (j <= fin) {
+      aux[k] = vector[j];
+      j++;
+      k++;
+    }
+  else
+    while (i <= cen) {
+      aux[k] = vector[i];
+      i++;
+      k++;
+    }
+  for (int z = ini; z <= fin; z++) {
+    vector[z] = aux[z];
+  }
+}
+
+#endif  // MERGESORT_H
