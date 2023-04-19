@@ -26,6 +26,7 @@
 #include "../include/MergeSort.h"
 #include "../include/RadixSort.h"
 #include "../include/ShellSort.h"
+#include "../include/Key.h"
 
 const std::string kRedBold = "\033[31m\033[1m";
 const std::string kGreenBold = "\033[32m\033[1m";
@@ -33,8 +34,7 @@ const std::string kCyanBold = "\033[36m\033[1m";
 const std::string kBold = "\033[1m";
 const std::string kReset = "\033[0m"; 
 
-// typedef Key<int> keyType;
-typedef long keyType;
+typedef Key<int> keyType;
 
 int main() {
   int vectorSize, generateOption, algorithmOption;
@@ -46,7 +46,7 @@ int main() {
   std::cout << "Introduzca el tamaño del vector: " << kReset;
   std::cin >> vectorSize;
 
-  std::vector<long> vector(vectorSize);
+  std::vector<keyType> vector(vectorSize);
 
   std::cout << kRedBold << "  1." << kReset << kBold << " Aleatorio" << std::endl;
   std::cout << kRedBold << "  2." << kReset << kBold << " Manual" << std::endl;
@@ -82,9 +82,8 @@ int main() {
     std::cout << vector[i] << " ";
   }
   std::cout << "]" << kReset << std::endl;
-  std::cout << std::endl;
 
-  std::cout << "Seleccione algun algoritmo de ordenación: " << std::endl;
+  std::cout << "\nSeleccione algun algoritmo de ordenación: " << std::endl;
   std::cout << kRedBold << "  1." << kReset << kBold << " Inserción" << std::endl;
   std::cout << kRedBold << "  2." << kReset << kBold << " MergeSort" << std::endl;
   std::cout << kRedBold << "  3." << kReset << kBold << " ShellSort" << std::endl;

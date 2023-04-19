@@ -21,16 +21,16 @@
 
 #include "SortMethod.h"
 
-template<class Key>
-class Insertion : public SortMethod<Key> {
+template<typename T>
+class Insertion : public SortMethod<T> {
   public:
-    void Sort(std::vector<Key> &vector, int size);
+    void Sort(std::vector<T> &vector, int size);
 };
 
-template<class Key>
-void Insertion<Key>::Sort(std::vector<Key> &vector, int size) {
+template<typename T>
+void Insertion<T>::Sort(std::vector<T> &vector, int size) {
   for (int i = 1; i < size; i++) {
-    Key key = vector[i];
+    T key = vector[i];
     int j = i - 1;
     while (j >= 0 && vector[j] > key) {
       vector[j + 1] = vector[j];

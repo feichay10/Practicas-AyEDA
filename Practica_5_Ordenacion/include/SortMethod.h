@@ -24,18 +24,18 @@
 const int kMaximunNumber = 9999;
 const int kMinimunNumber = 1000;
 
-template<class Key>
+template<typename T>
 class SortMethod {
   public:
-    virtual void Sort(std::vector<Key> &vector, int size) = 0;
-    void print(std::vector<Key> &vector, int size);
+    virtual void Sort(std::vector<T> &vector, int size) = 0;
+    void print(std::vector<T> &vector, int size);
 
   private:
     unsigned size_;
 };
 
-template<class Key>
-void print(std::vector<Key> &vector, int size) {
+template<typename T>
+void print(std::vector<T> &vector, int size) {
   for (int i = 0; i < size; i++) {
     std::cout << vector[i] << " ";
   }

@@ -21,16 +21,16 @@
 
 #include "SortMethod.h"
 
-template<class Key>
-class ShellSort : public SortMethod<Key> {
+template<typename T>
+class ShellSort : public SortMethod<T> {
   public:
-    void Sort(std::vector<Key> &vector, int size);
+    void Sort(std::vector<T> &vector, int size);
 };
 
-template<class Key>
-void ShellSort<Key>::Sort(std::vector<Key> &vector, int size) {
+template<typename T>
+void ShellSort<T>::Sort(std::vector<T> &vector, int size) {
   int j;
-  Key temp;
+  T temp;
   float alpha;
   std::cout << "Introduzca un alfa entre 0 y 1: ";
   std::cin >> alpha;

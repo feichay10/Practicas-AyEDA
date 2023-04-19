@@ -21,35 +21,37 @@
 
 #include "SortMethod.h"
 
-template <class Key>
-class MergeSort : public SortMethod<Key> {
+template <typename T>
+class MergeSort : public SortMethod<T> {
  public:
-  void Msort(std::vector<Key> &vector, int ini, int fin);
-  void Sort(std::vector<Key> &vector, int size);
-  void Mix(std::vector<Key> &vector, int ini, int cen, int fin);
+  void Msort(std::vector<T> &vector, int ini, int fin);
+  void Sort(std::vector<T> &vector, int size);
+  void Mix(std::vector<T> &vector, int ini, int cen, int fin);
 };
 
-template <class Key>
-void MergeSort<Key>::Msort(std::vector<Key> &vector, int ini, int fin) {
+template <typename T>
+void MergeSort<T>::Msort(std::vector<T> &vector, int ini, int fin) {
   if (ini < fin) {
     int cen = (ini + fin) / 2;
     Msort(vector, ini, cen);
     Msort(vector, cen + 1, fin);
     Mix(vector, ini, cen, fin);
+    print(vector, fin + 1);
   }
 }
 
-template <class Key>
-void MergeSort<Key>::Sort(std::vector<Key> &vector, int size) {
+template <typename T>
+void MergeSort<T>::Sort(std::vector<T> &vector, int size) {
   Msort(vector, 0, size - 1);
 }
 
-template <class Key>
-void MergeSort<Key>::Mix(std::vector<Key> &vector, int ini, int cen, int fin) {
+template <typename T>
+void MergeSort<T>::Mix(std::vector<T> &vector, int ini, int cen, int fin) {
   int i = ini;
   int j = cen + 1;
+  int size = fin;
 
-  std::vector<Key> aux(fin + 1);
+  std::vector<T> aux(fin + 1);
 
   int k = ini;
   while ((i <= cen) && (j <= fin)) {
@@ -63,18 +65,20 @@ void MergeSort<Key>::Mix(std::vector<Key> &vector, int ini, int cen, int fin) {
     k++;
   }
 
-  if (i > cen)
+  if (i > cen) {
     while (j <= fin) {
       aux[k] = vector[j];
       j++;
       k++;
     }
-  else
+  } else {
     while (i <= cen) {
       aux[k] = vector[i];
       i++;
       k++;
     }
+  }
+
   for (int z = ini; z <= fin; z++) {
     vector[z] = aux[z];
   }

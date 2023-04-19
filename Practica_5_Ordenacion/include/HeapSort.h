@@ -21,15 +21,15 @@
 
 #include "SortMethod.h"
 
-template<class Key>
-class HeapSort : public SortMethod<Key> {
+template<typename T>
+class HeapSort : public SortMethod<T> {
   public:
-    void Sort(std::vector<Key> &vector, int size);
+    void Sort(std::vector<T> &vector, int size);
 };
 
-template<class Key>
-void HeapSort<Key>::Sort(std::vector<Key> &vector, int size) {
-  Key temp;
+template<typename T>
+void HeapSort<T>::Sort(std::vector<T> &vector, int size) {
+  T temp;
   for (int i = size / 2 - 1; i >= 0; i--) {
     for (int j = i; j < size; j++) {
       if (vector[j] > vector[i]) {

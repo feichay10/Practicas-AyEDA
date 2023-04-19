@@ -21,16 +21,16 @@
 
 #include "SortMethod.h"
 
-template<class Key>
-class RadixSort : public SortMethod<Key> {
+template<typename T>
+class RadixSort : public SortMethod<T> {
   public:
-    void Sort(std::vector<Key> &vector, int size);
+    void Sort(std::vector<T> &vector, int size);
 };
 
-template<class Key>
-void RadixSort<Key>::Sort(std::vector<Key> &vector, int size) {
+template<typename T>
+void RadixSort<T>::Sort(std::vector<T> &vector, int size) {
   for(int i = 1; kMinimunNumber / i > 0; i *= 10){
-    std::vector<Key> aux(size);
+    std::vector<T> aux(size);
     int count[10] = {0};
     for(int j = 0; j < size; j++){
       int digit = (vector[j] / i) % 10;
