@@ -21,36 +21,36 @@
 
 #include "SortMethod.h"
 
-template<typename T>
+template <typename T>
 class RadixSort : public SortMethod<T> {
-  public:
-    void Sort(std::vector<T> &vector, int size);
+ public:
+  void Sort(std::vector<T> &vector, int size);
 };
 
-template<typename T>
+template <typename T>
 void RadixSort<T>::Sort(std::vector<T> &vector, int size) {
-  for(int i = 1; kMinimunNumber / i > 0; i *= 10){
+  for (int i = 1; kMinimunNumber / i > 0; i *= 10) {
     std::vector<T> aux(size);
     int count[10] = {0};
-    for(int j = 0; j < size; j++){
+    for (int j = 0; j < size; j++) {
       int digit = (vector[j] / i) % 10;
       count[digit]++;
     }
-    for(int j = 1; j < 10; j++){
+    for (int j = 1; j < 10; j++) {
       count[j] += count[j - 1];
     }
-    for(int j = size - 1; j >= 0; j--){
+    for (int j = size - 1; j >= 0; j--) {
       int digit = (vector[j] / i) % 10;
       aux[count[digit] - 1] = vector[j];
       count[digit]--;
     }
-    for (int k = 0; k < size; k++){
+    for (int k = 0; k < size; k++) {
       vector[k] = aux[k];
     }
-    #ifdef TRAZA
+#ifdef TRAZA
     print(vector, size);
-    #endif
+#endif
   }
 }
 
-#endif // RADIXSORT_H
+#endif  // RADIXSORT_H

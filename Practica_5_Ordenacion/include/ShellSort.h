@@ -21,13 +21,13 @@
 
 #include "SortMethod.h"
 
-template<typename T>
+template <typename T>
 class ShellSort : public SortMethod<T> {
-  public:
-    void Sort(std::vector<T> &vector, int size);
+ public:
+  void Sort(std::vector<T> &vector, int size);
 };
 
-template<typename T>
+template <typename T>
 void ShellSort<T>::Sort(std::vector<T> &vector, int size) {
   int j;
   T temp;
@@ -42,10 +42,10 @@ void ShellSort<T>::Sort(std::vector<T> &vector, int size) {
       }
       vector[j] = temp;
     }
-    #ifdef TRAZA
+#ifdef TRAZA
     print(vector, size);
-    #endif
+#endif
   }
 }
 
-#endif // SHELLSORT_H
+#endif  // SHELLSORT_H

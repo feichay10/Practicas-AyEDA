@@ -21,13 +21,13 @@
 
 #include "SortMethod.h"
 
-template<typename T>
+template <typename T>
 class HeapSort : public SortMethod<T> {
-  public:
-    void Sort(std::vector<T> &vector, int size);
+ public:
+  void Sort(std::vector<T> &vector, int size);
 };
 
-template<typename T>
+template <typename T>
 void HeapSort<T>::Sort(std::vector<T> &vector, int size) {
   T temp;
   for (int i = size / 2 - 1; i >= 0; i--) {
@@ -38,9 +38,9 @@ void HeapSort<T>::Sort(std::vector<T> &vector, int size) {
         vector[j] = temp;
       }
     }
-    #ifdef TRAZA
+#ifdef TRAZA
     print(vector, size);
-    #endif
+#endif
   }
   for (int i = size - 1; i >= 0; i--) {
     temp = vector[0];
@@ -53,10 +53,10 @@ void HeapSort<T>::Sort(std::vector<T> &vector, int size) {
         vector[j + 1] = temp;
       }
     }
-    #ifdef TRAZA
+#ifdef TRAZA
     print(vector, size);
-    #endif
+#endif
   }
 }
 
-#endif // HEAPSORT_H
+#endif  // HEAPSORT_H

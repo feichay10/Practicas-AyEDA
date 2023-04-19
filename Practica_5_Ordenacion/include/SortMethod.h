@@ -24,17 +24,17 @@
 const int kMaximunNumber = 9999;
 const int kMinimunNumber = 1000;
 
-template<typename T>
+template <typename T>
 class SortMethod {
-  public:
-    virtual void Sort(std::vector<T> &vector, int size) = 0;
-    void print(std::vector<T> &vector, int size);
+ public:
+  virtual void Sort(std::vector<T> &vector, int size) = 0;
+  void print(std::vector<T> &vector, int size);
 
-  private:
-    unsigned size_;
+ private:
+  unsigned size_;
 };
 
-template<typename T>
+template <typename T>
 void print(std::vector<T> &vector, int size) {
   for (int i = 0; i < size; i++) {
     std::cout << vector[i] << " ";
@@ -42,4 +42,4 @@ void print(std::vector<T> &vector, int size) {
   std::cout << std::endl;
 }
 
-#endif // SORTMETHOD_H
+#endif  // SORTMETHOD_H

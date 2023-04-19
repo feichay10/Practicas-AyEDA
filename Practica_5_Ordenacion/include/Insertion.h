@@ -21,13 +21,13 @@
 
 #include "SortMethod.h"
 
-template<typename T>
+template <typename T>
 class Insertion : public SortMethod<T> {
-  public:
-    void Sort(std::vector<T> &vector, int size);
+ public:
+  void Sort(std::vector<T> &vector, int size);
 };
 
-template<typename T>
+template <typename T>
 void Insertion<T>::Sort(std::vector<T> &vector, int size) {
   for (int i = 1; i < size; i++) {
     T key = vector[i];
@@ -37,10 +37,10 @@ void Insertion<T>::Sort(std::vector<T> &vector, int size) {
       j--;
     }
     vector[j + 1] = key;
-    #ifdef TRAZA
+#ifdef TRAZA
     print(vector, size);
-    #endif
+#endif
   }
 }
 
-#endif // INSERTION_H
+#endif  // INSERTION_H
