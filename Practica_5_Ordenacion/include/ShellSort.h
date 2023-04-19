@@ -42,7 +42,9 @@ void ShellSort<T>::Sort(std::vector<T> &vector, int size) {
       }
       vector[j] = temp;
     }
+    #ifdef TRAZA
     print(vector, size);
+    #endif
   }
 }
 

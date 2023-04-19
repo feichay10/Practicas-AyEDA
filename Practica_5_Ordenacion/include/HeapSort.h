@@ -38,7 +38,9 @@ void HeapSort<T>::Sort(std::vector<T> &vector, int size) {
         vector[j] = temp;
       }
     }
+    #ifdef TRAZA
     print(vector, size);
+    #endif
   }
   for (int i = size - 1; i >= 0; i--) {
     temp = vector[0];
@@ -51,7 +53,9 @@ void HeapSort<T>::Sort(std::vector<T> &vector, int size) {
         vector[j + 1] = temp;
       }
     }
+    #ifdef TRAZA
     print(vector, size);
+    #endif
   }
 }
 

@@ -116,7 +116,10 @@ int main() {
       break;
   } 
 
-  std::cout << "\nOrdenando... " << std::endl;
+  #ifdef TRAZA
+  std::cout << "\nOrdenando..." << std::endl;
+  #endif
+
   sortMethod->Sort(vector, vectorSize);
   std::cout << "\n\nVector ordenado es: " << std::endl;
   std::cout << kGreenBold << "[ ";

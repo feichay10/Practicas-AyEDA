@@ -47,7 +47,9 @@ void RadixSort<T>::Sort(std::vector<T> &vector, int size) {
     for (int k = 0; k < size; k++){
       vector[k] = aux[k];
     }
+    #ifdef TRAZA
     print(vector, size);
+    #endif
   }
 }
 

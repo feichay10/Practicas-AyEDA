@@ -37,7 +37,9 @@ void Insertion<T>::Sort(std::vector<T> &vector, int size) {
       j--;
     }
     vector[j + 1] = key;
+    #ifdef TRAZA
     print(vector, size);
+    #endif
   }
 }
 
