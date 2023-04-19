@@ -20,19 +20,19 @@
 #include <random>
 #include <vector>
 
-#include "../include/SortMethod.h"
 #include "../include/HeapSort.h"
 #include "../include/Insertion.h"
+#include "../include/Key.h"
 #include "../include/MergeSort.h"
 #include "../include/RadixSort.h"
 #include "../include/ShellSort.h"
-#include "../include/Key.h"
+#include "../include/SortMethod.h"
 
 const std::string kRedBold = "\033[31m\033[1m";
 const std::string kGreenBold = "\033[32m\033[1m";
 const std::string kCyanBold = "\033[36m\033[1m";
 const std::string kBold = "\033[1m";
-const std::string kReset = "\033[0m"; 
+const std::string kReset = "\033[0m";
 
 typedef Key<int> keyType;
 
@@ -54,7 +54,7 @@ int main() {
   std::cin >> generateOption;
 
   system("clear");
-  switch(generateOption) {
+  switch (generateOption) {
     case 1:
       std::cout << kBold << "Vector aleatorio" << kReset << std::endl;
       for (int i = 0; i < vectorSize; i++) {
@@ -76,7 +76,6 @@ int main() {
       break;
   }
 
-
   std::cout << kCyanBold << "[ ";
   for (int i = 0; i < vectorSize; i++) {
     std::cout << vector[i] << " ";
@@ -87,9 +86,9 @@ int main() {
   std::cout << kRedBold << "  1." << kReset << kBold << " Inserción" << std::endl;
   std::cout << kRedBold << "  2." << kReset << kBold << " MergeSort" << std::endl;
   std::cout << kRedBold << "  3." << kReset << kBold << " ShellSort" << std::endl;
-  std::cout << kRedBold << "  4." << kReset << kBold << " HeapSort" << std::endl;
+  std::cout << kRedBold << "  4." << kReset << kBold << " HeapSort"  << std::endl;
   std::cout << kRedBold << "  5." << kReset << kBold << " RadixSort" << std::endl;
-    std::cout << "Seleccione el algoritmo de ordenación: ";
+  std::cout << "Seleccione el algoritmo de ordenación: ";
   std::cin >> algorithmOption;
 
   SortMethod<keyType> *sortMethod;
@@ -114,11 +113,11 @@ int main() {
       std::cout << "Opción no válida" << std::endl;
       exit(EXIT_FAILURE);
       break;
-  } 
+  }
 
-  #ifdef TRAZA
+#ifdef TRAZA
   std::cout << "\nOrdenando..." << std::endl;
-  #endif
+#endif
 
   sortMethod->Sort(vector, vectorSize);
   std::cout << "\n\nVector ordenado es: " << std::endl;
@@ -130,4 +129,3 @@ int main() {
   std::cout << std::endl;
   return 0;
 }
-

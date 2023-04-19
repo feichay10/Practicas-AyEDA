@@ -7,7 +7,7 @@ all: ${OBJS}
 	$(CC) $(CXXFLAGS) -o main ${OBJS} 
 
 traza: ${OBJS}
-	g++ src/main.cc -D TRAZA -o main
+	$(CC) src/main.cc -D TRAZA -o main
 
 clean: 
 	rm -rf src/*.o main
