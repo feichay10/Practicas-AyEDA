@@ -36,9 +36,6 @@ void MergeSort<T>::Msort(std::vector<T> &vector, int ini, int fin) {
     Msort(vector, ini, cen);
     Msort(vector, cen + 1, fin);
     Mix(vector, ini, cen, fin);
-#ifdef TRAZA
-    print(vector, fin + 1);
-#endif
   }
 }
 
@@ -83,6 +80,9 @@ void MergeSort<T>::Mix(std::vector<T> &vector, int ini, int cen, int fin) {
 
   for (int z = ini; z <= fin; z++) {
     vector[z] = aux[z];
+#ifdef TRAZA
+    print(vector, fin + 1);
+#endif
   }
 }
 
