@@ -73,6 +73,7 @@ int main() {
       break;
     default:
       std::cout << "Opción no válida" << std::endl;
+      exit(EXIT_FAILURE);
       break;
   }
 
