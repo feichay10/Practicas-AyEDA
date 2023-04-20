@@ -34,7 +34,7 @@ const std::string kCyanBold = "\033[36m\033[1m";
 const std::string kBold = "\033[1m";
 const std::string kReset = "\033[0m";
 
-typedef Key<int> keyType;
+typedef Key<long> keyType;
 
 int main() {
   int vectorSize, generateOption, algorithmOption;
