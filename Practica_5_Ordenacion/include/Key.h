@@ -33,6 +33,8 @@ class Key {
   bool operator<(const Key<T> &other) const;
   bool operator>(const Key<T> &other) const;
   bool operator<=(const Key<T> &other) const;
+  bool operator>=(const Key<T> &other) const;
+  bool operator==(const Key<T> &other) const;
   T operator/(const Key<T> &other) const;
 
  private:
@@ -62,6 +64,16 @@ bool Key<T>::operator>(const Key<T> &other) const {
 template <typename T>
 bool Key<T>::operator<=(const Key<T> &other) const {
   return key_ <= other.key_;
+}
+
+template <typename T>
+bool Key<T>::operator>=(const Key<T> &other) const {
+  return key_ >= other.key_;
+}
+
+template <typename T>
+bool Key<T>::operator==(const Key<T> &other) const {
+  return key_ == other.key_;
 }
 
 template <typename T>
