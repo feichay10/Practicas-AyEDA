@@ -36,6 +36,10 @@ class Key {
   bool operator>=(const Key<T> &other) const;
   bool operator==(const Key<T> &other) const;
   T operator/(const Key<T> &other) const;
+  
+  // MODIFICATION - Assignment = operator
+  Key<T> &operator=(const Key<T> &other);
+  static long get_counter() { return counter_; }
 
  private:
   friend std::ostream &operator<<(std::ostream &os, const Key &key) {
@@ -49,7 +53,11 @@ class Key {
   }
 
   T key_;
+  static long counter_;
 };
+
+template <typename T>
+long Key<T>::counter_ = 0;
 
 template <typename T>
 bool Key<T>::operator<(const Key<T> &other) const {
@@ -79,6 +87,13 @@ bool Key<T>::operator==(const Key<T> &other) const {
 template <typename T>
 T Key<T>::operator/(const Key<T> &other) const {
   return key_ / other.key_;
+}
+
+template <typename T>
+Key<T> &Key<T>::operator=(const Key<T> &other) {
+  key_ = other.key_;
+  counter_++;
+  return *this;
 }
 
 #endif  // KEY_H

@@ -16,6 +16,15 @@
  *
  */
 
+// Elegir una tecnica de ordenacion, pero en lugar de ejecutar con un tamaño de vector, es generar
+// es utilizar un vector de tamaño aleatorio, y ejecutar el algoritmo de ordenacion con ese vector
+// tamaño 100, 1000 y 10000 elementos
+
+// la idea es quedarnos con el numero de comparaciones (asignaciones) numero de asignaciones de clave
+// que se utilizan al realizar la operacion. Para contarlos lo haremos con una clave que tendra un campo que
+// actue como clave (clase) y añadimos un contador estatico (static<long> counter) y añadimos el metodo numerico
+// de asignacion 
+
 #include <iostream>
 #include <random>
 #include <vector>
