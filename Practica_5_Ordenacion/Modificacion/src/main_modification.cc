@@ -59,38 +59,17 @@ int main() {
   std::vector<keyType> vectorOneThousand(1000);
   std::vector<keyType> vectorTenThousand(10000);
 
-  std::cout << kBold << "Vector aleatorio de 100 elementos: " << kReset << std::endl;
   for (int i = 0; i < 100; i++) {
     vectorOneHundred[i] = dis(gen);
   }
 
-  std::cout << kCyanBold << "[ ";
-  for (int i = 0; i < 100; i++) {
-    std::cout << vectorOneHundred[i] << " ";
-  }
-  std::cout << "]" << kReset << std::endl;
-
-  std::cout << kBold << "\n\nVector aleatorio de 1000 elementos: " << kReset << std::endl;
   for (int i = 0; i < 1000; i++) {
     vectorOneThousand[i] = dis(gen);
   }
 
-  std::cout << kCyanBold << "[ ";
-  for (int i = 0; i < 1000; i++) {
-    std::cout << vectorOneThousand[i] << " ";
-  }
-  std::cout << "]" << kReset << std::endl;
-
-  std::cout << kBold << "\n\nVector aleatorio de 10000 elementos: " << kReset << std::endl;
   for (int i = 0; i < 10000; i++) {
     vectorTenThousand[i] = dis(gen);
   }
-
-  std::cout << kCyanBold << "[ ";
-  for (int i = 0; i < 10000; i++) {
-    std::cout << vectorTenThousand[i] << " ";
-  }
-  std::cout << "]" << kReset << std::endl;
 
   std::cout << "\nSeleccione algun algoritmo de ordenación: " << std::endl;
   std::cout << kRedBold << "  1." << kReset << kBold << " Inserción" << std::endl;
@@ -131,29 +110,14 @@ int main() {
 
   sortMethod->Sort(vectorOneHundred, vectorOneHundred.size());
   std::cout << kBold << "\n\nVector ordenado de 100 elementos: " << kReset << std::endl;
-  std::cout << kGreenBold << "[ ";
-  for (int i = 0; i < 100; i++) {
-    std::cout << vectorOneHundred[i] << " ";
-  }
-  std::cout << "]" << kReset << std::endl;
   std::cout << kBold << "Número de comparaciones: " << kReset << key.get_counter() << std::endl;
 
   sortMethod->Sort(vectorOneThousand, vectorOneThousand.size());
   std::cout << kBold << "\n\nVector ordenado de 1000 elementos: " << kReset << std::endl;
-  std::cout << kGreenBold << "[ ";
-  for (int i = 0; i < 1000; i++) {
-    std::cout << vectorOneThousand[i] << " ";
-  }
-  std::cout << "]" << kReset << std::endl;
   std::cout << kBold << "Número de comparaciones: " << kReset << key.get_counter() << std::endl;
 
   sortMethod->Sort(vectorTenThousand, vectorTenThousand.size());
   std::cout << kBold << "\n\nVector ordenado de 10000 elementos: " << kReset << std::endl;
-  std::cout << kGreenBold << "[ ";
-  for (int i = 0; i < 10000; i++) {
-    std::cout << vectorTenThousand[i] << " ";
-  }
-  std::cout << "]" << kReset << std::endl;
   std::cout << kBold << "Número de comparaciones: " << kReset << key.get_counter() << std::endl;
   return 0;
 }
