@@ -18,8 +18,8 @@
 
 #include <iostream>
 
-#include "include/Key.h"
-#include "include/ABB.h"
+#include "../include/Key.h"
+#include "../include/ABB.h"
 
 const std::string kRedBold = "\033[31m\033[1m";
 const std::string kGreenBold = "\033[32m\033[1m";
@@ -52,7 +52,7 @@ int main() {
   }
 
   while (true) {
-    std::cout << kBold << "Operaciones" << kReset << std::endl;
+    std::cout << kBold << "\n\nOperaciones" << kReset << std::endl;
     std::cout << kRedBold << "  [0]" << kReset << kBold << " Salir" << std::endl;
     std::cout << kRedBold << "  [1]" << kReset << kBold << " Insertar clave" << std::endl;
     std::cout << kRedBold << "  [2]" << kReset << kBold << " Buscar clave" << std::endl;
@@ -67,8 +67,8 @@ int main() {
         exit(EXIT_SUCCESS);
         break;
       case 1: 
-        std::cout << "Insetar clave: ";
-        // std::cin >> key;
+        std::cout << "Insertar clave: ";
+        std::cin >> key;
         // if (tree->insert(key)) {
         //   std::cout << "Clave insertada" << std::endl;
         // } else {
@@ -86,6 +86,7 @@ int main() {
         break;
       default: 
         std::cout << "Opcion invalida" << std::endl;
+        exit(EXIT_FAILURE);
     }
     // mostrar arbol
     // tree->Write();
