@@ -16,13 +16,25 @@
  *
  */
 
+#ifndef KEY_H_
+#define KEY_H_
+
 template <typename T>
 class Key {
  public:
   Key(T key) : key_(key) {}
+  Key() = default;
   ~Key() = default;
   T getKey() const { return key_; }
+
+  // Operator >> overload
+  friend std::istream& operator>>(std::istream& is, Key& key) {
+    is >> key.key_;
+    return is;
+  }
 
  private:
   T key_;
 };
+
+#endif //KEY_H_
