@@ -21,21 +21,15 @@
 
 template <class Key>
 class NodoB {
- public:
   NodoB(Key data_, NodoB* left_ = nullptr, NodoB* right_ = nullptr)
       : data_(data_), left_(left_), right_(right_) {}
   NodoB() : left_(nullptr), right_(nullptr) {}
   ~NodoB() = default;
-
-  NodoB<Key>* getLeft() const;
-  NodoB<Key>*& getLeft();
-  NodoB<Key>* getRight() const;
-  NodoB<Key>*& getRight();
-
-  void setLeft(NodoB<Key>* left);
-  void setRight(NodoB<Key>* right);
-  void setData(Key data);
   Key getData() const;
+
+ public:
+  NodoB<Key>* getLeft() const;
+  NodoB<Key>* getRight() const;
 
  private:
   Key data_;
@@ -49,33 +43,8 @@ NodoB<Key>* NodoB<Key>::getLeft() const {
 }
 
 template <class Key>
-NodoB<Key>*& NodoB<Key>::getLeft() {
-  return left_;
-}
-
-template <class Key>
 NodoB<Key>* NodoB<Key>::getRight() const {
   return right_;
-}
-
-template <class Key>
-NodoB<Key>*& NodoB<Key>::getRight() {
-  return right_;
-}
-
-template <class Key>
-void NodoB<Key>::setLeft(NodoB<Key>* left) {
-  NodoB::left_ = left;
-}
-
-template <class Key>
-void NodoB<Key>::setRight(NodoB<Key>* right) {
-  NodoB::right_ = right;
-}
-
-template <class Key>
-void NodoB<Key>::setData(Key data) {
-  NodoB::data_ = data;
 }
 
 template <class Key>
