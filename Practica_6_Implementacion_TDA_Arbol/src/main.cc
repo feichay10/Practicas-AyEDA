@@ -19,6 +19,7 @@
 #include <iostream>
 
 #include "../include/Key.h"
+// #include "../include/AB.h"
 #include "../include/ABB.h"
 
 const std::string kRedBold = "\033[31m\033[1m";
@@ -30,25 +31,25 @@ const std::string kReset = "\033[0m";
 typedef Key<long> keyType;
 
 int main() {
-  int option;
+  int optionTree, option;
 
   std::cout << kBold << "Arboles de busqueda" << kReset << std::endl;
   std::cout << kRedBold << "  1." << kReset << kBold << " Árbol Binario de Búsqueda - ABB" << std::endl;
-  std::cout << kRedBold << "  2." << kReset << kBold << " Árbol Binario de Búsqueda Balancedo - AVL" << std::endl;
+  std::cout << kRedBold << "  2." << kReset << kBold << " Árbol Binario de Búsqueda Balanceado - AVL" << std::endl;
   std::cout << "Seleccione tipo de arbol: "; 
-  std::cin >> option;
+  std::cin >> optionTree;
 
-  // AB<keyType> *tree;
+  AB<keyType> *tree;
 
-  switch (option) {
+  switch (optionTree) {
     case 1: 
-      // tree = new ABB<keyType>();
+      tree = new ABB<keyType>();
       break;
     case 2: 
       // tree = new AVL<keyType>();
       break;
     default: std::cout << "Opcion invalida" << std::endl;
-      return 0;
+      exit(EXIT_FAILURE);
   }
 
   while (true) {
@@ -69,15 +70,15 @@ int main() {
       case 1: 
         std::cout << "Insertar clave: ";
         std::cin >> key;
-        // if (tree->insert(key)) {
-        //   std::cout << "Clave insertada" << std::endl;
-        // } else {
-        //   std::cout << "Clave ya existente" << std::endl;
-        // }
+        if (tree->insert(key)) {
+          std::cout << "Clave insertada" << std::endl;
+        } else {
+          std::cout << "Clave ya existente" << std::endl;
+        }
         break;
       case 2: 
         std::cout << "Buscar clave: ";
-        // std::cin >> key;
+        std::cin >> key;
         // std::cout << "Clave " << key << ": " << tree->search(key) << std::endl;
         break;
       case 3: 
@@ -89,6 +90,6 @@ int main() {
         exit(EXIT_FAILURE);
     }
     // mostrar arbol
-    // tree->Write();
+    tree->write();
   }
 }

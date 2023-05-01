@@ -27,10 +27,21 @@ class Key {
   ~Key() = default;
   T getKey() const { return key_; }
 
+  // Operator overload
+  bool operator<(const Key& key) const { return key_ < key.key_; }
+  bool operator>(const Key& key) const { return key_ > key.key_; }
+  bool operator==(const Key& key) const { return key_ == key.key_; }
+
   // Operator >> overload
   friend std::istream& operator>>(std::istream& is, Key& key) {
     is >> key.key_;
     return is;
+  }
+
+  // Operator << overload
+  friend std::ostream& operator<<(std::ostream& os, const Key& key) {
+    os << key.key_;
+    return os;
   }
 
  private:
