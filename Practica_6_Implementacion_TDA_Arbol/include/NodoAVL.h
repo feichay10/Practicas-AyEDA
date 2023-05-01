@@ -22,15 +22,15 @@
 template <class Key>
 class NodoAVL : public NodoB<Key>{
  public:
-  NodoAVL(void);
+  NodoAVL();
   NodoAVL(const Key& data, NodoAVL<Key>* left = NULL, NodoAVL<Key>* right = NULL);
   ~NodoAVL() = default;
 
-  int getBal(void);
-  NodoAVL<Key>* getLeft(void) const;
-  NodoAVL<Key>*& getLeft(void);
-  NodoAVL<Key>* getRight(void) const;
-  NodoAVL<Key>*& getRight(void);
+  int getBal();
+  NodoAVL<Key>* getLeft() const;
+  NodoAVL<Key>*& getLeft();
+  NodoAVL<Key>* getRight() const;
+  NodoAVL<Key>*& getRight();
   void setBal(const int& bal);
   void setLeft(NodoAVL<Key>* &left = NULL);
   void setRight(NodoAVL<Key>* &right = NULL);
