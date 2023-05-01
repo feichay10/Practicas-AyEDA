@@ -22,9 +22,27 @@
 template <class Key>
 class NodoAVL : public NodoB<Key>{
  public:
+  NodoAVL(void);
+  NodoAVL(const Key& data, NodoAVL<Key>* left = NULL, NodoAVL<Key>* right = NULL);
+  ~NodoAVL() = default;
+
+  int getBal(void);
+  NodoAVL<Key>* getPtrLeft(void) const;
+  NodoAVL<Key>*& getPtrLeft(void);
+  NodoAVL<Key>* getPtrRight(void) const;
+  NodoAVL<Key>*& getPtrRight(void);
+  void setBal(const int& bal);
+  void setPtrLeft(NodoAVL<Key>* &left = NULL);
+  void setPtrRight(NodoAVL<Key>* &right = NULL);
+
+  NodoAVL<Key>& operator=(const NodoAVL<Key>& nodo);
+  friend std::ostream& operator<<(std::ostream& out, const NodoAVL<Key>& nodo) {
+    out << nodo.data_;
+    return out;
+  }
 
  private:
-
+  int bal_;
 };
 
 #endif //NODOAVL_H_
