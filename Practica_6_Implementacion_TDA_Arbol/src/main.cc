@@ -79,7 +79,7 @@ int main() {
       case 2: 
         std::cout << "Buscar clave: ";
         std::cin >> key;
-        // std::cout << "Clave " << key << ": " << tree->search(key) << std::endl;
+        std::cout << "Clave " << key << ": " << tree->search(key) << std::endl;
         break;
       case 3: 
         std::cout << "Mostrar arbol inorden: ";
