@@ -27,17 +27,17 @@ class NodoAVL : public NodoB<Key>{
   ~NodoAVL() = default;
 
   int getBal(void);
-  NodoAVL<Key>* getPtrLeft(void) const;
-  NodoAVL<Key>*& getPtrLeft(void);
-  NodoAVL<Key>* getPtrRight(void) const;
-  NodoAVL<Key>*& getPtrRight(void);
+  NodoAVL<Key>* getLeft(void) const;
+  NodoAVL<Key>*& getLeft(void);
+  NodoAVL<Key>* getRight(void) const;
+  NodoAVL<Key>*& getRight(void);
   void setBal(const int& bal);
-  void setPtrLeft(NodoAVL<Key>* &left = NULL);
-  void setPtrRight(NodoAVL<Key>* &right = NULL);
+  void setLeft(NodoAVL<Key>* &left = NULL);
+  void setRight(NodoAVL<Key>* &right = NULL);
 
-  NodoAVL<Key>& operator=(const NodoAVL<Key>& nodo);
-  friend std::ostream& operator<<(std::ostream& out, const NodoAVL<Key>& nodo) {
-    out << nodo.data_;
+  NodoAVL<Key>& operator=(const NodoAVL<Key>& node);
+  friend std::ostream& operator<<(std::ostream& out, const NodoAVL<Key>& node) {
+    out << node.data_;
     return out;
   }
 
