@@ -22,15 +22,15 @@
 template <typename T>
 class Key {
  public:
-  Key(T key) : key_(key) {}
+  Key(T key);
   Key() = default;
   ~Key() = default;
-  T getKey() const { return key_; }
+  T getKey() const;
 
   // Operator overload
-  bool operator<(const Key& key) const { return key_ < key.key_; }
-  bool operator>(const Key& key) const { return key_ > key.key_; }
-  bool operator==(const Key& key) const { return key_ == key.key_; }
+  bool operator<(const Key& key);
+  bool operator>(const Key& key);
+  bool operator==(const Key& key);
 
   // Operator >> overload
   friend std::istream& operator>>(std::istream& is, Key& key) {
@@ -47,5 +47,30 @@ class Key {
  private:
   T key_;
 };
+
+template <typename T>
+Key<T>::Key(T key) {
+  key_ = key;
+}
+
+template <typename T>
+T Key<T>::getKey() const {
+  return key_;
+}
+
+template <typename T>
+bool Key<T>::operator<(const Key& key) {
+  return key_ < key.key_;
+}
+
+template <typename T>
+bool Key<T>::operator>(const Key& key) {
+  return key_ > key.key_;
+}
+
+template <typename T>
+bool Key<T>::operator==(const Key& key) {
+  return key_ == key.key_;
+}
 
 #endif //KEY_H_

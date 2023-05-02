@@ -19,6 +19,8 @@
 #ifndef NODOAVL_H_
 #define NODOAVL_H_
 
+#include "NodoB.h"
+
 template <class Key>
 class NodoAVL : public NodoB<Key>{
  public:
@@ -44,5 +46,35 @@ class NodoAVL : public NodoB<Key>{
  private:
   int bal_;
 };
+
+template <typename Key>
+NodoAVL<Key>::NodoAVL() {
+  this->left_ = NULL;
+  this->right_ = NULL;
+  bal_ = 0;
+}
+
+template <typename Key>
+NodoAVL<Key>::NodoAVL(const Key& data, NodoAVL<Key>* left, NodoAVL<Key>* right) {
+  this->data_ = data;
+  this->left_ = left;
+  this->right_ = right;
+  bal_ = 0;
+}
+
+template <typename Key>
+int NodoAVL<Key>::getBal() {
+  return bal_;
+}
+
+template <typename Key>
+NodoAVL<Key>* NodoAVL<Key>::getLeft() const {
+  return reinterpret_cast<NodoAVL<Key>*>(this->NodoB<Key>::getLeft());
+}
+
+template <typename Key>
+NodoAVL<Key>*& NodoAVL<Key>::getLeft() {
+  return reinterpret_cast<NodoAVL<Key>*&>(this->NodoB<Key>::getLeft());
+}
 
 #endif //NODOAVL_H_
