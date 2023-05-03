@@ -37,7 +37,6 @@ class NodoAVL : public NodoB<Key>{
   void setLeft(NodoAVL<Key>* &left = NULL);
   void setRight(NodoAVL<Key>* &right = NULL);
 
-  NodoAVL<Key>& operator=(const NodoAVL<Key>& node);
   friend std::ostream& operator<<(std::ostream& out, const NodoAVL<Key>& node) {
     out << node.data_;
     return out;

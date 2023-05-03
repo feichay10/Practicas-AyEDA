@@ -47,7 +47,7 @@ void AB<Key>::inorder() const {
 
 template <typename Key>
 void AB<Key>::inorder(NodoB<Key>* node) const {
-  if (root_ != nullptr) {
+  if (node != nullptr) {
     inorder(node->getLeft());
     std::cout << node->getData() << " ";
     inorder(node->getRight());
@@ -75,7 +75,7 @@ void AB<Key>::write() {
   std::queue<NodoB<Key>*> queue, queueAux;
   queue.push(root_);
   while (!queue.empty()) {
-    std::cout << "Nivel " << k << ": ";
+    std::cout << "\nNivel " << k << ": ";
     while (!queue.empty()) {
       if (queue.front() != nullptr) {
         std::cout << "[" << queue.front()->getData() << "]";

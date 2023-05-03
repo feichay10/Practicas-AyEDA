@@ -19,8 +19,8 @@
 #include <iostream>
 
 #include "../include/Key.h"
-// #include "../include/AB.h"
 #include "../include/ABB.h"
+#include "../include/AVL.h"
 
 const std::string kRedBold = "\033[31m\033[1m";
 const std::string kGreenBold = "\033[32m\033[1m";
@@ -46,7 +46,7 @@ int main() {
       tree = new ABB<keyType>();
       break;
     case 2: 
-      // tree = new AVL<keyType>();
+      tree = new AVL<keyType>();
       break;
     default: std::cout << "Opcion invalida" << std::endl;
       exit(EXIT_FAILURE);
@@ -83,11 +83,11 @@ int main() {
         break;
       case 3: 
         std::cout << "Mostrar arbol inorden: ";
-        // tree->inorder();
+        tree->inorder();
         break;
       default: 
         std::cout << "Opcion invalida" << std::endl;
-        exit(EXIT_FAILURE);
+        std::cout << "\n\nSeleccione operacion: " << std::endl;
     }
     // mostrar arbol
     tree->write();
