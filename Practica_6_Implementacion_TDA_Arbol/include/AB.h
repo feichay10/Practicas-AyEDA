@@ -28,6 +28,8 @@ template <typename Key>
 class AB {
  public:
   NodoB<Key>* getRoot() const;
+  NodoB<Key>*& getRoot();
+  void setRoot(NodoB<Key>* root);
   virtual bool insert(const Key& k) = 0;
   virtual bool search(const Key& k) const = 0;
   void inorder() const;
@@ -55,6 +57,16 @@ void AB<Key>::inorder(NodoB<Key>* node) const {
 template <typename Key>
 NodoB<Key>* AB<Key>::getRoot() const {
   return root_;
+}
+
+template <typename Key>
+NodoB<Key>*& AB<Key>::getRoot() {
+  return root_;
+}
+
+template <typename Key>
+void AB<Key>::setRoot(NodoB<Key>* root) {
+  root_ = root;
 }
 
 template <typename Key>
