@@ -77,4 +77,29 @@ NodoAVL<Key>*& NodoAVL<Key>::getLeft() {
   return reinterpret_cast<NodoAVL<Key>*&>(this->NodoB<Key>::getLeft());
 }
 
+template <typename Key>
+NodoAVL<Key>* NodoAVL<Key>::getRight() const {
+  return reinterpret_cast<NodoAVL<Key>*>(this->NodoB<Key>::getRight());
+}
+
+template <typename Key>
+NodoAVL<Key>*& NodoAVL<Key>::getRight() {
+  return reinterpret_cast<NodoAVL<Key>*&>(this->NodoB<Key>::getRight());
+}
+
+template <typename Key>
+void NodoAVL<Key>::setBal(const int& bal) {
+  bal_ = bal;
+}
+
+template <typename Key>
+void NodoAVL<Key>::setLeft(NodoAVL<Key>* &left) {
+  this->NodoB<Key>::setLeft(left);
+}
+
+template <typename Key>
+void NodoAVL<Key>::setRight(NodoAVL<Key>* &right) {
+  this->NodoB<Key>::setRight(right);
+}
+
 #endif //NODOAVL_H_
