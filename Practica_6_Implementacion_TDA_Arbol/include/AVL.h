@@ -45,14 +45,15 @@ class AVL : public ABB<Key> {
 };
 
 template <typename Key>
-AVL<Key>::AVL(bool trace, NodoAVL<Key>* node) : trace_(trace) {
+AVL<Key>::AVL(bool trace, NodoAVL<Key>* node) {
+  this->trace_ = trace;
   this->AB<Key>::setRoot(node);
 }
 
 template <typename Key>
 bool AVL<Key>::Insert(const Key& data) {
   NodoAVL<Key>* newOne = new NodoAVL<Key>(data);
-  bool grow{false};
+  bool grow = false;
   this->InsertaBal(this->GetRoot(), newOne, grow);
   return grow;
 }
@@ -74,72 +75,76 @@ NodoAVL<Key>* AVL<Key>::GetRoot() const {
 
 template <typename Key>
 void AVL<Key>::rotation_II(NodoAVL<Key>*& node) {
-  NodoAVL<Key>* nodo1 = reinterpret_cast<NodoAVL<Key>*&>(node->GetPtrIzdo());
-  node->SetPtrIzdo(reinterpret_cast<NodoAVL<Key>*&>(nodo1->GetPtrDcho()));
-  nodo1->SetPtrDcho(node);
-  if (nodo1->GetBal() == 1) {
+  NodoAVL<Key>* node_aux = reinterpret_cast<NodoAVL<Key>*&>(node->GetPtrIzdo());
+  node->SetPtrIzdo(reinterpret_cast<NodoAVL<Key>*&>(node_aux->GetPtrDcho()));
+  node_aux->SetPtrDcho(node);
+  if (node_aux->GetBal() == 1) {
     node->SetBal(0);
-    nodo1->SetBal(0);
-  } else {  ///< nodo1->GetBal() == 0
+    node_aux->SetBal(0);
+  } else {
     node->SetBal(1);
-    nodo1->SetBal(-1);
+    node_aux->SetBal(-1);
   }
-  node = nodo1;
+  node = node_aux;
 }
 
 template <typename Key>
 void AVL<Key>::rotation_DD(NodoAVL<Key>*& node) {
-  NodoAVL<Key>* nodo1 = reinterpret_cast<NodoAVL<Key>*&>(node->GetPtrDcho());
-  node->SetPtrDcho(reinterpret_cast<NodoAVL<Key>*&>(nodo1->GetPtrIzdo()));
-  nodo1->SetPtrIzdo(node);
-  if (nodo1->GetBal() == -1) {
+  NodoAVL<Key>* node_aux = reinterpret_cast<NodoAVL<Key>*&>(node->GetPtrDcho());
+  node->SetPtrDcho(reinterpret_cast<NodoAVL<Key>*&>(node_aux->GetPtrIzdo()));
+  node_aux->SetPtrIzdo(node);
+  if (node_aux->GetBal() == -1) {
     node->SetBal(0);
-    nodo1->SetBal(0);
-  } else {  ///< nodo1->GetBal() == 0
+    node_aux->SetBal(0);
+  } else {
     node->SetBal(-1);
-    nodo1->SetBal(1);
+    node_aux->SetBal(1);
   }
-  node = nodo1;
+  node = node_aux;
 }
 
 template <typename Key>
 void AVL<Key>::rotation_ID(NodoAVL<Key>*& node) {
-  NodoAVL<Key>* nodo1 = node->GetPtrIzdo();
-  NodoAVL<Key>* nodo2 = nodo1->GetPtrDcho();
-  node->GetPtrIzdo() = nodo2->GetPtrDcho();  ///< Es esta linea
-  nodo2->SetPtrDcho(node);
-  nodo1->SetPtrDcho(nodo2->GetPtrIzdo());
-  nodo2->GetPtrIzdo() = nodo1;
-  if (nodo2->GetBal() == -1)
-    nodo1->SetBal(1);
-  else
-    nodo1->SetBal(0);
-  if (nodo2->GetBal() == 1)
-    node->SetBal(-1);
-  else
+  NodoAVL<Key>* node_aux = node->GetPtrIzdo();
+  NodoAVL<Key>* node_aux_2 = node_aux->GetPtrDcho();
+  node->GetPtrIzdo() = node_aux_2->GetPtrDcho();
+  node_aux_2->SetPtrDcho(node);
+  node_aux->SetPtrDcho(node_aux_2->GetPtrIzdo());
+  node_aux_2->GetPtrIzdo() = node_aux;
+  if (node_aux_2->GetBal() == -1) {
+    node->SetBal(1);
+  } else {
     node->SetBal(0);
-  nodo2->SetBal(0);
-  node = nodo2;
+  }
+  if (node_aux_2->GetBal() == 1) {
+    node_aux->SetBal(-1);
+  } else {
+    node_aux->SetBal(0);
+  }
+  node_aux_2->SetBal(0);
+  node = node_aux_2;
 }
 
 template <typename Key>
 void AVL<Key>::rotation_DI(NodoAVL<Key>*& node) {
-  NodoAVL<Key>* nodo1 = node->GetPtrDcho();
-  NodoAVL<Key>* nodo2 = nodo1->GetPtrIzdo();
-  node->GetPtrDcho() = nodo2->GetPtrIzdo();  ///< Y esta otra
-  nodo2->SetPtrIzdo(node);
-  nodo1->SetPtrIzdo(nodo2->GetPtrDcho());
-  nodo2->SetPtrDcho(nodo1);
-  if (nodo2->GetBal() == 1)
-    nodo1->SetBal(-1);
-  else
-    nodo1->SetBal(-1);
-  if (nodo2->GetBal() == -1)
+  NodoAVL<Key>* node_aux = node->GetPtrDcho();
+  NodoAVL<Key>* node_aux_2 = node_aux->GetPtrIzdo();
+  node->GetPtrDcho() = node_aux_2->GetPtrIzdo();
+  node_aux_2->SetPtrIzdo(node);
+  node_aux->SetPtrIzdo(node_aux_2->GetPtrDcho());
+  node_aux_2->SetPtrDcho(node_aux);
+  if (node_aux_2->GetBal() == 1) {
+    node_aux->SetBal(-1);
+  } else {
+    node_aux->SetBal(-1);
+  }
+  if (node_aux_2->GetBal() == -1) {
     node->SetBal(1);
-  else
+  } else {
     node->SetBal(0);
-  nodo2->SetBal(0);
-  node = nodo2;
+  }
+  node_aux_2->SetBal(0);
+  node = node_aux_2;
 }
 
 template <typename Key>
@@ -159,7 +164,8 @@ void AVL<Key>::InsertaBal(NodoAVL<Key>*& root, NodoAVL<Key>*& newOne, bool& grow
           root->setBal(-1);
           break;
         case -1:
-          if (reinterpret_cast<NodoAVL<Key>*&>(root->getLeft())->getBal() == -1) {
+          if (reinterpret_cast<NodoAVL<Key>*&>(root->getLeft())->getBal() ==
+              -1) {
             rotation_II(root);
           } else {
             rotation_ID(root);
@@ -194,5 +200,4 @@ void AVL<Key>::InsertaBal(NodoAVL<Key>*& root, NodoAVL<Key>*& newOne, bool& grow
   }
 }
 
-
-#endif //AVL_H_
+#endif  // AVL_H_
