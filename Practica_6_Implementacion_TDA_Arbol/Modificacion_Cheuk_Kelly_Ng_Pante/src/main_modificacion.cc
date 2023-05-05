@@ -36,7 +36,7 @@
 typedef Key<long> keyType;
 
 int main() {
-  //AB<keyType> *tree_abb; 
+  AB<keyType> *tree_abb; 
   AB<keyType> *tree_avl; 
   std::random_device rd;
   std::mt19937 gen(rd());
@@ -44,26 +44,27 @@ int main() {
   keyType random;
   int count_abb = 0, count_avl = 0;
 
-  //tree_abb = new ABB<keyType>();
+  tree_abb = new ABB<keyType>();
   tree_avl = new AVL<keyType>();
 
+  // Fallo en el insert del AVL
   for (int i = 0; i < 5000; i++) { 
     random = dis(gen);
-    // if (tree_abb->insert(random)) {
-    //   ++count_abb;
-    // }
+    if (tree_abb->insert(random)) {
+      ++count_abb;
+    }
     if (tree_avl->insert(random)) {
       ++count_avl;
     }
   }
 
-  //std::cout << "Numero de valores insertados en el arbol ABB: " << count_abb << std::endl;
+  std::cout << "Numero de valores insertados en el arbol ABB: " << count_abb << std::endl;
   std::cout << "Numero de valores insertado en el arbol AVL: " << count_avl << std::endl << std::endl;
 
-  //std::cout << "ABB: " << std::endl;
-  // std::cout << "Altura del subarbol izquierdo: " << tree_abb->height(tree_abb->getRoot()->getLeft()) << std::endl;
-  // std::cout << "Altura del subarbol derecho: " << tree_abb->height(tree_abb->getRoot()->getRight()) << std::endl;
-  // std::cout << "La diferencia altura entre los subarboles: " << tree_abb->height(tree_abb->getRoot()->getLeft()) - tree_abb->height(tree_abb->getRoot()->getRight()) << std::endl;
+  std::cout << "ABB: " << std::endl;
+  std::cout << "Altura del subarbol izquierdo: " << tree_abb->height(tree_abb->getRoot()->getLeft()) << std::endl;
+  std::cout << "Altura del subarbol derecho: " << tree_abb->height(tree_abb->getRoot()->getRight()) << std::endl;
+  std::cout << "La diferencia altura entre los subarboles: " << tree_abb->height(tree_abb->getRoot()->getLeft()) - tree_abb->height(tree_abb->getRoot()->getRight()) << std::endl;
 
   std::cout << "\nAVL: " << std::endl;
   std::cout << "Altura del subarbol izquierdo: " << tree_avl->height(tree_avl->getRoot()->getLeft()) << std::endl;
