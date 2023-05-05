@@ -37,6 +37,9 @@ class AB {
   bool empty();
   void write();
 
+  // Modificacion:
+  const int height(NodoB<Key>* node) const;
+
  protected:
   NodoB<Key>* root_;
 };
@@ -98,6 +101,21 @@ void AB<Key>::write() {
     }
     k++;
     std::cout << "\n";
+  }
+}
+
+// Modificacion
+template <typename Key>
+const int AB<Key>::height(NodoB<Key>* node) const {
+  if (node == nullptr) {
+    return 0;
+  }
+  int left_height = height(node->getLeft());
+  int right_height = height(node->getRight());
+  if (left_height > right_height) {
+    return ++left_height;
+  } else {
+    return ++right_height;
   }
 }
 
