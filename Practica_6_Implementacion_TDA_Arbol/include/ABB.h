@@ -26,7 +26,6 @@ class ABB : public AB<Key> {
   bool insertBranch(NodoB<Key>*& node, Key k);
   bool searchBranch(NodoB<Key>* node, Key k) const;
 
-  // methods from AB class
   bool insert(const Key& k);
   bool search(const Key& k) const;
 };

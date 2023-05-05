@@ -25,6 +25,7 @@ class NodoB {
   NodoB(Key data_, NodoB<Key>* left_ = nullptr, NodoB<Key>* right_ = nullptr);
   NodoB();
   ~NodoB() = default;
+  
   NodoB<Key>* getLeft() const;
   NodoB<Key>*& getLeft();
   NodoB<Key>* getRight() const;
