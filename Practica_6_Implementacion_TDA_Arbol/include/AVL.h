@@ -28,20 +28,20 @@ template <class Key>
 class AVL : public ABB<Key> {
  public:
   AVL(bool trace = false, NodoAVL<Key>* node = nullptr);
-  bool Insert(const Key& data);
+  bool insert(const Key& data) override;
 
  protected:
-  void SetRoot(NodoAVL<Key>* root);
-  NodoAVL<Key>*& GetRoot();
-  NodoAVL<Key>* GetRoot() const;
+  void setRoot(NodoAVL<Key>* root);
+  NodoAVL<Key>*& getRoot();
+  NodoAVL<Key>* getRoot() const;
 
  private:
-  bool trace_{false};
+  bool trace_ = false;
   void rotation_II(NodoAVL<Key>*& node);
   void rotation_DD(NodoAVL<Key>*& node);
   void rotation_ID(NodoAVL<Key>*& node);
   void rotation_DI(NodoAVL<Key>*& node);
-  void InsertaBal(NodoAVL<Key>*& root, NodoAVL<Key>*& newOne, bool& grow);
+  void insertBal(NodoAVL<Key>*& root, NodoAVL<Key>*& newOne, bool& grow);
 };
 
 template <typename Key>
@@ -51,131 +51,121 @@ AVL<Key>::AVL(bool trace, NodoAVL<Key>* node) {
 }
 
 template <typename Key>
-bool AVL<Key>::Insert(const Key& data) {
+bool AVL<Key>::insert(const Key& data) {
   NodoAVL<Key>* newOne = new NodoAVL<Key>(data);
   bool grow = false;
-  this->InsertaBal(this->GetRoot(), newOne, grow);
+  this->insertBal(this->getRoot(), newOne, grow);
   return grow;
 }
 
 template <typename Key>
-void AVL<Key>::SetRoot(NodoAVL<Key>* root) {
-  this->AB<Key>::SetRoot(root);
+void AVL<Key>::setRoot(NodoAVL<Key>* root) {
+  this->AB<Key>::setRoot(root);
 }
 
 template <typename Key>
-NodoAVL<Key>*& AVL<Key>::GetRoot() {
-  return reinterpret_cast<NodoAVL<Key>*&>(this->AB<Key>::GetRoot());
+NodoAVL<Key>*& AVL<Key>::getRoot() {
+  return reinterpret_cast<NodoAVL<Key>*&>(this->AB<Key>::getRoot());
 }
 
 template <typename Key>
-NodoAVL<Key>* AVL<Key>::GetRoot() const {
-  return reinterpret_cast<NodoAVL<Key>*>(this->AB<Key>::GetRoot());
+NodoAVL<Key>* AVL<Key>::getRoot() const {
+  return reinterpret_cast<NodoAVL<Key>*>(this->AB<Key>::getRoot());
 }
 
 template <typename Key>
 void AVL<Key>::rotation_II(NodoAVL<Key>*& node) {
-  NodoAVL<Key>* node_aux = reinterpret_cast<NodoAVL<Key>*&>(node->GetPtrIzdo());
-  node->SetPtrIzdo(reinterpret_cast<NodoAVL<Key>*&>(node_aux->GetPtrDcho()));
-  node_aux->SetPtrDcho(node);
-  if (node_aux->GetBal() == 1) {
-    node->SetBal(0);
-    node_aux->SetBal(0);
+  #ifdef TRAZA
+    std::cout << "Rotación II en [" << node->getData() << "]";
+  #endif
+  NodoAVL<Key>* node1 = reinterpret_cast<NodoAVL<Key>*&>(node->getLeft());
+  node->setLeft(reinterpret_cast<NodoAVL<Key>*&>(node1->getRight()));
+  node1->setRight(node);
+  if (node1->getBal() == 1) {
+    node->setBal(0);
+    node1->setBal(0);
   } else {
-    node->SetBal(1);
-    node_aux->SetBal(-1);
+    node->setBal(1);
+    node1->setBal(-1);
   }
-  node = node_aux;
+  node = node1;
 }
 
 template <typename Key>
 void AVL<Key>::rotation_DD(NodoAVL<Key>*& node) {
-  NodoAVL<Key>* node_aux = reinterpret_cast<NodoAVL<Key>*&>(node->GetPtrDcho());
-  node->SetPtrDcho(reinterpret_cast<NodoAVL<Key>*&>(node_aux->GetPtrIzdo()));
-  node_aux->SetPtrIzdo(node);
-  if (node_aux->GetBal() == -1) {
-    node->SetBal(0);
-    node_aux->SetBal(0);
+  #ifdef TRAZA
+    std::cout << "Rotación DD en [" << node->getData() << "]";
+  #endif
+  NodoAVL<Key>* node1 = reinterpret_cast<NodoAVL<Key>*&>(node->getRight());
+  node->setRight(reinterpret_cast<NodoAVL<Key>*&>(node1->getLeft()));
+  node1->setLeft(node);
+  if (node1->getBal() == -1) {
+    node->setBal(0);
+    node1->setBal(0);
   } else {
-    node->SetBal(-1);
-    node_aux->SetBal(1);
+    node->setBal(-1);
+    node1->setBal(1);
   }
-  node = node_aux;
+  node = node1;
 }
 
 template <typename Key>
 void AVL<Key>::rotation_ID(NodoAVL<Key>*& node) {
-  NodoAVL<Key>* node_aux = node->GetPtrIzdo();
-  NodoAVL<Key>* node_aux_2 = node_aux->GetPtrDcho();
-  node->GetPtrIzdo() = node_aux_2->GetPtrDcho();
-  node_aux_2->SetPtrDcho(node);
-  node_aux->SetPtrDcho(node_aux_2->GetPtrIzdo());
-  node_aux_2->GetPtrIzdo() = node_aux;
-  if (node_aux_2->GetBal() == -1) {
-    node->SetBal(1);
+  #ifdef TRAZA
+    std::cout << "Rotación ID en [" << node->getData() << "]";
+  #endif
+  NodoAVL<Key>* node1 = node->getLeft();
+  NodoAVL<Key>* node2 = node1->getRight();
+  node->getLeft() = node2->getRight();
+  node2->setRight(node);
+  node1->setRight(node2->getLeft());
+  node2->getLeft() = node1;
+  if (node2->getBal() == -1) {
+    node->setBal(1);
   } else {
-    node->SetBal(0);
+    node->setBal(0);
   }
-  if (node_aux_2->GetBal() == 1) {
-    node_aux->SetBal(-1);
+  if (node2->getBal() == 1) {
+    node1->setBal(-1);
   } else {
-    node_aux->SetBal(0);
+    node1->setBal(0);
   }
-  node_aux_2->SetBal(0);
-  node = node_aux_2;
+  node2->setBal(0);
+  node = node2;
 }
 
 template <typename Key>
 void AVL<Key>::rotation_DI(NodoAVL<Key>*& node) {
-  NodoAVL<Key>* node_aux = node->GetPtrDcho();
-  NodoAVL<Key>* node_aux_2 = node_aux->GetPtrIzdo();
-  node->GetPtrDcho() = node_aux_2->GetPtrIzdo();
-  node_aux_2->SetPtrIzdo(node);
-  node_aux->SetPtrIzdo(node_aux_2->GetPtrDcho());
-  node_aux_2->SetPtrDcho(node_aux);
-  if (node_aux_2->GetBal() == 1) {
-    node_aux->SetBal(-1);
+  #ifdef TRAZA
+    std::cout << "Rotación DI en [" << node->getData() << "]";
+  #endif
+  NodoAVL<Key>* node1 = node->getRight();
+  NodoAVL<Key>* node2 = node1->getLeft();
+  node->getRight() = node2->getLeft();
+  node2->setLeft(node);
+  node1->setLeft(node2->getRight());
+  node2->setRight(node1);
+  if (node2->getBal() == 1) {
+    node1->setBal(-1);
   } else {
-    node_aux->SetBal(-1);
+    node1->setBal(-1);
   }
-  if (node_aux_2->GetBal() == -1) {
-    node->SetBal(1);
+  if (node2->getBal() == -1) {
+    node->setBal(1);
   } else {
-    node->SetBal(0);
+    node->setBal(0);
   }
-  node_aux_2->SetBal(0);
-  node = node_aux_2;
+  node2->setBal(0);
+  node = node2;
 }
 
 template <typename Key>
-void AVL<Key>::InsertaBal(NodoAVL<Key>*& root, NodoAVL<Key>*& newOne, bool& grow) {
-  if (root == NULL) {
+void AVL<Key>::insertBal(NodoAVL<Key>*& root, NodoAVL<Key>*& newOne, bool& grow) {
+  if (root == nullptr) {
     root = newOne;
     grow = true;
-  } else if (newOne->getData() < root->getData()) {
+  } else if (newOne->getData() < root->getData()) { // Insertar balanceado por la izquierda
     insertBal(reinterpret_cast<NodoAVL<Key>*&>(root->getLeft()), newOne, grow);
-    if (grow) {
-      switch (root->getBal()) {
-        case 1:
-          root->setBal(0);
-          grow = false;
-          break;
-        case 0:
-          root->setBal(-1);
-          break;
-        case -1:
-          if (reinterpret_cast<NodoAVL<Key>*&>(root->getLeft())->getBal() ==
-              -1) {
-            rotation_II(root);
-          } else {
-            rotation_ID(root);
-          }
-          grow = false;
-          break;
-      }
-    }
-  } else if (newOne->getData() > root->getData()) {
-    insertBal(reinterpret_cast<NodoAVL<Key>*&>(root->getRight()), newOne, grow);
     if (grow) {
       switch (root->getBal()) {
         case -1:
@@ -186,17 +176,46 @@ void AVL<Key>::InsertaBal(NodoAVL<Key>*& root, NodoAVL<Key>*& newOne, bool& grow
           root->setBal(1);
           break;
         case 1:
-          if (reinterpret_cast<NodoAVL<Key>*&>(root->getRight())->getBal() == 1) {
+          #ifdef TRAZA
+            std::cout << "Desbalanceo: " << std::endl;
+            this->write();
+          #endif
+          NodoAVL<Key>* node1 = reinterpret_cast<NodoAVL<Key>*&>(root->getLeft());
+          if (node1->getBal() == 1) {
+            rotation_II(root);
+          } else {
+            rotation_ID(root);
+          }
+          grow = false;
+      }
+    }
+  } else if (newOne->getData() > root->getData()) { // Insertar balanceado por la derecha
+    insertBal(reinterpret_cast<NodoAVL<Key>*&>(root->getRight()), newOne, grow);
+    if (grow) {
+      switch (root->getBal()) {
+        case 1:
+          root->setBal(0);
+          grow = false;
+          break;
+        case 0:
+          root->setBal(-1);
+          break;
+        case -1:
+          #ifdef TRAZA
+            std::cout << "Desbalanceo: " << std::endl;
+            this->write();
+          #endif
+          NodoAVL<Key>* node1 = reinterpret_cast<NodoAVL<Key>*&>(root->getRight());
+          if (node1->getBal() == -1) {
             rotation_DD(root);
           } else {
             rotation_DI(root);
           }
           grow = false;
-          break;
       }
     }
   } else {
-    std::cout << "Clave duplicada" << std::endl;
+    std::cout << "\033[31m\033[1m" << "Clave duplicada" << "\033[0m" << std::endl;
   }
 }
 

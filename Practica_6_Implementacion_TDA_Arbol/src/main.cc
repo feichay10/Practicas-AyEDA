@@ -36,7 +36,7 @@ int main() {
   std::cout << kBold << "Arboles de busqueda" << kReset << std::endl;
   std::cout << kRedBold << "  1." << kReset << kBold << " Árbol Binario de Búsqueda - ABB" << std::endl;
   std::cout << kRedBold << "  2." << kReset << kBold << " Árbol Binario de Búsqueda Balanceado - AVL" << std::endl;
-  std::cout << "Seleccione tipo de arbol: "; 
+  std::cout << "Seleccione tipo de arbol: " << kReset; 
   std::cin >> optionTree;
 
   AB<keyType> *tree;
@@ -58,38 +58,45 @@ int main() {
     std::cout << kRedBold << "  [1]" << kReset << kBold << " Insertar clave" << std::endl;
     std::cout << kRedBold << "  [2]" << kReset << kBold << " Buscar clave" << std::endl;
     std::cout << kRedBold << "  [3]" << kReset << kBold << " Mostrar arbol inorden" << std::endl;
-    std::cout << "Seleccione operacion: "; 
+    std::cout << "Seleccione operacion: " << kReset; 
     std::cin >> option;
 
     keyType key;
+
+    // Comprobar si el arbol está vacio
+    if (tree->empty()) {
+      std::cout << kBold << "\nArbol vacio" << kReset << std::endl;
+      tree->write();
+    }
 
     switch (option) {
       case 0:
         exit(EXIT_SUCCESS);
         break;
       case 1: 
-        std::cout << "Insertar clave: ";
+        std::cout << kBold << "\nInsertar clave: " << kReset;
         std::cin >> key;
-        if (tree->insert(key)) {
-          std::cout << "Clave insertada" << std::endl;
-        } else {
-          std::cout << "Clave ya existente" << std::endl;
-        }
+        tree->insert(key);
         break;
       case 2: 
-        std::cout << "Buscar clave: ";
+        std::cout << kBold << "\nBuscar clave: " << kReset;
         std::cin >> key;
-        std::cout << "Clave " << key << ": " << tree->search(key) << std::endl;
+        if (tree->search(key)) {
+          std::cout << kGreenBold << "Clave encontrada" << kReset << std::endl;
+        } else {
+          std::cout << kRedBold << "Clave no encontrada" << kReset << std::endl;
+        }
         break;
       case 3: 
-        std::cout << "Mostrar arbol inorden: ";
+        std::cout << kBold << "\nMostrar arbol inorden: " << kReset << std::endl;
         tree->inorder();
+        std::cout << std::endl;
         break;
       default: 
         std::cout << "Opcion invalida" << std::endl;
         std::cout << "\n\nSeleccione operacion: " << std::endl;
     }
-    // mostrar arbol
+    std::cout << std::endl;
     tree->write();
   }
 }

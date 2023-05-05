@@ -34,6 +34,7 @@ class AB {
   virtual bool search(const Key& k) const = 0;
   void inorder() const;
   void inorder(NodoB<Key>* node) const;
+  bool empty();
   void write();
 
  protected:
@@ -49,7 +50,7 @@ template <typename Key>
 void AB<Key>::inorder(NodoB<Key>* node) const {
   if (node != nullptr) {
     inorder(node->getLeft());
-    std::cout << node->getData() << " ";
+    std::cout << "\033[36m\033[1m" << node->getData() << " " << "\033[0m";
     inorder(node->getRight());
   }
 }
@@ -70,12 +71,17 @@ void AB<Key>::setRoot(NodoB<Key>* root) {
 }
 
 template <typename Key>
+bool AB<Key>::empty() {
+  return root_ == nullptr;
+}
+
+template <typename Key>
 void AB<Key>::write() {
   int k = 0;
   std::queue<NodoB<Key>*> queue, queueAux;
   queue.push(root_);
   while (!queue.empty()) {
-    std::cout << "\nNivel " << k << ": ";
+    std::cout << "Nivel " << k << ": ";
     while (!queue.empty()) {
       if (queue.front() != nullptr) {
         std::cout << "[" << queue.front()->getData() << "]";
@@ -91,7 +97,7 @@ void AB<Key>::write() {
       queueAux.pop();
     }
     k++;
-    std::cout << "\n\n";
+    std::cout << "\n";
   }
 }
 

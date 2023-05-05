@@ -47,19 +47,10 @@ class NodoAVL : public NodoB<Key>{
 };
 
 template <typename Key>
-NodoAVL<Key>::NodoAVL() {
-  this->left_ = NULL;
-  this->right_ = NULL;
-  bal_ = 0;
-}
+NodoAVL<Key>::NodoAVL() : NodoB<Key>(), bal_(0) {}
 
 template <typename Key>
-NodoAVL<Key>::NodoAVL(const Key& data, NodoAVL<Key>* left, NodoAVL<Key>* right) {
-  this->data_ = data;
-  this->left_ = left;
-  this->right_ = right;
-  bal_ = 0;
-}
+NodoAVL<Key>::NodoAVL(const Key& data, NodoAVL<Key>* left, NodoAVL<Key>* right) : NodoB<Key>::NodoB(data, left, right), bal_(0) {}
 
 template <typename Key>
 int NodoAVL<Key>::getBal() {
