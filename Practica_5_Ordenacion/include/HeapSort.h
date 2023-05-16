@@ -25,38 +25,58 @@ template <typename T>
 class HeapSort : public SortMethod<T> {
  public:
   void Sort(std::vector<T> &vector, int size);
+
+ private:
+  void PushDown(int i, std::vector<T>& vec, int n);
+  void Swap(T& i, T& j);
 };
 
-template <typename T>
-void HeapSort<T>::Sort(std::vector<T> &vector, int size) {
-  T temp;
-  for (int i = size / 2 - 1; i >= 0; i--) {
-    for (int j = i; j < size; j++) {
-      if (vector[j] > vector[i]) {
-        temp = vector[i];
-        vector[i] = vector[j];
-        vector[j] = temp;
-      }
-    }
-#ifdef TRAZA
-    print(vector, size);
-#endif
+template<typename T>
+void HeapSort<T>::Sort(std::vector<T>& vector, int size) {
+  std::cout << "Fase 1, inserciones\n";
+  for (int i{int(size) / 2 - 1}; i >= 0; --i) {
+    this->PushDown(i, vector, size);
+    for (auto j: vector) std::cout << j << " ";
+    std::cout << std::endl;
   }
-  for (int i = size - 1; i >= 0; i--) {
-    temp = vector[0];
-    vector[0] = vector[i];
-    vector[i] = temp;
-    for (int j = 0; j < i; j++) {
-      if (vector[j] > vector[j + 1]) {
-        temp = vector[j];
-        vector[j] = vector[j + 1];
-        vector[j + 1] = temp;
-      }
-    }
-#ifdef TRAZA
-    print(vector, size);
-#endif
+  std::cout << std::endl;
+  
+  std::cout << "Fase 2, extracciones\n";
+  for (int i{int(size) - 1}; i > 0; --i) {
+    this->Swap(vector[0], vector[i]);
+    this->PushDown(0, vector, i);
+    for (auto j: vector) std::cout << j << " ";
+    std::cout << std::endl;
   }
+  std::cout << std::endl;
+}
+
+template<typename T>
+void HeapSort<T>::PushDown(int i, std::vector<T>& vec, int n) {
+  int largest{i};
+  int left{2 * i + 1};
+  int right{2 * i + 2};
+
+  /// Si el hijo izquierdo es mas grande que el padre
+  if ((left < n) && (vec[left] > vec[largest])) largest = left;
+  
+  /// Si el hijo derecho es mas grande que el mas grande hasta ahora
+  if ((right < n) && (vec[right] > vec[largest])) largest = right;
+  
+  /// Si el mas grande no es el padre
+  if (largest != i) {
+    this->Swap(vec[i], vec[largest]);
+  
+    /// Llamamos recursivamente al sub-arbol afectado
+    this->PushDown(largest, vec, n);
+  }
+}
+
+template<typename T>
+void HeapSort<T>::Swap(T& i, T& j) {
+  T aux{i};
+  i = j;
+  j = aux;
 }
 
 #endif  // HEAPSORT_H
