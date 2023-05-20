@@ -27,6 +27,7 @@
 #include "../include/RadixSort.h"
 #include "../include/ShellSort.h"
 #include "../include/Selection.h"
+#include "../include/QuickSort.h"
 #include "../include/SortMethod.h"
 
 const std::string kRedBold = "\033[31m\033[1m";
@@ -91,6 +92,7 @@ int main() {
   std::cout << kRedBold << "  4." << kReset << kBold << " HeapSort"  << std::endl;
   std::cout << kRedBold << "  5." << kReset << kBold << " RadixSort" << std::endl;
   std::cout << kRedBold << "  6." << kReset << kBold << " Seleccion" << std::endl;
+  std::cout << kRedBold << "  7." << kReset << kBold << " QuickSort" << std::endl;
   std::cout << "Seleccione el algoritmo de ordenación: ";
   std::cin >> algorithmOption;
 
@@ -115,6 +117,9 @@ int main() {
     case 6:
       sortMethod = new Selection<keyType>();
       break;
+    // case 7: 
+    //   sortMethod = new QuickSort<keyType>();
+    //   break;
     default:
       std::cout << "Opción no válida" << std::endl;
       exit(EXIT_FAILURE);

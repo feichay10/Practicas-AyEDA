@@ -48,38 +48,18 @@ template <typename T>
 void MergeSort<T>::Mix(std::vector<T> &vector, int ini, int cen, int fin) {
   int i = ini;
   int j = cen + 1;
-  int size = fin;
-
   std::vector<T> aux(fin + 1);
-
-  int k = ini;
-  while ((i <= cen) && (j <= fin)) {
-    if ((vector[i]) < (vector[j])) {
+  for (int k = ini; k <= fin; k++) {
+    if (i <= cen && (j > fin || vector[i] < vector[j])) {
       aux[k] = vector[i];
       i++;
     } else {
       aux[k] = vector[j];
       j++;
     }
-    k++;
   }
-
-  if (i > cen) {
-    while (j <= fin) {
-      aux[k] = vector[j];
-      j++;
-      k++;
-    }
-  } else {
-    while (i <= cen) {
-      aux[k] = vector[i];
-      i++;
-      k++;
-    }
-  }
-
-  for (int z = ini; z <= fin; z++) {
-    vector[z] = aux[z];
+  for (int k = ini; k <= fin; k++) {
+    vector[k] = aux[k];
 #ifdef TRAZA
     print(vector, fin + 1);
 #endif
