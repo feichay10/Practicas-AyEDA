@@ -25,23 +25,31 @@ template <typename T>
 class ShellSort : public SortMethod<T> {
  public:
   void Sort(std::vector<T> &vector, int size);
+
+ private:
+  void DeltaSort(std::vector<T> &vector, int size, int delta);
 };
 
 template <typename T>
 void ShellSort<T>::Sort(std::vector<T> &vector, int size) {
-  int j;
+  unsigned int delta = size;
+  while (delta > 1) {
+    delta = delta / 2;
+    DeltaSort(vector, size, delta);
+  }
+}
+
+template <typename T>
+void ShellSort<T>::DeltaSort(std::vector<T> &vector, int size, int delta) {
   T temp;
-  float alpha;
-  std::cout << "Introduzca un alfa entre 0 y 1: ";
-  std::cin >> alpha;
-  for (int h = (size * alpha) / 2; h > 0; h /= 2) {
-    for (int i = h; i < size; i++) {
-      temp = vector[i];
-      for (j = i; j >= h && vector[j - h] > temp; j -= h) {
-        vector[j] = vector[j - h];
-      }
-      vector[j] = temp;
+  for (int i = delta; i < size; i++) {
+    temp = vector[i];
+    int j = i;
+    while (j >= delta && vector[j - delta] > temp) {
+      vector[j] = vector[j - delta];
+      j = j - delta;
     }
+    vector[j] = temp;
 #ifdef TRAZA
     print(vector, size);
 #endif
